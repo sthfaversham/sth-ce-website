@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>STH Construction & Engineering | Rail consultancy, Faversham</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="icon" type="image/png" sizes="64x64" href="/favicon-64.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon-180.png">
+<link rel="canonical" href="https://www.sth-ce.com/">
+<meta property="og:title" content="STH Construction & Engineering — railway engineering consultancy and business development advisory">
+<meta property="og:description" content="Growth advisory for rail and civils contractor owners; tender and commercial support; railway engineering, interface management and design assurance. Faversham, Kent.">
+<meta property="og:url" content="https://www.sth-ce.com/">
+<meta property="og:type" content="website">
+<meta name="description" content="Railway engineering consultancy and business development advisory for rail and civils contractors: growth and leadership support, tender and bid support, P-Way and civils delivery, systems engineering, interface management and design assurance. Steve Horrigan, Faversham, Kent, UK.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: full-width bands, 1100px inner column, left-aligned type; signage-style condensed headings with mono "chainage" labels */
+  :root{
+    --bg:#f2f3f1;        /* cool concrete */
+    --surface:#ffffff;
+    --ink:#161a1d;
+    --ink-2:#4a5158;
+    --line:#d3d7d4;
+    --accent:#0e6a8a;    /* steel blue */
+    --accent-ink:#ffffff;
+    --dark:#161a1d;      /* dark band */
+    --dark-fg:#e9ebe8;
+    --dark-muted:#9aa2a8;
+    --dark-line:#2d3339;
+    --display:"Barlow Condensed","Arial Narrow",Impact,sans-serif;
+    --body:"Barlow","Helvetica Neue",Arial,sans-serif;
+    --mono:"IBM Plex Mono","Courier New",monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#121517;--surface:#1b1f22;--ink:#e9ebe8;--ink-2:#aeb5ba;--line:#2e3438;
+      --accent:#3fb0d6;--accent-ink:#0b1216;
+      --dark:#0b0d0f;--dark-fg:#e9ebe8;--dark-muted:#8d959b;--dark-line:#23282c;
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#121517;--surface:#1b1f22;--ink:#e9ebe8;--ink-2:#aeb5ba;--line:#2e3438;
+    --accent:#3fb0d6;--accent-ink:#0b1216;
+    --dark:#0b0d0f;--dark-fg:#e9ebe8;--dark-muted:#8d959b;--dark-line:#23282c;
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;margin:0}
+  body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+  a{color:inherit}
+  section[id],main[id]{scroll-margin-top:80px}
+  h1,h2,h3{font-family:var(--display);line-height:1.02;margin:0;text-wrap:balance;letter-spacing:.005em}
+  h1{font-size:clamp(2.6rem,6.5vw,5.2rem);font-weight:700;text-transform:uppercase}
+  h2{font-size:clamp(2rem,4.2vw,3.1rem);font-weight:700;text-transform:uppercase}
+  h3{font-size:1.5rem;font-weight:600}
+  p{margin:0}
+  .wrap{max-width:1100px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .band{padding-block:clamp(56px,8vw,104px)}
+  .label{font-family:var(--mono);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+  .label b{color:var(--accent);font-weight:500}
+  .lede{font-size:1.2rem;color:var(--ink-2);max-width:62ch}
+
+  /* header */
+  header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);border-bottom:1px solid var(--line)}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
+  .mark{display:flex;align-items:center;gap:12px;text-decoration:none}
+  .mark .box{width:40px;height:40px;background:var(--accent);color:var(--accent-ink);font-family:var(--display);font-weight:700;font-size:1.05rem;display:grid;place-items:center;letter-spacing:.02em}
+  .mark .name{font-family:var(--display);font-weight:600;font-size:1.15rem;line-height:1.05;text-transform:uppercase}
+  .mark .name small{display:block;font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;color:var(--ink-2);font-weight:400;text-transform:uppercase}
+  nav{display:flex;gap:22px;font-size:.95rem;font-weight:500}
+  nav a{text-decoration:none;color:var(--ink-2)}
+  nav a:hover,nav a:focus-visible{color:var(--accent)}
+  @media (max-width:640px){nav a{display:none}nav a.always{display:inline}}
+  .clients{margin-top:44px;border-top:1px solid var(--line);padding-top:18px}
+  .clients p{color:var(--ink-2);font-size:.95rem;max-width:none}
+  .clients p b{color:var(--ink);font-weight:500}
+  .btn{display:inline-block;background:var(--accent);color:var(--accent-ink);text-decoration:none;font-weight:600;padding:12px 20px;font-size:.98rem}
+  .btn:hover{filter:brightness(.93)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+  /* hero */
+  .hero{padding-block:clamp(64px,9vw,120px) clamp(48px,6vw,80px);border-bottom:1px solid var(--line)}
+  .hero .grid{display:grid;grid-template-columns:1.4fr 1fr;gap:48px;align-items:end}
+  .hero .ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+  .rule{height:6px;background:var(--accent);width:88px;margin-block:22px 26px}
+  .facts{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);background:var(--surface)}
+  .fact{padding:18px 20px;border-bottom:1px solid var(--line);min-width:0}
+  .fact:nth-child(odd){border-right:1px solid var(--line)}
+  .fact:nth-last-child(-n+2){border-bottom:0}
+  .fact .n{font-family:var(--display);font-size:2.3rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+  .fact .t{font-size:.9rem;color:var(--ink-2);margin-top:4px}
+  @media (max-width:820px){.hero .grid{grid-template-columns:1fr}}
+
+  /* three ways strip */
+  .ways{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:36px}
+  .way{background:var(--surface);padding:24px 24px 22px;min-width:0;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit}
+  .way:hover h3,.way:focus-visible h3{color:var(--accent)}
+  .way h3{font-size:1.35rem}
+  .way p{color:var(--ink-2);font-size:.95rem}
+  .way .eng{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);border-top:1px solid var(--line);padding-top:10px;margin-top:auto}
+  .way .eng b{color:var(--accent);font-weight:500}
+  @media (max-width:760px){.ways{grid-template-columns:1fr}}
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:28px}
+  .cta-row span{color:var(--ink-2);font-size:.95rem}
+  /* services */
+  .services{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:40px}
+  @media (max-width:980px){.services{grid-template-columns:repeat(2,1fr)}}
+  .svc{background:var(--surface);padding:30px 28px 32px;min-width:0;display:flex;flex-direction:column;gap:14px}
+  .svc .label{margin-bottom:2px}
+  .svc ul{margin:0;padding-left:18px;color:var(--ink-2);display:grid;gap:6px;font-size:.98rem}
+  .svc .who{font-size:.9rem;color:var(--ink-2);border-top:1px solid var(--line);padding-top:12px;margin-top:auto}
+  .svc .who strong{color:var(--ink);font-weight:600}
+  .svc.lead{grid-column:1/-1;border-top:4px solid var(--accent)}
+  .svc.lead ul{columns:2;column-gap:32px}
+  @media (max-width:760px){.services{grid-template-columns:1fr}.svc.lead ul{columns:1}}
+
+  /* dark band: how we work */
+  .dark{background:var(--dark);color:var(--dark-fg)}
+  .dark .label{color:var(--dark-muted)}
+  .dark .lede{color:var(--dark-muted)}
+  .principles{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:40px}
+  .pr{border-top:2px solid var(--accent);padding-top:18px;min-width:0}
+  .pr h3{margin-bottom:10px}
+  .pr p{color:var(--dark-muted);font-size:1rem}
+  @media (max-width:760px){.principles{grid-template-columns:1fr;gap:28px}}
+
+  /* experience timeline (real chronological sequence) */
+  .track{margin-top:40px;display:grid;gap:0;border-top:1px solid var(--line)}
+  .stop{display:grid;grid-template-columns:150px 1fr;gap:24px;padding-block:22px;border-bottom:1px solid var(--line);min-width:0}
+  .stop .when{font-family:var(--mono);font-size:.85rem;color:var(--ink-2);padding-top:5px;white-space:nowrap}
+  .stop .when.now{color:var(--accent)}
+  .stop h3{font-size:1.35rem}
+  .stop p{color:var(--ink-2);margin-top:4px;max-width:66ch}
+  @media (max-width:560px){.stop{grid-template-columns:1fr;gap:6px}}
+
+  /* case studies */
+  .cases{display:grid;gap:32px;margin-top:40px}
+  .case{display:grid;grid-template-columns:1fr 1.4fr;gap:0;border:1px solid var(--line);background:var(--surface);overflow:hidden}
+  .case .img{min-height:260px;background:var(--dark) center/cover no-repeat}
+  .case .img.text{display:grid;place-items:center;padding:28px;color:var(--dark-fg);text-align:center}
+  .case .img.text .big{font-family:var(--display);font-weight:700;font-size:3rem;line-height:1;color:#8fd3ea}
+  .case .img.text .sm{font-family:var(--mono);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dark-muted);margin-top:8px}
+  .case .txt{padding:28px 28px 26px;min-width:0;display:grid;gap:12px}
+  .case h3{font-size:1.5rem}
+  .case .role{font-family:var(--mono);font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+  .case dl{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;margin:4px 0 0}
+  .case dt{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);padding-top:4px}
+  .case dd{margin:0;color:var(--ink-2);font-size:.98rem}
+  .case .attr{font-size:.82rem;color:var(--ink-2);border-top:1px solid var(--line);padding-top:10px}
+  @media (max-width:760px){.case{grid-template-columns:1fr}.case .img{min-height:200px}}
+  /* about */
+  .about{display:grid;grid-template-columns:1fr 1.3fr;gap:48px;align-items:start}
+  .portrait{aspect-ratio:1/1;max-width:100%;background:#ffffff;border:1px solid var(--line);padding:40px 0 0;position:relative;overflow:hidden}
+  .portrait img{display:block;width:100%;height:100%;object-fit:contain;object-position:center bottom}
+  .portrait .cap{position:absolute;top:16px;left:16px}
+  .about p+p{margin-top:14px}
+  @media (max-width:760px){.about{grid-template-columns:1fr}.portrait{max-width:320px}}
+
+  /* contact */
+  .contact{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+  .mail{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px}
+  .mail code{font-family:var(--mono);font-size:1.15rem;background:var(--surface);border:1px solid var(--line);padding:10px 14px;user-select:all;word-break:break-all}
+  .copy{font:inherit;font-weight:600;background:transparent;color:var(--ink);border:1px solid var(--ink);padding:10px 16px;cursor:pointer}
+  .copy:hover{background:var(--ink);color:var(--bg)}
+  .copy[data-done="1"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  dl{display:grid;grid-template-columns:auto 1fr;gap:10px 18px;margin:0}
+  dt{font-family:var(--mono);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);padding-top:4px}
+  dd{margin:0}
+  @media (max-width:760px){.contact{grid-template-columns:1fr}}
+
+  footer{border-top:1px solid var(--line);padding-block:28px;font-size:.88rem;color:var(--ink-2)}
+  footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+  /* photo hero */
+  .hero{position:relative;color:#f3f4f2;background:#1a1f23 center 40%/cover no-repeat;border-bottom:0;padding-block:clamp(88px,12vw,160px) clamp(56px,7vw,96px)}
+  .hero::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(14,17,20,.82) 0%,rgba(14,17,20,.6) 50%,rgba(14,17,20,.25) 100%)}
+  .hero .wrap{position:relative}
+  .hero .label{color:#c9ced3}.hero .label b{color:#8fd3ea}
+  .hero .lede{color:#d8dcdf}
+  .hero .btn.ghost{color:#f3f4f2;border-color:#f3f4f2}
+  .hero .facts{background:rgba(14,17,20,.55);border-color:rgba(255,255,255,.18);backdrop-filter:blur(4px)}
+  .hero .fact{border-color:rgba(255,255,255,.18)}
+  .hero .fact .t{color:#c9ced3}
+  .hero .credit{position:absolute;right:16px;bottom:10px;font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;color:#9aa2a8;text-transform:uppercase}
+  /* photo strip */
+  .strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .strip figure{margin:0;position:relative;aspect-ratio:4/3;max-width:100%;overflow:hidden;background:var(--dark)}
+  .strip img{width:100%;height:100%;object-fit:cover;display:block}
+  .strip figcaption{position:absolute;left:0;right:0;bottom:0;padding:10px 14px;font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:#e9ebe8;background:linear-gradient(transparent,rgba(14,17,20,.85))}
+  @media (max-width:640px){.strip{grid-template-columns:1fr}}
+  /* dark band with photo */
+  .dark{position:relative;background:var(--dark) center/cover no-repeat}
+  .dark::before{content:"";position:absolute;inset:0;background:rgba(11,13,15,.84)}
+  .dark .wrap{position:relative}
+  /* service card images */
+  .svc.lead{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;padding:0;overflow:hidden}
+  .svc.lead .body{padding:30px 28px 32px;display:flex;flex-direction:column;gap:14px}
+  .svc.lead .pic{min-height:260px;background:var(--dark) center/cover no-repeat}
+  @media (max-width:760px){.svc.lead{grid-template-columns:1fr}.svc.lead .pic{min-height:200px;order:-1}}
+  @media (prefers-reduced-motion:no-preference){.btn,.copy{transition:background .15s,color .15s,filter .15s}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ProfessionalService","name":"STH Construction & Engineering Ltd","url":"https://www.sth-ce.com/","email":"info@sth-ce.com","founder":{"@type":"Person","name":"Steve Horrigan","jobTitle":"Director","sameAs":"https://www.linkedin.com/in/steve-horrigan-a9b5ab60/"},"address":{"@type":"PostalAddress","addressLocality":"Faversham","addressRegion":"Kent","addressCountry":"GB"},"areaServed":["United Kingdom","Europe"],"description":"Business development advisory, tender support and railway engineering consultancy for rail and civils contractors, programmes and clients."}
+</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="mark" href="#top" aria-label="STH Construction & Engineering home">
+      <span class="box">STH</span>
+      <span class="name">Construction &amp; Engineering<small>Business development · Rail · Civils · Kent, UK</small></span>
+    </a>
+    <nav aria-label="Sections">
+      <a href="#services">Services</a>
+      <a href="#approach">How I work</a>
+      <a href="#projects">Projects</a>
+      <a href="#track">Track record</a>
+      <a href="#about">About</a>
+      <a href="#contact" class="always">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" style="background-image:url('images/hero-tunnel.jpg')">
+    <div class="wrap grid">
+      <div>
+        <p class="label"><b>STH-CE</b> · Business development &amp; engineering consultancy</p>
+        <div class="rule"></div>
+        <h1>Growth and work-winning support for rail and civils contractors.</h1>
+        <p class="lede" style="margin-top:22px">Business and growth advisory for contractor owners. Tender and commercial support. Railway engineering, interface management and design assurance for programmes and clients. From someone who has priced the work, won it and run the company that delivered it.</p>
+        <div class="ctas">
+          <a class="btn" href="#contact">Talk to Steve</a>
+          <a class="btn ghost" href="#services">What I do</a>
+        </div>
+      </div>
+      <div class="facts" aria-label="Track record">
+        <div class="fact"><div class="n">25+</div><div class="t">years in UK rail and civils</div></div>
+        <div class="fact"><div class="n">10 yrs</div><div class="t">running a rail contractor as MD</div></div>
+        <div class="fact"><div class="n">2000</div><div class="t">on the railway since CTRL Phase 1</div></div>
+        <div class="fact"><div class="n">MD</div><div class="t">Former MD of a Network Rail Principal Contractor</div></div>
+      </div>
+    </div>
+    <span class="credit">Rail replacement, tunnel possession</span>
+  </section>
+
+  <div class="strip" aria-label="Site photographs">
+    <figure><img loading="lazy" src="images/strip-rrv.jpg" alt="Road-rail excavator placing ballast bags during a night possession"><figcaption>Night possession, road-rail plant</figcaption></figure>
+    <figure><img loading="lazy" src="images/strip-ler-plates.jpg" alt="Ballasted track with lateral end resistance plates fitted, Network Rail"><figcaption>Lateral end resistance plates, Network Rail</figcaption></figure>
+    <figure><img loading="lazy" src="images/strip-crane.jpg" alt="Lorry-mounted crane working over a viaduct during a night possession"><figcaption>Night possession: crane access and logistics</figcaption></figure>
+  </div>
+
+  <section class="band" id="services">
+    <div class="wrap">
+      <p class="label"><b>01</b> · Services</p>
+      <h2 style="margin-top:12px">Three ways to work with STH</h2>
+      <p class="lede" style="margin-top:14px">Owners who want a better-run, better-paid business. Bid teams who want to win more of the right work. Programmes and designers who need engineering and assurance from someone who has delivered on site. Three services, one way of working.</p>
+      <div class="ways">
+        <a class="way" href="#svc-growth">
+          <p class="label"><b>1</b> · Owners &amp; directors</p>
+          <h3>Business growth &amp; leadership advisory</h3>
+          <p>For owner-run rail and civils contractors: business plan, management structure, KPIs, pipeline, work-winning strategy and commercial oversight.</p>
+          <p class="eng"><b>Engagement</b> · retained or project-based</p>
+        </a>
+        <a class="way" href="#svc-bid">
+          <p class="label"><b>2</b> · Bid teams &amp; commercial</p>
+          <h3>Tendering &amp; commercial support</h3>
+          <p>Bid / no-bid, tender strategy, delivery methodology, programme and risk, pricing logic, independent challenge before submission.</p>
+          <p class="eng"><b>Engagement</b> · fixed scope or day rate</p>
+        </a>
+        <a class="way" href="#svc-se">
+          <p class="label"><b>3</b> · Programmes, designers &amp; clients</p>
+          <h3>Rail engineering &amp; technical assurance</h3>
+          <p>Interface management, requirements, design reviews and independent checking, P-Way and civils buildability, site engineering and handback.</p>
+          <p class="eng"><b>Engagement</b> · defined deliverables or project support</p>
+        </a>
+      </div>
+      <p class="label" style="margin-top:56px"><b>In detail</b> · What each one covers</p>
+      <div class="services">
+        <article class="svc lead" id="svc-growth">
+          <div class="body">
+          <p class="label"><b>1</b> · Growth &amp; leadership advisory</p>
+          <h3>Business development &amp; growth advisory</h3>
+          <p style="color:var(--ink-2);max-width:60ch">Hands-on support for owner-run rail and civils contractors who have built a solid business and want to run it with more structure, win more of the right work and grow without the owners becoming the bottleneck.</p>
+          <ul>
+            <li>A clear business plan, priorities and roadmap, with measurable targets</li>
+            <li>Management structure, roles and responsibilities, regular management meetings with actions and accountability</li>
+            <li>Practical KPIs and reporting: turnover and margin by client and division, workload, pipeline, tender hit rate</li>
+            <li>Work-winning strategy: target clients and frameworks, positioning, warm introductions through an established rail network</li>
+            <li>Commercial oversight: pricing strategy, margin control, a second pair of eyes on deals and proposals</li>
+            <li>Operations: labour models (PAYE vs CIS), team structure and resourcing</li>
+            <li>Management systems and accreditation: H&amp;S policies, SOPs and RAMS; submissions for RISQS, CHAS, SMAS, Constructionline and ISO 9001 / 14001 / 45001; the route from subcontractor to Network Rail Principal Contractor, having done it</li>
+            <li>Owner support: advice from someone who has run the same kind of business</li>
+          </ul>
+          <p class="who"><strong>How it works:</strong> retained support with a regular working session and email / phone access in between, or a defined piece of work. Terms agreed up front. No guarantees on wins, just experience applied properly.</p>
+          </div>
+          <div class="pic" role="img" aria-label="Vacuum excavation lorry on a road-rail access point under overhead line equipment" style="background-image:url('images/svc-vacuum-excavator.jpg')"></div>
+        </article>
+        <article class="svc" id="svc-bid">
+          <p class="label"><b>2</b> · Tendering &amp; commercial</p>
+          <h3>Bid &amp; tender support</h3>
+          <ul>
+            <li>Bid / no-bid decisions before you commit the hours</li>
+            <li>Tender reviews: pricing logic, margin, risk and where the liability sits in the contract</li>
+            <li>Delivery methodology and sequencing, particularly for possession-based works, so the price has a buildable method behind it</li>
+            <li>Independent review of the submission before it goes out</li>
+            <li>Full tender support on a day-rate basis where needed</li>
+          </ul>
+          <p class="who"><strong>For:</strong> contractors who want a better hit rate and better margins on the tenders they do chase</p>
+        </article>
+        <article class="svc" id="svc-se">
+          <p class="label"><b>3</b> · Programmes &amp; designers</p>
+          <h3>Systems engineering &amp; design assurance</h3>
+          <ul>
+            <li>Interface management: Interface Management Plan, Interface Control Forms (ICFs) and interface register across INFRA, ENE, CCS and FAC</li>
+            <li>Requirements written as give / get: who provides, who receives, what, when, in what format. Traceability and baseline control in DOORS</li>
+            <li>Technical and buildability review of track and civils design packages: alignment, geometry, S&amp;C, clearances, interfaces, constructability. Scope of review agreed per appointment; not a formal CRE / checker role unless appointed</li>
+            <li>Track alignment and model data: AutoCAD / Civil 3D, LandXML exchange, alignment checking and setting-out data</li>
+            <li>Verification evidence prepared and structured for submission to NoBo / AsBo and TSI interoperability review (the assurance bodies make the assessment)</li>
+            <li>Scope boundary definition, RE / SE responsibility split, interface risk and gap analysis at design stage</li>
+          </ul>
+          <p class="who"><strong>For:</strong> alliances, designers, main contractors and clients on multi-discipline rail programmes, in the UK and Europe</p>
+        </article>
+        <article class="svc">
+          <p class="label"><b>3</b> · Contractors &amp; site teams</p>
+          <h3>P-Way &amp; civils delivery</h3>
+          <ul>
+            <li>Tender support: delivery methodology, possession strategy, staging and sequencing, plant and logistics, resource and programme</li>
+            <li>Buildability review of track and civils designs: plain line and S&amp;C renewals, slab track, platforms, drainage, structures interfaces</li>
+            <li>Site engineering: survey and setting-out queries, track geometry checks, as-built records and track handback</li>
+            <li>Possession-based works: access, isolations, RRV and crane operations; engineering input to temporary works and lift plans</li>
+            <li>Completion documentation, handback packs and close-out, done properly first time</li>
+            <li>NEC3 / NEC4 and programme awareness (P6, MS Project), so engineering advice lands in the commercial reality of the job</li>
+          </ul>
+          <p class="who"><strong>For:</strong> contractors and consultancies delivering Network Rail, TfL / DLR and light-rail works</p>
+        </article>
+      </div>
+      <div class="cta-row"><a class="btn" href="#contact">Get in touch</a><span>Email is quickest. A paragraph on what, where and when is enough to start.</span></div>
+      <div class="clients">
+        <p class="label"><b>Worked with / for</b></p>
+        <p style="margin-top:10px"><b>Network Rail</b> · <b>Docklands Light Railway / TfL</b> · <b>Rail Baltica (NGE TSO, Alliance 1)</b> · <b>Carillion Rail</b> · <b>Mowlem</b> · <b>Serco Docklands</b> · <b>Pod-Trak</b> · <b>C Spencer</b> · <b>IntelRail</b> · <b>CTS Group</b></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band dark" id="approach" style="background-image:url('images/approach-jcb.jpg')">
+    <div class="wrap">
+      <p class="label"><b>02</b> · How I work</p>
+      <h2 style="margin-top:12px">Correct on paper is not the same as right on site.</h2>
+      <p class="lede" style="margin-top:14px">Most interface and delivery problems come from unclear ownership and sequencing that only works if everyone is perfect. I write things down so a site team can follow them.</p>
+      <div class="principles">
+        <div class="pr">
+          <h3>Ownership first</h3>
+          <p>Every requirement has a provider and a receiver. If it can't be assigned, it's wrong, duplicated, or missing context.</p>
+        </div>
+        <div class="pr">
+          <h3>Buildability before sign-off</h3>
+          <p>I check access, possessions, plant and sequencing before a design goes for approval. If it relies on perfect coordination, I say so.</p>
+        </div>
+        <div class="pr">
+          <h3>Only what construction needs</h3>
+          <p>Generic rules where the railway is the same, specific ones only where location, risk or scope differs. If a document wouldn't matter to construction, it probably shouldn't exist.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="projects">
+    <div class="wrap">
+      <p class="label"><b>03</b> · Projects</p>
+      <h2 style="margin-top:12px">Three projects that show how I work</h2>
+      <p class="lede" style="margin-top:14px">One built the habit. One made slab track a specialism. One is live. Each delivered in the role stated.</p>
+      <div class="cases">
+
+        <article class="case">
+          <div class="img" role="img" aria-label="Slab track switches and crossings being installed inside the St Pancras station box" style="background-image:url('images/case-stpancras.jpg')"></div>
+          <div class="txt">
+            <p class="role">CTRL (HS1) Section 2 · St Pancras International · 2000s</p>
+            <h3>High-speed slab track and S&amp;C inside the St Pancras station box</h3>
+            <dl>
+              <dt>Challenge</dt><dd>A new 1435 mm high-speed terminus throat built inside the St Pancras station box during construction, with structures, station fit-out, OLE and signalling contractors all working in the same space. Slab track and switches and crossings to tight tolerances, on a programme that could not move.</dd>
+              <dt>Role</dt><dd>Head of Engineering for the track works (Carillion, Contract 104H). Earlier, Project Engineer at Ashford (Mowlem, Contract C434).</dd>
+              <dt>What I did</dt><dd>Led the site engineering team: survey control and setting-out for slab track and S&amp;C, top-down and bottom-up construction methods, design coordination with the structures and station teams, engineering assurance and handover records.</dd>
+              <dt>Outcome</dt><dd>Track delivered to tolerance and handed into commissioning. This is where the habit of checking buildability and interfaces before signing anything comes from.</dd>
+            </dl>
+            <p class="attr">Delivered as an employee of Carillion Rail and Mowlem on CTRL Phase 1. STH Construction &amp; Engineering was not the contracting party.</p>
+          </div>
+        </article>
+
+        <article class="case">
+          <div class="img" role="img" aria-label="DLR slab track with baseplates and rail clips" style="background-image:url('images/case-dlr-slab.jpg')"></div>
+          <div class="txt">
+            <p class="role">Docklands Light Railway · 2010 – 2023</p>
+            <h3>Slab track renewals on a driverless, third-rail railway</h3>
+            <dl>
+              <dt>Challenge</dt><dd>DLR runs on slab track with short engineering hours and no margin for a late handback. S&amp;C and baseplate renewals have to be designed, sequenced and built in small windows, with the right baseplate system for each location.</dd>
+              <dt>Role</dt><dd>Engineering Manager at Serco Docklands (systems engineering on the Crossrail–DLR interface); tender and engineering management on DLR renewals with Carillion and Pod-Trak; then Managing Director of ASH on the DLR Track Renewals framework.</dd>
+              <dt>What I did</dt><dd>New turnouts and crossovers; Delkor, Vanguard and Vipa baseplate systems; slab built top-down and bottom-up; maintenance renewals including bolt and baseplate replacement; interface requirements between Crossrail construction and DLR operations.</dd>
+              <dt>Outcome</dt><dd>Thirteen years of DLR slab-track work in one role or another, from writing the method to running the company delivering it. Slab track is a specialism, not a line in a CV.</dd>
+            </dl>
+            <p class="attr">Delivered as an employee of Serco Docklands and Pod-Trak, and as Managing Director of ASH Construction Group Ltd. STH Construction &amp; Engineering was not the contracting party.</p>
+          </div>
+        </article>
+
+        <article class="case">
+          <div class="img text"><div><div class="big">INFRA · ENE<br>CCS · FAC</div><div class="sm">one register · every requirement owned</div></div></div>
+          <div class="txt">
+            <p class="role">Rail Baltica · Alliance 1, Estonia · 2025 – present</p>
+            <h3>Building the interface framework for a new high-speed railway</h3>
+            <dl>
+              <dt>Challenge</dt><dd>A new-build 1435 mm line delivered by an alliance for infrastructure, separate client-procured contractors for electrification and signalling, station designers, and adjacent alliances. Design is verified by independent bodies, so every interface had to be defined, owned and evidenced before the design could be accepted.</dd>
+              <dt>Role</dt><dd>A1 Interface Manager in the Systems Engineering team; also Infrastructure Integration &amp; Installation Manager.</dd>
+              <dt>What I did</dt><dd>Built the interface framework from first principles: Interface Management Plan, a suite of generic and location-specific Interface Control Forms, and an interface requirements register in which every requirement has a provider, a receiver, an ICF and a verification method. Scope definition work mapping what the alliance owns against what others do. Verification evidence tracked by design stage and baselined in DOORS. Technical query process with the electrification, signalling and station designers.</dd>
+              <dt>Outcome</dt><dd>A register the verifiers can audit, and interface problems surfaced at design stage, where they cost a meeting, rather than on site, where they cost a possession.</dd>
+            </dl>
+            <p class="attr">Live programme; appointment through NGE TSO SAS UK Branch. Details limited to the published scope.</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="track">
+    <div class="wrap">
+      <p class="label"><b>04</b> · Track record</p>
+      <h2 style="margin-top:12px">Career in brief</h2>
+      <div class="track">
+        <div class="stop">
+          <div class="when now">Current</div>
+          <div><h3>Business development &amp; growth advisory</h3><p>Retained advisor to rail and civils contractors: business planning, KPIs and management reporting, pipeline and work-winning strategy, commercial oversight, and the move toward Principal Contractor status.</p></div>
+        </div>
+        <div class="stop">
+          <div class="when now">Current</div>
+          <div><h3>Rail Baltica, Alliance 1 (Estonia)</h3><p>Interface Manager and Infrastructure Integration &amp; Installation Manager on a 37 km section of new high-speed railway, Tootsi to Pärnu. Interface strategy, ICF register and coordination across infrastructure, energy, control-command and facilities design.</p></div>
+        </div>
+        <div class="stop">
+          <div class="when now">Current</div>
+          <div><h3>UK Network Rail works</h3><p>Engineering advisory on live renewals and enhancement projects: tender methodologies, site engineering, possession works and handback.</p></div>
+        </div>
+        <div class="stop">
+          <div class="when">2013 – 2023</div>
+          <div><h3>ASH Construction Group, Founder &amp; Managing Director</h3><p>Founded and grew a rail and civils contractor from start-up to a Network Rail Principal Contractor delivering P-Way, civils and labour supply.</p></div>
+        </div>
+        <div class="stop">
+          <div class="when">2012 – 2016</div>
+          <div><h3>C Spencer Ltd</h3><p>Project and engineering manager roles on rail schemes at Gravesend and Rochester, Kent.</p></div>
+        </div>
+        <div class="stop">
+          <div class="when">2010 – 2012</div>
+          <div><h3>Serco Docklands (DLR), Engineering Manager</h3><p>Systems engineering on the Crossrail / Docklands Light Railway interfaces.</p></div>
+        </div>
+        <div class="stop">
+          <div class="when">2000 – 2010</div>
+          <div><h3>Channel Tunnel Rail Link, Phase 1</h3><p>Section 2: Head of Engineering, Carillion Contract 104H (St Pancras). Section 1: Project Engineer, Mowlem Contract C434 (Ashford).</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="about" style="padding-top:0">
+    <div class="wrap about">
+      <div class="portrait">
+        <span class="label cap" style="color:#4a5158">Director</span>
+        <img src="images/steve-horrigan.jpg" alt="Steve Horrigan">
+      </div>
+      <div>
+        <p class="label"><b>05</b> · About</p>
+        <h2 style="margin-top:12px">Steve Horrigan</h2>
+        <p class="lede" style="margin-top:14px">Director, STH Construction &amp; Engineering Ltd</p>
+        <div style="margin-top:22px;max-width:62ch">
+          <p>Civil engineer by training, contractor by trade. Steve started on CTRL in Kent in 2000 and has spent the years since on the delivery side of railways: setting out, possessions, handback, and later running a Network Rail Principal Contractor.</p>
+          <p>That background is the point. He now spends most of his time helping owner-run contractors grow: putting structure and numbers around the business, deciding what to bid and how to price it, and opening doors. The engineering is why the business advice works: he knows how the job actually gets delivered, who ends up liable when it doesn't, and what a site team will and won't follow at three in the morning.</p>
+          <p>STH is Steve. You deal with him directly, start to finish. Based in Faversham, Kent; works across the UK and on European rail programmes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="contact" style="border-top:1px solid var(--line)">
+    <div class="wrap contact">
+      <div>
+        <p class="label"><b>06</b> · Contact</p>
+        <h2 style="margin-top:12px">Get in touch</h2>
+        <p class="lede" style="margin-top:14px">Email is quickest. Say what the job is, where, and when you need an answer by. I reply within one working day.</p>
+        <div class="mail">
+          <a class="btn" href="mailto:info@sth-ce.com?subject=Enquiry%20from%20sth-ce.com">Email Steve</a>
+          <code id="mail-addr">info@sth-ce.com</code>
+          <button class="copy" id="copy-btn" type="button">Copy address</button>
+        </div>
+      </div>
+      <dl>
+        <dt>Company</dt><dd>STH Construction &amp; Engineering Ltd</dd>
+        <dt>Location</dt><dd>Faversham, Kent, United Kingdom</dd>
+        <dt>Email</dt><dd>info@sth-ce.com</dd>
+        <dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/steve-horrigan-a9b5ab60/" rel="me noopener" target="_blank">Steve Horrigan</a></dd>
+        <dt>Sectors</dt><dd>Rail and civils, UK and Europe</dd>
+        <dt>Engagement</dt><dd>Retained, day rate or fixed fee</dd>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 STH Construction &amp; Engineering Ltd. Registered in England &amp; Wales, company no. 16478521. Registered office: 99 Canterbury Road, Whitstable, Kent CT5 4HG.</span>
+    <span>sth-ce.com</span>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var btn=document.getElementById('copy-btn'),addr=document.getElementById('mail-addr');
+    if(!btn||!addr)return;
+    btn.addEventListener('click',function(){
+      var text=addr.textContent;
+      function done(){btn.textContent='Copied';btn.dataset.done='1';setTimeout(function(){btn.textContent='Copy address';delete btn.dataset.done;},1800);}
+      function fallback(){var r=document.createRange();r.selectNodeContents(addr);var s=window.getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='Selected';setTimeout(function(){btn.textContent='Copy address';},1800);}
+      try{navigator.clipboard.writeText(text).then(done,fallback);}catch(e){fallback();}
+    });
+  })();
+</script>
+
+</body>
+</html>
