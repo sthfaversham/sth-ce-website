@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>STH Construction & Engineering | Rail consultancy, Faversham</title>
+<title>Rail Engineering &amp; Business Consultancy | STH Construction &amp; Engineering</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64.png">
@@ -201,6 +201,27 @@
   .dark::before{content:"";position:absolute;inset:0;background:rgba(11,13,15,.84)}
   .dark .wrap{position:relative}
   /* service card images */
+  /* growth story */
+  .growth{border-bottom:1px solid var(--line)}
+  .gstats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:32px}
+  .gstats .g{background:var(--surface);padding:24px 24px 20px;border-top:4px solid var(--accent)}
+  .gstats .n{font-family:var(--display);font-weight:700;font-size:clamp(2.6rem,6vw,4rem);line-height:1;color:var(--accent);letter-spacing:.01em}
+  .gstats .t{margin-top:8px;font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+  .gnote{margin-top:14px;font-size:.82rem;color:var(--ink-2);max-width:70ch}
+  @media (max-width:640px){.gstats{grid-template-columns:1fr}.gstats .g{padding:18px 20px 16px}}
+  /* expandable service detail + enquiry links */
+  .svc .pitch{margin:0;color:var(--ink-2);max-width:60ch}
+  details.more{padding-top:2px}
+  details.more summary{cursor:pointer;list-style:none;font-family:var(--mono);font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:10px;padding:4px 0}
+  details.more summary::-webkit-details-marker{display:none}
+  details.more summary::before{content:"+";display:inline-grid;place-items:center;width:20px;height:20px;border:1px solid currentColor;font-size:.95rem;line-height:1}
+  details.more[open] summary::before{content:"−"}
+  details.more ul{margin-top:12px!important}
+  .svc .ask{font-weight:600;color:var(--accent);text-decoration:none;font-size:.95rem;align-self:flex-start;border-bottom:1px solid transparent}
+  .svc .ask:hover,.svc .ask:focus-visible{border-bottom-color:currentColor}
+  .svc .who{margin-top:auto}
+  .cta-band{display:flex;gap:20px 32px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:40px;padding:26px 28px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent)}
+  .cta-band p{margin:6px 0 0;color:var(--ink-2)}
   .svc.lead{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;padding:0;overflow:hidden}
   .svc.lead .body{padding:30px 28px 32px;display:flex;flex-direction:column;gap:14px}
   .svc.lead .pic{min-height:260px;background:var(--dark) center/cover no-repeat}
@@ -399,20 +420,20 @@
             <div class="pg act" id="pg-geo">
           <div class="r on"><span>Radius <i>R</i></span><b>190.000 m</b></div>
           <div class="r on"><span>Track gauge <i>G</i></span><b>1435 mm</b></div>
-          <div class="r" id="pc-off"><span>Offset at <i>x</i> = <span id="pc-x">0.000</span> m</span><b id="pc-y">0.000 m</b></div>
+          <div class="r" id="pc-off"><span>Offset at <i>x</i> = <span id="pc-x">23.308</span> m</span><b id="pc-y">1.435 m = G ✓</b></div>
           <div class="f">y = R − √(R² − x²)</div>
           <div class="r" id="pc-nose"><span>Crossing nose</span><b>x = 23.308 m</b></div>
           <div class="f">x = √(2RG − G²)</div>
           <div class="r" id="pc-ang"><span>Crossing angle</span><b>7.05° · 1 in 8.09</b></div>
-          <div class="r" id="pc-brg"><span>Bearers @ 650 mm</span><b id="pc-n">0</b></div>
+          <div class="r" id="pc-brg"><span>Bearers @ 650 mm</span><b id="pc-n">55</b></div>
             </div>
             <div class="pg" id="pg-cant">
-              <div class="r" id="cn-v"><span>Diverging speed <i>V</i></span><b id="pc-v">0 km/h</b></div>
-              <div class="r" id="cn-e"><span>Equilibrium cant <i>E</i></span><b id="pc-e">0.0 mm</b></div>
+              <div class="r" id="cn-v"><span>Diverging speed <i>V</i></span><b id="pc-v">40 km/h</b></div>
+              <div class="r" id="cn-e"><span>Equilibrium cant <i>E</i></span><b id="pc-e">99.5 mm</b></div>
               <div class="f">E = 11.82 · V² / R</div>
               <div class="r" id="cn-c"><span>Applied cant <i>C</i></span><b>0 mm</b></div>
               <div class="f">no cant through the S&amp;C</div>
-              <div class="r" id="cn-d"><span>Cant deficiency <i>D</i></span><b id="pc-d">0.0 mm</b></div>
+              <div class="r" id="cn-d"><span>Cant deficiency <i>D</i></span><b id="pc-d">99.5 mm</b></div>
               <div class="f">D = E − C</div>
               <div class="r" id="cn-l"><span>Limit (illustrative)</span><b id="pc-lim">≤ 110 mm</b></div>
             </div>
@@ -453,6 +474,20 @@
     <button type="button" class="pc-replay" id="pc-replay" hidden>↻ Replay</button>
   </section>
 
+  <section class="band growth" id="growth" aria-labelledby="growth-h">
+    <div class="wrap">
+      <p class="label"><b>Background</b> · Built through delivery</p>
+      <h2 id="growth-h" style="margin-top:12px">Experience built through delivery.</h2>
+      <p class="lede" style="margin-top:14px">I founded ASH Construction Group in 2013 and grew it from a start-up into a multi-million-pound Network Rail Principal Contractor delivering P-Way, civils and labour supply. Today I support major rail programmes in the UK and Europe. The business advice comes from having built one, not from reading about it.</p>
+      <div class="gstats">
+        <div class="g"><div class="n">£10m+</div><div class="t">annual turnover reached</div></div>
+        <div class="g"><div class="n">400+</div><div class="t">PTS-qualified workforce at peak</div></div>
+        <div class="g"><div class="n">25+</div><div class="t">years in rail</div></div>
+      </div>
+      <p class="gnote">Turnover and workforce figures relate to ASH Construction Group Ltd during Steve's time as Managing Director. STH Construction &amp; Engineering Ltd is a separate company.</p>
+    </div>
+  </section>
+
   <section class="band" id="services">
     <div class="wrap">
       <p class="label"><b>01</b> · Services</p>
@@ -485,6 +520,7 @@
           <p class="label"><b>1</b> · Growth &amp; leadership advisory</p>
           <h3>Business development &amp; growth advisory</h3>
           <p style="color:var(--ink-2);max-width:60ch">Hands-on support for owner-run rail and civils contractors who have built a solid business and want to run it with more structure, win more of the right work and grow without the owners becoming the bottleneck.</p>
+          <details class="more"><summary>What's included</summary>
           <ul>
             <li>A clear business plan, priorities and roadmap, with measurable targets</li>
             <li>Management structure, roles and responsibilities, regular management meetings with actions and accountability</li>
@@ -495,13 +531,17 @@
             <li>Management systems and accreditation: H&amp;S policies, SOPs and RAMS; submissions for RISQS, CHAS, SMAS, Constructionline and ISO 9001 / 14001 / 45001; the route from subcontractor to Network Rail Principal Contractor, having done it</li>
             <li>Owner support: advice from someone who has run the same kind of business</li>
           </ul>
+          </details>
           <p class="who"><strong>How it works:</strong> retained support with a regular working session and email / phone access in between, or a defined piece of work. Terms agreed up front. No guarantees on wins, just experience applied properly.</p>
+          <a class="ask" href="mailto:info@sth-ce.com?subject=Enquiry%20-%20Business%20advisory">Talk to Steve about growth support <span aria-hidden="true">→</span></a>
           </div>
           <div class="pic" role="img" aria-label="Vacuum excavation lorry on a road-rail access point under overhead line equipment" style="background-image:url('images/svc-vacuum-excavator.jpg')"></div>
         </article>
         <article class="svc" id="svc-bid">
           <p class="label"><b>2</b> · Tendering &amp; commercial</p>
           <h3>Bid &amp; tender support</h3>
+                    <p class="pitch">Win more of the right work, at the right margin, with a method that can actually be built.</p>
+          <details class="more"><summary>What's included</summary>
           <ul>
             <li>Bid / no-bid decisions before you commit the hours</li>
             <li>Tender reviews: pricing logic, margin, risk and where the liability sits in the contract</li>
@@ -509,11 +549,15 @@
             <li>Independent review of the submission before it goes out</li>
             <li>Full tender support on a day-rate basis where needed</li>
           </ul>
+          </details>
           <p class="who"><strong>For:</strong> contractors who want a better hit rate and better margins on the tenders they do chase</p>
+          <a class="ask" href="mailto:info@sth-ce.com?subject=Enquiry%20-%20Bid%20support">Ask about a tender <span aria-hidden="true">→</span></a>
         </article>
         <article class="svc" id="svc-se">
-          <p class="label"><b>3</b> · Programmes &amp; designers</p>
+          <p class="label"><b>3A</b> · Programmes &amp; designers</p>
           <h3>Systems engineering &amp; design assurance</h3>
+                    <p class="pitch">Interfaces and requirements that are owned, verifiable and sorted at design stage, not in a possession.</p>
+          <details class="more"><summary>What's included</summary>
           <ul>
             <li>Interface management: Interface Management Plan, Interface Control Forms (ICFs) and interface register across INFRA, ENE, CCS and FAC</li>
             <li>Requirements written as give / get: who provides, who receives, what, when, in what format. Traceability and baseline control in DOORS</li>
@@ -522,11 +566,15 @@
             <li>Verification evidence prepared and structured for submission to NoBo / AsBo and TSI interoperability review (the assurance bodies make the assessment)</li>
             <li>Scope boundary definition, RE / SE responsibility split, interface risk and gap analysis at design stage</li>
           </ul>
+          </details>
           <p class="who"><strong>For:</strong> alliances, designers, main contractors and clients on multi-discipline rail programmes, in the UK and Europe</p>
+          <a class="ask" href="mailto:info@sth-ce.com?subject=Enquiry%20-%20Systems%20engineering">Ask about interface &amp; assurance work <span aria-hidden="true">→</span></a>
         </article>
-        <article class="svc">
-          <p class="label"><b>3</b> · Contractors &amp; site teams</p>
+        <article class="svc" id="svc-pway">
+          <p class="label"><b>3B</b> · Contractors &amp; site teams</p>
           <h3>P-Way &amp; civils delivery</h3>
+                    <p class="pitch">Delivery engineering from someone who has set out, possessed and handed back the track himself.</p>
+          <details class="more"><summary>What's included</summary>
           <ul>
             <li>Tender support: delivery methodology, possession strategy, staging and sequencing, plant and logistics, resource and programme</li>
             <li>Buildability review of track and civils designs: plain line and S&amp;C renewals, slab track, platforms, drainage, structures interfaces</li>
@@ -535,7 +583,9 @@
             <li>Completion documentation, handback packs and close-out, done properly first time</li>
             <li>NEC3 / NEC4 and programme awareness (P6, MS Project), so engineering advice lands in the commercial reality of the job</li>
           </ul>
+          </details>
           <p class="who"><strong>For:</strong> contractors and consultancies delivering Network Rail, TfL / DLR and light-rail works</p>
+          <a class="ask" href="mailto:info@sth-ce.com?subject=Enquiry%20-%20P-Way%20and%20civils">Ask about P-Way &amp; civils support <span aria-hidden="true">→</span></a>
         </article>
       </div>
       <div class="cta-row"><a class="btn" href="#contact">Get in touch</a><span>Email is quickest. A paragraph on what, where and when is enough to start.</span></div>
@@ -628,6 +678,10 @@
           </div>
         </article>
 
+      </div>
+      <div class="cta-band">
+        <div><h3>Got a job like one of these?</h3><p>Send a paragraph on what, where and when. I reply within one working day.</p></div>
+        <a class="btn" href="mailto:info@sth-ce.com?subject=Project%20enquiry%20from%20sth-ce.com">Email Steve</a>
       </div>
     </div>
   </section>
@@ -772,7 +826,7 @@
       if(m&&m[1]!=='2000'){countUp(n,parseInt(m[1],10),m[2])}
     });
     if(reduce||!('IntersectionObserver' in window))return;
-    var groups=[['.ways .way',.09],['.services .svc',.07],['.cases .case',.1],['.principles .pr',.1],['.track .stop',.05],['#about .portrait',0],['.strip figure',.08]];
+    var groups=[['.ways .way',.09],['.services .svc',.07],['.cases .case',.1],['.principles .pr',.1],['.track .stop',.05],['#about .portrait',0],['.strip figure',.08],['.gstats .g',.1]];
     var vh=window.innerHeight||800, items=[];
     groups.forEach(function(g){document.querySelectorAll(g[0]).forEach(function(el,i){
       if(el.getBoundingClientRect().top<vh*0.95)return; // already on screen: leave as is
@@ -792,7 +846,8 @@
   var MONO='"IBM Plex Mono", "Courier New", monospace', DISP='"Barlow Condensed", "Arial Narrow", sans-serif';
   // ---------- geometry (metres): u along main line from switch toe, v across (diverging side negative) ----------
   var G=1.435, h=G/2, R=190, uX=Math.sqrt(2*R*G-G*G);
-  function vc(u){return u<=0?0:-(R-Math.sqrt(Math.max(0,R*R-u*u)))}
+  var TA=uX/Math.sqrt(R*R-uX*uX);
+  function vc(u){return u<=0?0:u<=uX?-(R-Math.sqrt(R*R-u*u)):-(G+(u-uX)*TA)}
   var U0=-22, U1=62, segs=[], D='trk';
   function L(a,b,w,k){segs.push({a:a,b:b,w:w||1,k:k||'r',m:(a[0]+b[0])/2,d:D})}
   function P(fn,u0,u1,st,w,k){var p=fn(u0);for(var u=u0+st;u<=u1+1e-6;u+=st){var q=fn(u);L(p,q,w,k);p=q}}
@@ -818,7 +873,7 @@
     if(u<0) q=[[u-bw,-1.3],[u+bw,-1.3],[u+bw,1.3],[u-bw,1.3]];
     else if(u<uX+12){q=[[u-bw,d-1.3],[u+bw,d-1.3],[u+bw,1.3],[u-bw,1.3]];bearerU.push(u)}
     else{ q=[[u-bw,-1.3],[u+bw,-1.3],[u+bw,1.3],[u-bw,1.3]]; for(var i=0;i<4;i++)L(q[i],q[(i+1)%4],0.8,'s');
-      var s=u/R; q=[[u-bw+1.3*s,d-1.3],[u+bw+1.3*s,d-1.3],[u+bw-1.3*s,d+1.3],[u-bw-1.3*s,d+1.3]]; }
+      var s=u<=uX?u/R:TA; q=[[u-bw+1.3*s,d-1.3],[u+bw+1.3*s,d-1.3],[u+bw-1.3*s,d+1.3],[u-bw-1.3*s,d+1.3]]; }
     for(var i=0;i<4;i++)L(q[i],q[(i+1)%4],0.8,'s');
   }
   // ===== ENE: OLE masts, cantilevers, contact wire =====
@@ -908,7 +963,7 @@
   function CO(){return {
     toe: {g:'trk',pt:[0,-h],dx:narrow?-22:-30,dy:narrow?-44:-62,lines:['SWITCH TOE','Ch 0+000'],at:1,c:C1},
     nose:{g:'trk',pt:[uX,-h],dx:narrow?-30:-60,dy:narrow?46:60,lines:['CROSSING NOSE','1 in 8.09 · Ch 0+023.3'],at:uX+1,c:C1},
-    rad: {g:'trk',pt:[44,vc(44)-h],dx:narrow?-20:-40,dy:narrow?-42:-56,lines:['R = 190.000 m'],at:46,c:C1},
+    rad: {g:'trk',pt:[16,vc(16)-h],dx:narrow?-20:-40,dy:narrow?-42:-56,lines:['R = 190.000 m'],at:46,c:C1},
     ole: {g:'ene',pt:[39,6.2,5.8],dx:narrow?-24:30,dy:narrow?-16:-22,lines:narrow?['OLE · ENE']:['OLE MAST · ENE','2-track cantilever'],at:40,c:CI},
     pm:  {g:'ccs',pt:[1.4,-2.35,0.45],dx:narrow?24:56,dy:narrow?26:34,lines:['PM 101 · CCS',ixl.pm],at:3,c:CI},
     ac:  {g:'ccs',pt:[34,vc(34)-h],dx:-30,dy:64,lines:['AXLE COUNTER · T101'],at:35,c:CI,skipN:true},
@@ -946,7 +1001,7 @@
     var ft=fronts.trk; if(ft>41){var al=Math.min(1,(ft-41)/4)*emph('trk'),pa=Pj([40,0.0]),pb=Pj([40,vc(40)]);
       if(pa&&pb){ctx.strokeStyle='rgba(255,255,255,'+(0.55*al)+')';ctx.lineWidth=1;ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(pa[0],pa[1]);ctx.lineTo(pb[0],pb[1]);ctx.stroke();ctx.setLineDash([]);
         [pa,pb].forEach(function(p){ctx.beginPath();ctx.arc(p[0],p[1],2.5,0,6.283);ctx.fillStyle='rgba(255,255,255,'+(0.8*al)+')';ctx.fill()});
-        text('y = 4.258 m',(pa[0]+pb[0])/2+8,(pa[1]+pb[1])/2-6,'rgba(255,255,255,'+(0.9*al)+')',fs,'left')}}
+        text('y = '+(-vc(40)).toFixed(3)+' m',(pa[0]+pb[0])/2+8,(pa[1]+pb[1])/2-6,'rgba(255,255,255,'+(0.9*al)+')',fs,'left')}}
     // signal S15 head
     var fc=fronts.ccs; if(fc>S15[0]){var sh=Pj([S15[0],S15[1],4.4]);if(sh){var scl=Math.max(0.6,Math.min(1.5,16/sh[2])),a2=Math.min(1,(fc-S15[0])/4);
       ctx.fillStyle='rgba(10,18,22,'+(0.95*a2)+')';ctx.strokeStyle='rgba('+CI+','+(0.8*a2)+')';ctx.lineWidth=1;ctx.beginPath();ctx.rect(sh[0]-5*scl,sh[1]-9*scl,10*scl,18*scl);ctx.fill();ctx.stroke();
@@ -976,15 +1031,16 @@
       if(es<0.6)text(T.sub,x,y+subS+10,'rgba(214,224,229,'+(aIn*(1-es/0.6))+')',subS,'left');
     });
     // geometry page readouts follow the track front
-    var xu=Math.max(0,Math.min(U1,ft-1));
+    var xu=Math.max(0,Math.min(uX,ft-1));
     setT(rd.ch,fmtCh(Math.max(U0,Math.min(U1,ft))),'ch');
-    if(ft>0.5){rd.off.classList.add('on');setT(rd.x,xu.toFixed(3),'x');setT(rd.y,(-vc(xu)).toFixed(3)+' m','y')}
+    if(ft>0.5){rd.off.classList.add('on');setT(rd.x,xu.toFixed(3),'x');setT(rd.y,(-vc(xu)).toFixed(3)+' m'+(xu>=uX-1e-9?' = G ✓':''),'y')}
     if(ft>uX)rd.nose.classList.add('on'); if(ft>uX+3)rd.ang.classList.add('on');
     var nb=bearerU.filter(function(u){return u<ft}).length; if(nb>0){rd.brg.classList.add('on');setT(rd.n,String(nb),'n')}
     if(!reduce&&vis)raf=requestAnimationFrame(frame);
   }
   var calcEl=document.querySelector('#precision .calc'), btn=$('pc-replay');
   var SNAP=[].map.call(calcEl.querySelectorAll('*'),function(n){return [n,n.getAttribute('class')]}).concat([[rd.lock,rd.lock.getAttribute('class')]]);
+  if(!reduce)[['pc-x','0.000'],['pc-y','0.000 m'],['pc-n','0'],['pc-v','0 km/h'],['pc-e','0.0 mm'],['pc-d','0.0 mm']].forEach(function(a){var n=$(a[0]);if(n)n.textContent=a[1]});
   var TXT=['pc-ch','pc-x','pc-y','pc-n','pc-v','pc-e','pc-d','pc-lim','ixs1','ixs2','ixs3','ixs4','ixs5','ixs6','ifs1','ifs2','ifs3','ifs4','ifs5','ifs6'].map(function(id){var n=$(id);return [n,n.textContent]});
   function replay(){
     clearInterval(cycle); SNAP.forEach(function(p){if(p[1]===null)p[0].removeAttribute('class');else p[0].setAttribute('class',p[1])});
