@@ -642,15 +642,24 @@
   (function(){
     var svg=document.querySelector('.alignment'); if(!svg)return;
     var rails=svg.querySelectorAll('.rail'), g=svg.querySelector('.sleepers'); if(rails.length<2||!g||!rails[0].getTotalLength)return;
-    var a=rails[0],b=rails[1],la=a.getTotalLength(),lb=b.getTotalLength(),n=64,ns='http://www.w3.org/2000/svg';
-    for(var i=1;i<n;i++){
-      var t=i/n,p=a.getPointAtLength(la*t),q=b.getPointAtLength(lb*t),dx=q.x-p.x,dy=q.y-p.y;
-      var l=document.createElementNS(ns,'line');
-      l.setAttribute('x1',(p.x-dx*0.35).toFixed(1));l.setAttribute('y1',(p.y-dy*0.35).toFixed(1));
-      l.setAttribute('x2',(q.x+dx*0.35).toFixed(1));l.setAttribute('y2',(q.y+dy*0.35).toFixed(1));
-      l.style.setProperty('--sd',(0.15+t*2.4).toFixed(2)+'s');
-      g.appendChild(l);
+    var a=rails[0],b=rails[1],la=a.getTotalLength(),lb=b.getTotalLength(),n=64,ns='http://www.w3.org/2000/svg',lines=[];
+    for(var i=1;i<n;i++){var l=document.createElementNS(ns,'line');l.style.setProperty('--sd',(0.15+(i/n)*2.4).toFixed(2)+'s');g.appendChild(l);lines.push(l)}
+    function layout(){
+      var r=svg.getBoundingClientRect(); if(!r.width||!r.height)return;
+      var sx=r.width/1200, sy=r.height/400;           // viewBox is stretched to the band, so work in screen units
+      for(var i=1;i<n;i++){
+        var t=i/n, p=a.getPointAtLength(la*t), q=b.getPointAtLength(lb*t), p2=a.getPointAtLength(Math.min(la,la*t+4));
+        var tx=(p2.x-p.x)*sx, ty=(p2.y-p.y)*sy, tl=Math.hypot(tx,ty)||1; tx/=tl; ty/=tl;
+        var nx=-ty, ny=tx;                               // screen normal, square to the rail
+        var cx=(p.x+q.x)/2*sx, cy=(p.y+q.y)/2*sy;        // centre between the rails
+        var gap=Math.abs(((q.x-p.x)*sx)*nx+((q.y-p.y)*sy)*ny), half=gap*0.85;
+        var l=lines[i-1];
+        l.setAttribute('x1',((cx-nx*half)/sx).toFixed(2)); l.setAttribute('y1',((cy-ny*half)/sy).toFixed(2));
+        l.setAttribute('x2',((cx+nx*half)/sx).toFixed(2)); l.setAttribute('y2',((cy+ny*half)/sy).toFixed(2));
+      }
     }
+    layout();
+    if(window.ResizeObserver)new ResizeObserver(layout).observe(svg); else window.addEventListener('resize',layout);
   })();
 </script>
 <script>
