@@ -205,6 +205,73 @@
   .svc.lead .body{padding:30px 28px 32px;display:flex;flex-direction:column;gap:14px}
   .svc.lead .pic{min-height:260px;background:var(--dark) center/cover no-repeat}
   @media (max-width:760px){.svc.lead{grid-template-columns:1fr}.svc.lead .pic{min-height:200px;order:-1}}
+  /* ---------- precision band: live turnout design check ---------- */
+  .precision{position:relative;background:#081014;color:#e6ecee;overflow:hidden;isolation:isolate;border-top:1px solid #12232a;border-bottom:1px solid #12232a}
+  .precision canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:-2}
+  .precision::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,rgba(8,16,20,.97) 0%,rgba(8,16,20,.9) 30%,rgba(8,16,20,.35) 52%,rgba(8,16,20,0) 66%)}
+  .precision .wrap{position:relative;min-height:clamp(560px,48vw,700px);display:flex;align-items:center;padding-block:clamp(48px,6vw,80px)}
+  .precision .panel{width:min(100%,430px);display:grid;gap:18px}
+  .precision .label{color:#7f949e}.precision .label b{color:#4fc0e6}
+  .precision h2{font-size:clamp(2.1rem,4vw,3.3rem);color:#f2f5f6}
+  .calc{font-family:var(--mono);font-size:.82rem;line-height:1.55;color:#9fb2ba;border:1px solid #1c3540;background:rgba(6,14,18,.75);padding:14px 16px;display:grid;gap:2px;font-variant-numeric:tabular-nums}
+  .calc .hd{display:flex;justify-content:space-between;color:#5f7a86;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid #1c3540;padding-bottom:8px;margin-bottom:6px}
+  .calc .r{display:grid;grid-template-columns:1fr auto;gap:12px;opacity:.28;transition:opacity .4s ease,color .4s ease}
+  .calc .r.on{opacity:1}
+  .calc .r b{color:#e6ecee;font-weight:500}
+  .calc .r i{font-style:normal;color:#5f7a86}
+  .calc .f{grid-column:1/-1;color:#5f7a86;font-size:.74rem;margin:-2px 0 4px}
+  .calc .stamp{margin-top:8px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid #1c3540;padding-top:8px;opacity:0;transition:opacity .5s ease}
+  .calc .stamp.on{opacity:1}
+  .calc .stamp span{color:#4fc0e6;border:1px solid #4fc0e6;padding:2px 8px;letter-spacing:.14em;font-size:.72rem}
+  .lockup{display:flex;align-items:center;gap:14px;opacity:0;transform:translateY(10px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
+  .lockup.on{opacity:1;transform:none}
+  .lockup .lk-mark{height:44px;width:auto;color:#f2f5f6;flex:none}
+  .lockup .box{width:52px;height:52px;background:var(--accent);color:#fff;font-family:var(--display);font-weight:700;font-size:1.3rem;display:grid;place-items:center;letter-spacing:.02em}
+  .lockup .nm{font-family:var(--display);font-weight:600;font-size:1.35rem;line-height:1.05;text-transform:uppercase;color:#f2f5f6}
+  .lockup .nm small{display:block;font-family:var(--mono);font-weight:400;font-size:.68rem;letter-spacing:.14em;color:#7f949e;margin-top:4px}
+  .precision .note{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;color:#4f6670;text-transform:uppercase}
+  @media (max-width:760px){
+    .precision::before{display:none}
+    .precision canvas{position:relative;height:380px;z-index:0}
+    .precision .wrap{min-height:0;padding-block:40px 28px}
+    .precision .panel{width:100%}
+    .lockup .lk-mark{height:32px}
+    .lockup .nm{font-size:1.05rem}
+    .lockup .nm small{font-size:.6rem}
+  }
+  @media (prefers-reduced-motion:reduce){.calc .r{opacity:1}.calc .stamp,.lockup{opacity:1;transform:none}}
+  /* ---------- motion ---------- */
+  .hero{overflow:hidden;isolation:isolate}
+  .hero-bg{position:absolute;inset:-2%;background:inherit;background-size:cover;background-position:center 40%;z-index:-2;will-change:transform}
+  .hero::before{z-index:-1}
+  .band.dark{overflow:hidden;isolation:isolate}
+  .dark::before{z-index:-1}
+  .alignment{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+  .alignment path{fill:none;stroke:var(--accent);stroke-linecap:round}
+  .alignment .rail{stroke-width:1.5;opacity:.42}
+  .alignment .cl{stroke-width:1;opacity:.35;stroke-dasharray:6 10}
+  .alignment .draw{stroke-dasharray:1;stroke-dashoffset:0}
+  .strip figure img{transform-origin:center}
+  @media (prefers-reduced-motion:no-preference){
+    @keyframes kb{from{transform:scale(1.02) translate(0,0)}to{transform:scale(1.12) translate(-2%,-1.5%)}}
+    .hero-bg{animation:kb 28s ease-in-out infinite alternate}
+    @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+    @keyframes ruleIn{from{width:0}to{width:88px}}
+    .hero .label,.hero h1,.hero .lede,.hero .ctas,.hero .facts{animation:rise .8s cubic-bezier(.2,.7,.2,1) both}
+    .hero h1{animation-delay:.12s}.hero .lede{animation-delay:.28s}.hero .ctas{animation-delay:.42s}.hero .facts{animation-delay:.55s}
+    .hero .rule{animation:ruleIn .9s .2s cubic-bezier(.2,.7,.2,1) both}
+    .rv.pre{opacity:0;transform:translateY(22px)}
+    .rv.in{animation:rise .7s cubic-bezier(.2,.7,.2,1) both;animation-delay:var(--d,0s)}
+    @keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+    .alignment.pre .draw{stroke-dashoffset:1}
+    .alignment.in .draw{animation:draw 2.6s cubic-bezier(.4,0,.2,1) both}
+    .alignment.in .draw.r2{animation-delay:.15s}.alignment.in .cl{animation:rise 1s 1.6s both}
+    @keyframes drift{from{transform:scale(1)}to{transform:scale(1.08)}}
+    .strip figure img{animation:drift 14s ease-in-out infinite alternate}
+    .strip figure:nth-child(2) img{animation-delay:-5s}.strip figure:nth-child(3) img{animation-delay:-9s}
+    .way,.svc,.case{transition:transform .2s ease,box-shadow .2s ease}
+    .way:hover,.case:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.08)}
+  }
   @media (prefers-reduced-motion:no-preference){.btn,.copy{transition:background .15s,color .15s,filter .15s}}
 </style>
 <script type="application/ld+json">
@@ -232,6 +299,7 @@
 
 <main id="top">
   <section class="hero" style="background-image:url('images/hero-tunnel.jpg')">
+    <div class="hero-bg" aria-hidden="true"></div>
     <div class="wrap grid">
       <div>
         <p class="label"><b>STH-CE</b> · Business development &amp; engineering consultancy</p>
@@ -258,6 +326,29 @@
     <figure><img loading="lazy" src="images/strip-setting-out.jpg" alt="Total station set up over DLR track with Canary Wharf behind"><figcaption>Setting out, DLR at Canary Wharf</figcaption></figure>
     <figure><img loading="lazy" src="images/strip-crane.jpg" alt="Lorry-mounted crane working over a viaduct during a night possession"><figcaption>Night possession: crane access and logistics</figcaption></figure>
   </div>
+
+  <section class="precision" id="precision" aria-label="Precision in every detail: a turnout geometry check drawn live">
+    <div class="wrap">
+      <div class="panel">
+        <p class="label"><b>Design check</b> · Turnout geometry</p>
+        <h2>Precision in every detail.</h2>
+        <div class="calc" aria-live="off">
+          <div class="hd"><span>Diverging route · illustrative</span><span id="pc-ch">Ch 0+000.0</span></div>
+          <div class="r on"><span>Radius <i>R</i></span><b>190.000 m</b></div>
+          <div class="r on"><span>Track gauge <i>G</i></span><b>1435 mm</b></div>
+          <div class="r" id="pc-off"><span>Offset at <i>x</i> = <span id="pc-x">0.000</span> m</span><b id="pc-y">0.000 m</b></div>
+          <div class="f">y = R − √(R² − x²)</div>
+          <div class="r" id="pc-nose"><span>Crossing nose</span><b>x = 23.308 m</b></div>
+          <div class="f">x = √(2RG − G²)</div>
+          <div class="r" id="pc-ang"><span>Crossing angle</span><b>7.05° · 1 in 8.09</b></div>
+          <div class="r" id="pc-brg"><span>Bearers @ 650 mm</span><b id="pc-n">0</b></div>
+          <div class="stamp" id="pc-stamp"><em class="note">Geometry consistent</em><span>Checked</span></div>
+        </div>
+        <div class="lockup" id="pc-lock" aria-hidden="true"><svg class="lk-mark" viewBox="0 0 1064 323" aria-hidden="true"><path fill="#0E6A8A" d="M16.0,66.0L16.0,66.0Q16.0,0.0 88.0,0.0L780.0,0.0Q791.0,0.0 798.0,10.0L867.0,107.0L784.0,107.0L753.0,66.0ZM16.0,86.0L89.0,86.0Q98.0,86.0 102.0,96.0Q106.0,108.0 120.0,108.0L295.0,108.0Q387.0,108.0 387.0,192.0L387.0,208.0Q387.0,283.0 298.0,283.0L0.0,283.0L31.0,224.0L295.0,224.0Q312.0,224.0 312.0,206.0L312.0,192.0Q312.0,174.0 295.0,174.0L77.0,174.0Q17.0,174.0 17.0,116.0Z"/><path fill="currentColor" d="M414.0,84.0L616.0,84.0L616.0,108.0L552.0,108.0L552.0,283.0L473.0,283.0L473.0,108.0L414.0,108.0ZM676.0,84.0L735.0,84.0L754.0,110.0L754.0,126.0L946.0,126.0L946.0,0.0L1024.0,0.0L1024.0,283.0L946.0,283.0L946.0,185.0L754.0,185.0L754.0,283.0L676.0,283.0Z"/></svg><div class="nm">Construction &amp; Engineering<small>Design · Assurance · Delivery</small></div></div>
+      </div>
+    </div>
+    <canvas id="turnout" aria-hidden="true"></canvas>
+  </section>
 
   <section class="band" id="services">
     <div class="wrap">
@@ -353,6 +444,11 @@
   </section>
 
   <section class="band dark" id="approach" style="background-image:url('images/approach-night-portal.jpg')">
+    <svg class="alignment" viewBox="0 0 1200 400" preserveAspectRatio="none" aria-hidden="true">
+      <path class="rail draw" pathLength="1" d="M-20 330 C 260 330, 420 300, 600 220 S 960 80, 1220 70"/>
+      <path class="rail draw r2" pathLength="1" d="M-20 352 C 262 352, 426 322, 608 242 S 966 102, 1220 92"/>
+      <path class="cl" d="M-20 341 C 261 341, 423 311, 604 231 S 963 91, 1220 81"/>
+    </svg>
     <div class="wrap">
       <p class="label"><b>02</b> · How I work</p>
       <h2 style="margin-top:12px">Correct on paper is not the same as right on site.</h2>
@@ -530,5 +626,158 @@
   })();
 </script>
 
+
+<script>
+  (function(){
+    var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // count-up on the hero figures
+    function countUp(el,to,suffix){
+      if(reduce){return}
+      var t0=null,dur=1400;
+      function step(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/dur);var e=1-Math.pow(1-p,3);el.textContent=Math.round(to*e)+suffix;if(p<1)requestAnimationFrame(step)}
+      el.textContent='0'+suffix;setTimeout(function(){requestAnimationFrame(step)},600);
+    }
+    document.querySelectorAll('.hero .fact .n').forEach(function(n){
+      var m=n.textContent.trim().match(/^(\d+)(\D*)$/);
+      if(m&&m[1]!=='2000'){countUp(n,parseInt(m[1],10),m[2])}
+    });
+    if(reduce||!('IntersectionObserver' in window))return;
+    var groups=[['.ways .way',.09],['.services .svc',.07],['.cases .case',.1],['.principles .pr',.1],['.track .stop',.05],['#about .portrait',0],['.strip figure',.08]];
+    var vh=window.innerHeight||800, items=[];
+    groups.forEach(function(g){document.querySelectorAll(g[0]).forEach(function(el,i){
+      if(el.getBoundingClientRect().top<vh*0.95)return; // already on screen: leave as is
+      el.classList.add('rv','pre');el.style.setProperty('--d',(i*g[1]).toFixed(2)+'s');items.push(el);
+    })});
+    var al=document.querySelector('.alignment'); if(al&&al.getBoundingClientRect().top>vh*0.95){al.classList.add('pre');items.push(al)}else if(al){al.classList.add('in')}
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.remove('pre');e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px',threshold:0.05});
+    items.forEach(function(el){io.observe(el)});
+  })();
+</script>
+<script>
+(function(){
+  var cv=document.getElementById('turnout'); if(!cv||!cv.getContext)return;
+  var band=document.getElementById('precision'), ctx=cv.getContext('2d');
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var C1='79,192,230', CT='159,178,186';
+  var MONO='"IBM Plex Mono", "Courier New", monospace';
+  // ---------- geometry (metres): u along main line from switch toe, v across (diverging side negative) ----------
+  var G=1.435, h=G/2, R=190, uX=Math.sqrt(2*R*G-G*G);
+  function vc(u){return u<=0?0:-(R-Math.sqrt(Math.max(0,R*R-u*u)))}
+  var U0=-22, U1=62;
+  var segs=[];
+  function L(a,b,w,k){segs.push({a:a,b:b,w:w||1,k:k||'r',m:(a[0]+b[0])/2})}
+  function P(fn,u0,u1,st,w,k){var p=fn(u0);for(var u=u0+st;u<=u1+1e-6;u+=st){var q=fn(u);L(p,q,w,k);p=q}}
+  var e=0.036;
+  // main line: right rail continuous; left rail broken at the crossing
+  [-e,e].forEach(function(d){
+    P(function(u){return [u,h+d]},U0,U1,2,1.1);
+    P(function(u){return [u,-h+d]},U0,uX-0.5,2,1.1); P(function(u){return [u,-h+d]},uX+0.8,U1,2,1.1);
+    P(function(u){return [u,vc(u)-h+d]},0,U1,1,1.1);                           // diverging outer rail
+    P(function(u){return [u,vc(u)+h+d]},0.0,uX-0.5,1,1.1); P(function(u){return [u,vc(u)+h+d]},uX+0.8,U1,1,1.1); // diverging inner
+  });
+  // switch rails, crossing V, wing and check rails
+  P(function(u){return [u,vc(u)+h-0.075]},0.2,10,0.5,2,'b'); P(function(u){return [u,-h+0.075]},0.2,10,0.5,2,'b');
+  L([uX-0.5,-h],[uX+3.2,-h],2,'b'); L([uX-0.5,vc(uX-0.5)+h],[uX+3.2,vc(uX+3.2)+h],2,'b');
+  L([uX-3.5,-h-0.1],[uX+0.3,-h-0.1],1.4,'b'); L([uX-3.5,vc(uX-3.5)+h+0.1],[uX+0.3,vc(uX+0.3)+h+0.1],1.4,'b');
+  L([uX-4,h-0.13],[uX+2.2,h-0.13],1.5,'b'); L([uX-4,vc(uX-4)-h+0.13],[uX+2.2,vc(uX+2.2)-h+0.13],1.5,'b');
+  // adjacent running line at 4.0 m track centres
+  var T2=4.0;
+  [-e,e].forEach(function(d){P(function(u){return [u,T2-h+d]},U0,U1,2,1.1);P(function(u){return [u,T2+h+d]},U0,U1,2,1.1)});
+  for(var u2=U0;u2<=U1;u2+=0.65){var q2=[[u2-0.12,T2-1.3],[u2+0.12,T2-1.3],[u2+0.12,T2+1.3],[u2-0.12,T2+1.3]];for(var j=0;j<4;j++)L(q2[j],q2[(j+1)%4],0.8,'s')}
+  // bearers / sleepers
+  var sp=0.65,bw=0.12,nB=0,bearerU=[];
+  for(var u=U0;u<=U1;u+=sp){
+    var d=vc(u),q;
+    if(u<0) q=[[u-bw,-1.3],[u+bw,-1.3],[u+bw,1.3],[u-bw,1.3]];
+    else if(u<uX+12){q=[[u-bw,d-1.3],[u+bw,d-1.3],[u+bw,1.3],[u-bw,1.3]];bearerU.push(u)}
+    else{
+      q=[[u-bw,-1.3],[u+bw,-1.3],[u+bw,1.3],[u-bw,1.3]];
+      for(var i=0;i<4;i++)L(q[i],q[(i+1)%4],0.8,'s');
+      var s=u/R; q=[[u-bw+1.3*s,d-1.3],[u+bw+1.3*s,d-1.3],[u+bw-1.3*s,d+1.3],[u-bw-1.3*s,d+1.3]];
+    }
+    for(var i=0;i<4;i++)L(q[i],q[(i+1)%4],0.8,'s');
+  }
+  // chainage ticks (right of main line)
+  var ticks=[]; for(var c=-20;c<=60;c+=10){ticks.push(c);L([c,5.9],[c,6.5],1,'t')}
+  L([U0,6.2],[U1,6.2],0.7,'t');
+  // ---------- camera ----------
+  var W=0,H=0,dpr=1,narrow=false;
+  function size(){var r=cv.getBoundingClientRect();dpr=Math.min(2,window.devicePixelRatio||1);W=r.width;H=r.height;cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);narrow=W<760}
+  function camera(t){
+    var dr=reduce?0:Math.sin(t/8000)*1.6;
+    var Cm=narrow?[-6+dr,-11,13]:[-8+dr,-12,11.5], T=narrow?[20,0,0]:[22,-0.5,0];
+    var f=[T[0]-Cm[0],T[1]-Cm[1],T[2]-Cm[2]],fl=Math.hypot(f[0],f[1],f[2]);f=[f[0]/fl,f[1]/fl,f[2]/fl];
+    var r=[f[1],-f[0],0],rl=Math.hypot(r[0],r[1]);r=[r[0]/rl,r[1]/rl,0];
+    var up=[r[1]*f[2]-r[2]*f[1],r[2]*f[0]-r[0]*f[2],r[0]*f[1]-r[1]*f[0]];
+    var foc=narrow?W*1.1:Math.min(W,H*1.9)*1.2, cx=narrow?W*0.5:W*0.66, cy=narrow?H*0.52:H*0.5;
+    return function(p){var d=[p[0]-Cm[0],p[1]-Cm[1],(p[2]||0)-Cm[2]];var z=d[0]*f[0]+d[1]*f[1]+d[2]*f[2];if(z<0.6)return null;
+      var x=d[0]*r[0]+d[1]*r[1];var y=d[0]*up[0]+d[1]*up[1]+d[2]*up[2];return [cx+foc*x/z,cy-foc*y/z,z]};
+  }
+  // ---------- readouts ----------
+  var $=function(id){return document.getElementById(id)};
+  var rd={ch:$('pc-ch'),x:$('pc-x'),y:$('pc-y'),n:$('pc-n'),off:$('pc-off'),nose:$('pc-nose'),ang:$('pc-ang'),brg:$('pc-brg'),stamp:$('pc-stamp'),lock:$('pc-lock')};
+  function fmtCh(u){var s=u<0?'−':'';u=Math.abs(u);var k=Math.floor(u/1000);return 'Ch '+s+k+'+'+('000'+(u-k*1000).toFixed(1)).slice(-5)}
+  var last={};
+  function setT(el,v,key){if(last[key]!==v){last[key]=v;el.textContent=v}}
+  // ---------- draw ----------
+  var start=null, DUR=6000, vis=false, raf=0, done=false;
+  function text(s,x,y,col,size,align){ctx.font='500 '+size+'px '+MONO;ctx.fillStyle=col;ctx.textAlign=align||'left';ctx.fillText(s,x,y)}
+  function frame(t){
+    if(start===null)start=t; var el=reduce?1e9:t-start;
+    var Pj=camera(t); ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,W,H);
+    var k=Math.min(1,Math.max(0,(el-300)/DUR)), ke=1-Math.pow(1-k,2.2);
+    var front=U0+(U1-U0+6)*ke;
+    var pulse=done&&!reduce?U0+(((el-DUR)/55)%(U1-U0+30)):-999;
+    ctx.lineCap='round';
+    for(var i=0;i<segs.length;i++){var s=segs[i],A=Pj(s.a),B=Pj(s.b);if(!A||!B)continue;
+      var df=Math.max(0.2,Math.min(1,1.5-A[2]/60)),a;
+      if(s.m>front)a=0.05*df;
+      else{var near=Math.max(0,1-(front-s.m)/5);a=(s.k==='s'?0.5:s.k==='t'?0.45:0.92)*df+near*0.45;
+        var pd=Math.abs(s.m-pulse);if(pd<3.5&&s.k!=='s'&&s.k!=='t')a+=0.45*(1-pd/3.5)}
+      ctx.strokeStyle='rgba('+(s.k==='t'?CT:C1)+','+Math.min(1,a).toFixed(3)+')';
+      ctx.lineWidth=s.w*(0.55+0.95*Math.min(1,16/A[2]));
+      ctx.beginPath();ctx.moveTo(A[0],A[1]);ctx.lineTo(B[0],B[1]);ctx.stroke();
+    }
+    // chainage labels
+    var fs=narrow?9:10.5;
+    ticks.forEach(function(c){if(c>front)return;var p=Pj([c,7.0]);if(!p)return;text((c<0?'−':'')+'0+'+('000'+Math.abs(c)).slice(-3),p[0],p[1],'rgba('+CT+',.75)',fs,'center')});
+    // callouts
+    function callout(pt,dx,dy,lines,showAt){if(front<showAt)return;var p=Pj(pt);if(!p)return;var al=Math.min(1,(front-showAt)/4);
+      ctx.strokeStyle='rgba('+CT+','+(0.6*al)+')';ctx.lineWidth=1;ctx.beginPath();ctx.arc(p[0],p[1],3.5,0,6.283);ctx.moveTo(p[0],p[1]);ctx.lineTo(p[0]+dx,p[1]+dy);ctx.lineTo(p[0]+dx+(dx<0?-60:60),p[1]+dy);ctx.stroke();
+      lines.forEach(function(l,j){text(l,p[0]+dx+(dx<0?-60:0),p[1]+dy-6+j*(fs+4)+ (j?8:0),'rgba('+(j?CT:C1)+','+al+')',fs,'left')})}
+    callout([0,-h],narrow?-40:-70,narrow?-38:-52,['SWITCH TOE','Ch 0+000'],1);
+    callout([uX,-h],narrow?-30:-60,narrow?46:60,['CROSSING NOSE','1 in 8.09 · Ch 0+023.3'],uX+1);
+    callout([44,vc(44)-h],narrow?-20:-40,narrow?-42:-56,['R = 190.000 m'],46);
+    // offset dimension at x = 40
+    if(front>41){var al=Math.min(1,(front-41)/4),pa=Pj([40,0.0]),pb=Pj([40,vc(40)]);
+      if(pa&&pb){ctx.strokeStyle='rgba(255,255,255,'+(0.55*al)+')';ctx.lineWidth=1;ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(pa[0],pa[1]);ctx.lineTo(pb[0],pb[1]);ctx.stroke();ctx.setLineDash([]);
+        [pa,pb].forEach(function(p){ctx.beginPath();ctx.arc(p[0],p[1],2.5,0,6.283);ctx.fillStyle='rgba(255,255,255,'+(0.8*al)+')';ctx.fill()});
+        text('y = 4.258 m',(pa[0]+pb[0])/2+8,(pa[1]+pb[1])/2-6,'rgba(255,255,255,'+(0.9*al)+')',fs,'left')}}
+    // survey crosshair on the draw front
+    if(!done||reduce){var cu=Math.min(U1,Math.max(0,front-1)),pc=Pj([cu,vc(cu)]);
+      if(pc&&k<1){ctx.strokeStyle='rgba(255,255,255,.75)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pc[0]-12,pc[1]);ctx.lineTo(pc[0]+12,pc[1]);ctx.moveTo(pc[0],pc[1]-12);ctx.lineTo(pc[0],pc[1]+12);ctx.stroke();
+        ctx.beginPath();ctx.arc(pc[0],pc[1],6,0,6.283);ctx.stroke();
+        var E=601245.312+cu*0.874, N=160418.904+cu*0.486+vc(cu)*0.874;
+        text('E '+E.toFixed(3),pc[0]+14,pc[1]-16,'rgba(255,255,255,.85)',fs,'left');text('N '+N.toFixed(3),pc[0]+14,pc[1]-16+fs+3,'rgba(255,255,255,.85)',fs,'left')}}
+    // calc sheet
+    var xu=Math.max(0,Math.min(U1,front-1));
+    setT(rd.ch,fmtCh(Math.max(U0,Math.min(U1,front))),'ch');
+    if(front>0.5){rd.off.classList.add('on');setT(rd.x,xu.toFixed(3),'x');setT(rd.y,(-vc(xu)).toFixed(3)+' m','y')}
+    if(front>uX){rd.nose.classList.add('on')} if(front>uX+3){rd.ang.classList.add('on')}
+    var nb=bearerU.filter(function(u){return u<front}).length; if(nb>0){rd.brg.classList.add('on');setT(rd.n,String(nb),'n')}
+    if(k>=1&&!done){done=true;rd.stamp.classList.add('on');setTimeout(function(){rd.lock.classList.add('on')},500)}
+    if(!reduce&&vis)raf=requestAnimationFrame(frame);
+  }
+  function go(){cancelAnimationFrame(raf);raf=requestAnimationFrame(frame)}
+  size();
+  var ro=window.ResizeObserver?new ResizeObserver(function(){size();if(reduce||!vis)requestAnimationFrame(frame)}):null; if(ro)ro.observe(cv);
+  if(reduce||!('IntersectionObserver' in window)){vis=true;requestAnimationFrame(frame);return}
+  var played=false;
+  new IntersectionObserver(function(es){es.forEach(function(e){vis=e.isIntersecting;
+    if(vis){if(!played){played=true;start=null}go()}else cancelAnimationFrame(raf)})},{threshold:0.3}).observe(band);
+  document.addEventListener('visibilitychange',function(){if(document.hidden)cancelAnimationFrame(raf);else if(vis)go()});
+  requestAnimationFrame(frame);
+})();
+</script>
 </body>
 </html>
