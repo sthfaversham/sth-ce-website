@@ -349,6 +349,78 @@
   @media (prefers-reduced-motion:no-preference){.btn::after{transition:transform .45s cubic-bezier(.2,.7,.2,1)}}
   .btn:hover::after,.btn:focus-visible::after,.btn:active::after{transform:scaleX(1)}
   @media (prefers-reduced-motion:no-preference){.btn,.copy{transition:background .15s,color .15s,filter .15s}}
+
+  /* ===== 3D turnout experience ===== */
+  .xp{position:relative;height:640vh;background:#061019;color:#e6f1f4}
+  .xp-sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;
+    background:radial-gradient(ellipse at 65% 45%,rgba(30,110,140,.22),transparent 60%),
+      repeating-linear-gradient(0deg,rgba(79,192,230,.05) 0 1px,transparent 1px 64px),
+      repeating-linear-gradient(90deg,rgba(79,192,230,.05) 0 1px,transparent 1px 64px),#061019}
+  #xp-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity .8s ease}
+  .xp-ready #xp-canvas{opacity:1}
+  .xp-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+  .xp-labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .xp-label{position:absolute;left:0;top:0;opacity:0;white-space:nowrap;font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:#d7f3fa;will-change:transform,opacity}
+  .xp-label::before{content:"";position:absolute;left:-4px;top:-4px;width:8px;height:8px;border-radius:50%;background:#4fd3f0;box-shadow:0 0 12px #4fd3f0}
+  .xp-label{text-shadow:0 1px 8px #061019}
+  .xp-label.flip{translate:calc(-100% - 20px) 0;border-left:0;border-right:1px solid rgba(79,211,240,.7)}
+  .xp-label.flip::before{left:auto;right:-14px}
+  .xp-label{margin:-26px 0 0 10px;border-left:1px solid rgba(79,211,240,.7);padding:2px 8px;background:rgba(6,16,25,.62)}
+  .xp-veil{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(6,16,25,.9) 0%,rgba(6,16,25,.72) 34%,rgba(6,16,25,0) 62%);opacity:var(--veil,1)}
+  @media (max-width:760px){.xp-veil{background:linear-gradient(180deg,rgba(6,16,25,.92) 0%,rgba(6,16,25,.7) 42%,rgba(6,16,25,0) 66%)}}
+  .xp-stages{position:absolute;inset:0;display:grid;align-items:center;padding:96px max(20px,calc((100% - 1100px)/2)) 110px;pointer-events:none}
+  .xp-stage{grid-area:1/1;max-width:500px;pointer-events:auto;opacity:0;visibility:hidden;text-shadow:0 2px 26px rgba(6,16,25,.95)}
+  .xp-stage.xp-hero{max-width:640px;opacity:1;visibility:visible}
+  .xp .label{color:#9fb6bf}.xp .label b{color:#4fc0e6}
+  .xp .rule{background:#4fc0e6}
+  .xp h1{color:#f3f6f6;font-size:clamp(2.4rem,5vw,4.3rem)}
+  .xp h2{color:#f3f6f6;margin-top:12px}
+  .xp-stage>p:not(.label){color:#c9d6da;font-size:1.06rem;margin-top:14px}
+  .xp .lede{color:#cdd8dc;margin-top:20px;max-width:56ch}
+  .xp .btn.ghost{color:#f3f4f2;border-color:#f3f4f2}
+  .xp .ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+  .xp-cue{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#7fa3ae !important;margin-top:30px !important}
+  .xp-cue span{display:inline-block;margin-left:6px;color:#4fc0e6}
+  @media (prefers-reduced-motion:no-preference){.xp-cue span{animation:xpcue 1.6s ease-in-out infinite}@keyframes xpcue{50%{transform:translateY(5px)}}}
+  .xp-stage.xp-services{max-width:1100px}
+  .xp-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0 22px}
+  .xp-cards a{display:flex;flex-direction:column;gap:8px;padding:18px 18px 20px;text-decoration:none;color:#e6f1f4;background:rgba(6,16,25,.74);border:1px solid rgba(79,192,230,.32);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);text-shadow:none;transition:border-color .2s,transform .2s}
+  .xp-cards a:hover,.xp-cards a:focus-visible{border-color:#4fc0e6;transform:translateY(-2px)}
+  .xp-cards span{font-family:var(--mono);font-size:.72rem;color:#4fc0e6}
+  .xp-cards b{font-family:var(--display);font-size:1.35rem;font-weight:600;line-height:1.05}
+  .xp-cards i{font-style:normal;color:#b9c9ce;font-size:.92rem}
+  .xp-hud{position:absolute;left:max(20px,calc((100% - 1100px)/2));right:max(20px,calc((100% - 1100px)/2));bottom:22px;display:flex;align-items:center;gap:16px;font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:#9fb6bf}
+  .xp-stagenum{white-space:nowrap;min-width:16ch}
+  .xp-bar{flex:1;height:2px;background:rgba(159,182,191,.2)}
+  .xp-bar i{display:block;height:100%;background:#4fc0e6;transform-origin:left center;transform:scaleX(0)}
+  .xp-dots{display:flex;gap:6px}
+  .xp-dots button{font:inherit;color:#9fb6bf;background:transparent;border:1px solid rgba(159,182,191,.35);padding:5px 7px;cursor:pointer}
+  .xp-dots button[aria-current="step"]{color:#061019;background:#4fc0e6;border-color:#4fc0e6}
+  .xp-skip{color:#e6f1f4;text-decoration:none;border:1px solid rgba(230,241,244,.5);padding:5px 10px;white-space:nowrap}
+  .xp-skip:hover,.xp-skip:focus-visible{border-color:#4fc0e6;color:#4fc0e6}
+  .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .xp-concept{position:absolute;right:max(20px,calc((100% - 1100px)/2));bottom:58px;margin:0;font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(159,182,191,.75)}
+  @media (max-width:760px){
+    .xp{height:560vh}
+    .xp-stages{align-items:start;padding:84px 18px 96px}
+    .xp-stage h1{font-size:clamp(2.1rem,9vw,2.9rem)}
+    .xp .lede{font-size:.98rem}
+    .xp-cards{grid-template-columns:1fr;gap:8px;margin:16px 0}
+    .xp-cards a{padding:12px 14px}
+    .xp-cards i{display:none}
+    .xp-dots{display:none}
+    .xp-concept{top:auto;bottom:52px;left:18px;right:18px}
+    .xp-hud{bottom:16px;gap:12px}
+  }
+  /* static presentation: reduced motion, no WebGL, or script failure */
+  .xp-static{height:auto}
+  .xp-static .xp-sticky{position:relative;height:auto;min-height:100svh}
+  .xp-static #xp-canvas,.xp-static .xp-labels,.xp-static .xp-dots,.xp-static .xp-bar,.xp-static .xp-stagenum,.xp-static .xp-cue{display:none}
+  .xp-static .xp-poster{display:block;opacity:.38}
+  .xp-static .xp-stages{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:56px}
+  .xp-static .xp-stage{opacity:1 !important;visibility:visible !important;transform:none !important}
+  .xp-static .xp-hud{position:relative;left:auto;right:auto;bottom:auto;padding:0 max(20px,calc((100% - 1100px)/2)) 32px}
+  .xp-static .xp-concept{position:relative;top:auto;right:auto;padding:0 max(20px,calc((100% - 1100px)/2)) 24px}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"ProfessionalService","name":"STH Construction & Engineering Ltd","url":"https://www.sth-ce.com/","logo":"https://www.sth-ce.com/sth-logo.png","email":"info@sth-ce.com","founder":{"@type":"Person","name":"Steve Horrigan","jobTitle":"Director","sameAs":"https://www.linkedin.com/in/steve-horrigan-a9b5ab60/"},"address":{"@type":"PostalAddress","addressLocality":"Faversham","addressRegion":"Kent","addressCountry":"GB"},"areaServed":["United Kingdom","Europe"],"description":"Business development advisory, tender support and railway engineering consultancy for rail and civils contractors, programmes and clients."}
@@ -375,27 +447,64 @@
 </header>
 
 <main id="top">
-  <section class="hero" style="background-image:url('images/hero-ctrl-viaduct.jpg')">
-    <div class="hero-bg" aria-hidden="true"></div>
-    <div class="wrap grid">
-      <div>
-        <p class="label"><b>STH-CE</b> · Business development &amp; engineering consultancy</p>
-        <div class="rule"></div>
-        <h1>Growth and work-winning support for rail and civils contractors.</h1>
-        <p class="lede" style="margin-top:22px">Business and growth advisory for contractor owners. Tender and commercial support. Railway engineering, interface management and design assurance for programmes and clients. From someone who has priced the work, won it and run the company that delivered it.</p>
-        <div class="ctas">
-          <a class="btn" href="#contact">Talk to Steve</a>
-          <a class="btn ghost" href="#services">What I do</a>
+  <section class="xp" id="xp" aria-label="Interactive concept visualisation: a railway turnout assembled as you scroll">
+    <div class="xp-sticky">
+      <canvas id="xp-canvas" aria-hidden="true"></canvas>
+      <img class="xp-poster" src="images/xp-poster.jpg" alt="Concept visualisation of a railway turnout: concrete bearers, steel rails, switch blades and crossing on ballast" loading="lazy">
+      <div class="xp-veil" aria-hidden="true"></div>
+      <div class="xp-labels" aria-hidden="true"></div>
+      <div class="xp-stages">
+        <div class="xp-stage xp-hero" data-from="0" data-to="0.17">
+          <p class="label"><b>STH-CE</b> · Business development &amp; engineering consultancy</p>
+          <div class="rule"></div>
+          <h1>Growth and work-winning support for rail and civils contractors.</h1>
+          <p class="lede">Business and growth advisory for contractor owners. Tender and commercial support. Railway engineering, interface management and design assurance for programmes and clients. From someone who has priced the work, won it and run the company that delivered it.</p>
+          <div class="ctas">
+            <a class="btn" href="#contact">Discuss your project</a>
+            <a class="btn ghost" href="#services">What I do</a>
+          </div>
+          <p class="xp-cue" aria-hidden="true">Scroll to build the railway <span>↓</span></p>
+        </div>
+        <div class="xp-stage" data-from="0.19" data-to="0.37">
+          <p class="label"><b>01</b> · Setting out &amp; bearers</p>
+          <h2>Every bearer in the right place.</h2>
+          <p>Setting out comes first. Then the bearers go down in sequence, square to the main line and lengthening through the turnout.</p>
+        </div>
+        <div class="xp-stage" data-from="0.39" data-to="0.6">
+          <p class="label"><b>02</b> · Rails, switch &amp; crossing</p>
+          <h2>Steel goes in, in order.</h2>
+          <p>Stock rails, switch blades, closure rails, the crossing and check rails, then baseplates and fastenings. A build sequence a site team would recognise.</p>
+        </div>
+        <div class="xp-stage" data-from="0.62" data-to="0.83">
+          <p class="label"><b>03</b> · Checked in 3D</p>
+          <h2>Correct on paper. Right on site.</h2>
+          <p>Seeing the build in three dimensions is where access, sequencing and interface problems get caught: in a meeting, not in a possession.</p>
+        </div>
+        <div class="xp-stage xp-services" data-from="0.86" data-to="1">
+          <p class="label"><b>04</b> · How STH helps</p>
+          <h2>Engineering expertise. Commercial sense.</h2>
+          <div class="xp-cards">
+            <a href="#svc-growth"><span>1</span><b>Business growth &amp; leadership advisory</b><i>Structure, numbers, work-winning and commercial oversight for owner-run contractors.</i></a>
+            <a href="#svc-bid"><span>2</span><b>Tendering &amp; commercial support</b><i>Bid / no-bid, methodology, programme, pricing logic and independent challenge.</i></a>
+            <a href="#svc-se"><span>3</span><b>Rail engineering &amp; technical assurance</b><i>Interfaces, requirements, design and buildability reviews, P-Way and civils delivery.</i></a>
+          </div>
+          <a class="btn" href="#contact">Discuss your project</a>
         </div>
       </div>
-      <div class="facts" aria-label="Track record">
-        <div class="fact"><div class="n">25+</div><div class="t">years in UK rail and civils</div></div>
-        <div class="fact"><div class="n">12 yrs</div><div class="t">running a rail contractor as MD</div></div>
-        <div class="fact"><div class="n">2000</div><div class="t">on the railway since CTRL Phase 1</div></div>
-        <div class="fact"><div class="n">MD</div><div class="t">Former MD of a Network Rail Principal Contractor</div></div>
+      <div class="xp-hud" aria-hidden="false">
+        <div class="xp-stagenum" aria-live="off">01 / 05 · Design</div>
+        <div class="xp-bar" aria-hidden="true"><i></i></div>
+        <div class="xp-dots" role="group" aria-label="Jump to a stage">
+          <button type="button" data-p="0" aria-label="Design">01</button>
+          <button type="button" data-p="0.27" aria-label="Bearers">02</button>
+          <button type="button" data-p="0.5" aria-label="Rails, switch and crossing">03</button>
+          <button type="button" data-p="0.74" aria-label="3D model">04</button>
+          <button type="button" data-p="0.95" aria-label="Services">05</button>
+        </div>
+        <a class="xp-skip" href="#growth">Skip <span aria-hidden="true">↓</span><span class="vh"> the animation</span></a>
       </div>
+      <p class="xp-concept">Concept visualisation · illustrative geometry · not for construction</p>
     </div>
-    <span class="credit">New track, CTRL St Pancras approach viaduct</span>
   </section>
 
   <div class="strip" aria-label="Site photographs">
@@ -404,76 +513,7 @@
     <figure><img loading="lazy" src="images/strip-vacuum.jpg" alt="Road-rail vacuum excavator working under the overhead line during a possession"><figcaption>Vacuum excavation under the overhead line</figcaption></figure>
   </div>
 
-  <section class="precision" id="precision" aria-label="Precision in every detail: a turnout geometry check drawn live">
-    <div class="wrap">
-      <div class="panel">
-        <p class="label"><b>Design check</b> · Turnout geometry</p>
-        <h2>Precision in every detail.</h2>
-        <div class="calc" aria-live="off">
-          <div class="hd"><span>Diverging route · illustrative</span><span id="pc-ch">Ch 0+000.0</span></div>
-          <div class="tabs" role="tablist" aria-label="Design check pages">
-            <button type="button" role="tab" id="tb-geo" aria-selected="true">Geometry</button>
-            <button type="button" role="tab" id="tb-cant" aria-selected="false">Cant</button>
-            <button type="button" role="tab" id="tb-ixl" aria-selected="false">Interlocking</button>
-            <button type="button" role="tab" id="tb-ifc" aria-selected="false">Interfaces</button>
-          </div>
-          <div class="pages">
-            <div class="pg act" id="pg-geo">
-          <div class="r on"><span>Radius <i>R</i></span><b>190.000 m</b></div>
-          <div class="r on"><span>Track gauge <i>G</i></span><b>1435 mm</b></div>
-          <div class="r" id="pc-off"><span>Offset at <i>x</i> = <span id="pc-x">23.308</span> m</span><b id="pc-y">1.435 m = G ✓</b></div>
-          <div class="f">y = R − √(R² − x²)</div>
-          <div class="r" id="pc-nose"><span>Crossing nose</span><b>x = 23.308 m</b></div>
-          <div class="f">x = √(2RG − G²)</div>
-          <div class="r" id="pc-ang"><span>Crossing angle</span><b>7.05° · 1 in 8.09</b></div>
-          <div class="r" id="pc-brg"><span>Bearers @ 650 mm</span><b id="pc-n">55</b></div>
-            </div>
-            <div class="pg" id="pg-cant">
-              <div class="r" id="cn-v"><span>Diverging speed <i>V</i></span><b id="pc-v">40 km/h</b></div>
-              <div class="r" id="cn-e"><span>Equilibrium cant <i>E</i></span><b id="pc-e">99.5 mm</b></div>
-              <div class="f">E = 11.82 · V² / R</div>
-              <div class="r" id="cn-c"><span>Applied cant <i>C</i></span><b>0 mm</b></div>
-              <div class="f">no cant through the S&amp;C</div>
-              <div class="r" id="cn-d"><span>Cant deficiency <i>D</i></span><b id="pc-d">99.5 mm</b></div>
-              <div class="f">D = E − C</div>
-              <div class="r" id="cn-l"><span>Limit (illustrative)</span><b id="pc-lim">≤ 110 mm</b></div>
-            </div>
-            <div class="pg" id="pg-ixl">
-              <svg class="sch" id="sch" viewBox="0 0 400 78" aria-hidden="true">
-                <path class="trk" d="M8 50 H392"/><path class="trk" d="M150 50 L222 18 H392"/>
-                <path class="sec" d="M64 50 H300 M150 50 L222 18 H300"/>
-                <path class="route" pathLength="1" d="M40 50 H150 L222 18 H392"/>
-                <g class="ac"><path d="M64 44 V56"/><path d="M300 44 V56"/><path d="M300 12 V24"/></g>
-                <g class="pts"><path d="M150 50 L164 50"/><path class="rev" d="M150 50 L162 44.7"/></g>
-                <g class="sig"><path d="M40 50 V34 M40 34 H46"/><circle class="head" cx="52" cy="34" r="5"/><g class="ji"><circle cx="61" cy="28" r="1.6"/><circle cx="66" cy="24.5" r="1.6"/><circle cx="71" cy="21" r="1.6"/></g></g>
-                <text x="34" y="70">S12</text><text x="140" y="70">101</text><text x="196" y="70">T101</text><text x="352" y="12">A</text><text x="352" y="44">Main</text>
-              </svg>
-              <div class="r" id="ix1"><span>Route S12 → A (diverging)</span><b class="st wht" id="ixs1">—</b></div>
-              <div class="r" id="ix2"><span>Points 101 · N → R</span><b class="st wht" id="ixs2">—</b></div>
-              <div class="r" id="ix3"><span>Track section T101</span><b class="st wht" id="ixs3">—</b></div>
-              <div class="r" id="ix4"><span>Flank protection 102</span><b class="st wht" id="ixs4">—</b></div>
-              <div class="r" id="ix5"><span>Route locking</span><b class="st wht" id="ixs5">—</b></div>
-              <div class="r" id="ix6"><span>Signal S12</span><b class="st red" id="ixs6">ON</b></div>
-              <div class="f">illustrative sequence, not a real control table</div>
-            </div>
-            <div class="pg" id="pg-ifc">
-              <div class="r" id="if1"><span>OLE masts · <i>ENE</i></span><b class="st wht" id="ifs1">—</b></div>
-              <div class="r" id="if2"><span>Contact wire height · <i>ENE</i></span><b class="st wht" id="ifs2">—</b></div>
-              <div class="r" id="if3"><span>Platform edge offset · <i>CIVILS</i></span><b class="st wht" id="ifs3">—</b></div>
-              <div class="r" id="if4"><span>Platform height · <i>CIVILS</i></span><b class="st wht" id="ifs4">—</b></div>
-              <div class="r" id="if5"><span>LOC 101 &amp; cable route · <i>CCS</i></span><b class="st wht" id="ifs5">—</b></div>
-              <div class="r" id="if6"><span>S15 sighting · <i>CCS</i></span><b class="st wht" id="ifs6">—</b></div>
-              <div class="f">illustrative checks from an interface register</div>
-            </div>
-          </div>
-          <div class="stamp" id="pc-stamp"><em class="note">Geometry consistent</em><span>Checked</span></div>
-        </div>
-        <div class="lockup" id="pc-lock" aria-hidden="true"><svg class="lk-mark" viewBox="0 0 1064 323" aria-hidden="true"><path fill="#0E6A8A" d="M16.0,66.0L16.0,66.0Q16.0,0.0 88.0,0.0L780.0,0.0Q791.0,0.0 798.0,10.0L867.0,107.0L784.0,107.0L753.0,66.0ZM16.0,86.0L89.0,86.0Q98.0,86.0 102.0,96.0Q106.0,108.0 120.0,108.0L295.0,108.0Q387.0,108.0 387.0,192.0L387.0,208.0Q387.0,283.0 298.0,283.0L0.0,283.0L31.0,224.0L295.0,224.0Q312.0,224.0 312.0,206.0L312.0,192.0Q312.0,174.0 295.0,174.0L77.0,174.0Q17.0,174.0 17.0,116.0Z"/><path fill="currentColor" d="M414.0,84.0L616.0,84.0L616.0,108.0L552.0,108.0L552.0,283.0L473.0,283.0L473.0,108.0L414.0,108.0ZM676.0,84.0L735.0,84.0L754.0,110.0L754.0,126.0L946.0,126.0L946.0,0.0L1024.0,0.0L1024.0,283.0L946.0,283.0L946.0,185.0L754.0,185.0L754.0,283.0L676.0,283.0Z"/></svg><div class="nm">Construction &amp; Engineering<small>Design · Assurance · Delivery</small></div></div>
-      </div>
-    </div>
-    <canvas id="turnout" aria-hidden="true"></canvas>
-    <button type="button" class="pc-replay" id="pc-replay" hidden>↻ Replay</button>
-  </section>
+
 
   <section class="band growth" id="growth" aria-labelledby="growth-h">
     <div class="wrap">
@@ -1074,5 +1114,13 @@
     window.addEventListener('scroll',req,{passive:true}); window.addEventListener('resize',req); upd();
   })();
 </script>
+<script>
+  // 3D intro safety net: no modules, or the scene not ready in time -> static presentation
+  (function(){var x=document.getElementById('xp');if(!x)return;
+    if(!('noModule' in HTMLScriptElement.prototype)){x.classList.add('xp-static');return}
+    setTimeout(function(){if(!x.classList.contains('xp-ready'))x.classList.add('xp-static')},9000);})();
+</script>
+<script type="importmap">{"imports":{"three":"./js/vendor/three/three.module.min.js"}}</script>
+<script type="module" src="js/rail-experience.js"></script>
 </body>
 </html>
