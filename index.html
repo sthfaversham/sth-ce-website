@@ -226,8 +226,8 @@
   .calc .tabs button[aria-selected="true"]{color:#4fc0e6;border-bottom-color:#4fc0e6}
   .calc .tabs button:focus-visible{outline:1px solid #4fc0e6;outline-offset:2px}
   .calc .pages{display:grid}
-  .calc .pg{grid-area:1/1;display:grid;gap:2px;align-content:start;opacity:0;visibility:hidden;transition:opacity .45s ease,visibility 0s .45s}
-  .calc .pg.act{opacity:1;visibility:visible;transition:opacity .45s ease}
+  .calc .pg{grid-area:1/1;display:grid;gap:2px;align-content:start;opacity:0;visibility:hidden;transition:opacity .2s ease,visibility 0s .2s}
+  .calc .pg.act{opacity:1;visibility:visible;transition:opacity .5s ease .22s}
   .calc .sch{width:100%;height:auto;max-width:100%;margin:2px 0 8px;display:block}
   .sch path{fill:none;stroke-linecap:round}
   .sch .trk{stroke:#2b4652;stroke-width:3}
@@ -768,75 +768,70 @@
   var band=document.getElementById('precision'), ctx=cv.getContext('2d');
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var C1='79,192,230', CT='159,178,186', CI='206,222,230', CF='232,214,160';
-  var MONO='"IBM Plex Mono", "Courier New", monospace';
+  var MONO='"IBM Plex Mono", "Courier New", monospace', DISP='"Barlow Condensed", "Arial Narrow", sans-serif';
   // ---------- geometry (metres): u along main line from switch toe, v across (diverging side negative) ----------
   var G=1.435, h=G/2, R=190, uX=Math.sqrt(2*R*G-G*G);
   function vc(u){return u<=0?0:-(R-Math.sqrt(Math.max(0,R*R-u*u)))}
-  var U0=-22, U1=62;
-  var segs=[];
-  function L(a,b,w,k){segs.push({a:a,b:b,w:w||1,k:k||'r',m:(a[0]+b[0])/2})}
+  var U0=-22, U1=62, segs=[], D='trk';
+  function L(a,b,w,k){segs.push({a:a,b:b,w:w||1,k:k||'r',m:(a[0]+b[0])/2,d:D})}
   function P(fn,u0,u1,st,w,k){var p=fn(u0);for(var u=u0+st;u<=u1+1e-6;u+=st){var q=fn(u);L(p,q,w,k);p=q}}
   var e=0.036;
-  // main line: right rail continuous; left rail broken at the crossing
+  // ===== TRACK =====
+  D='trk';
   [-e,e].forEach(function(d){
     P(function(u){return [u,h+d]},U0,U1,2,1.1);
     P(function(u){return [u,-h+d]},U0,uX-0.5,2,1.1); P(function(u){return [u,-h+d]},uX+0.8,U1,2,1.1);
-    P(function(u){return [u,vc(u)-h+d]},0,U1,1,1.1);                           // diverging outer rail
-    P(function(u){return [u,vc(u)+h+d]},0.0,uX-0.5,1,1.1); P(function(u){return [u,vc(u)+h+d]},uX+0.8,U1,1,1.1); // diverging inner
+    P(function(u){return [u,vc(u)-h+d]},0,U1,1,1.1);
+    P(function(u){return [u,vc(u)+h+d]},0.0,uX-0.5,1,1.1); P(function(u){return [u,vc(u)+h+d]},uX+0.8,U1,1,1.1);
   });
-  // switch rails, crossing V, wing and check rails
   P(function(u){return [u,vc(u)+h-0.075]},0.2,10,0.5,2,'b'); P(function(u){return [u,-h+0.075]},0.2,10,0.5,2,'b');
   L([uX-0.5,-h],[uX+3.2,-h],2,'b'); L([uX-0.5,vc(uX-0.5)+h],[uX+3.2,vc(uX+3.2)+h],2,'b');
   L([uX-3.5,-h-0.1],[uX+0.3,-h-0.1],1.4,'b'); L([uX-3.5,vc(uX-3.5)+h+0.1],[uX+0.3,vc(uX+0.3)+h+0.1],1.4,'b');
   L([uX-4,h-0.13],[uX+2.2,h-0.13],1.5,'b'); L([uX-4,vc(uX-4)-h+0.13],[uX+2.2,vc(uX+2.2)-h+0.13],1.5,'b');
-  // adjacent running line at 4.0 m track centres
   var T2=4.0;
   [-e,e].forEach(function(d){P(function(u){return [u,T2-h+d]},U0,U1,2,1.1);P(function(u){return [u,T2+h+d]},U0,U1,2,1.1)});
   for(var u2=U0;u2<=U1;u2+=0.65){var q2=[[u2-0.12,T2-1.3],[u2+0.12,T2-1.3],[u2+0.12,T2+1.3],[u2-0.12,T2+1.3]];for(var j=0;j<4;j++)L(q2[j],q2[(j+1)%4],0.8,'s')}
-  // bearers / sleepers
-  var sp=0.65,bw=0.12,nB=0,bearerU=[];
+  var sp=0.65,bw=0.12,bearerU=[];
   for(var u=U0;u<=U1;u+=sp){
     var d=vc(u),q;
     if(u<0) q=[[u-bw,-1.3],[u+bw,-1.3],[u+bw,1.3],[u-bw,1.3]];
     else if(u<uX+12){q=[[u-bw,d-1.3],[u+bw,d-1.3],[u+bw,1.3],[u-bw,1.3]];bearerU.push(u)}
-    else{
-      q=[[u-bw,-1.3],[u+bw,-1.3],[u+bw,1.3],[u-bw,1.3]];
-      for(var i=0;i<4;i++)L(q[i],q[(i+1)%4],0.8,'s');
-      var s=u/R; q=[[u-bw+1.3*s,d-1.3],[u+bw+1.3*s,d-1.3],[u+bw-1.3*s,d+1.3],[u-bw-1.3*s,d+1.3]];
-    }
+    else{ q=[[u-bw,-1.3],[u+bw,-1.3],[u+bw,1.3],[u-bw,1.3]]; for(var i=0;i<4;i++)L(q[i],q[(i+1)%4],0.8,'s');
+      var s=u/R; q=[[u-bw+1.3*s,d-1.3],[u+bw+1.3*s,d-1.3],[u+bw-1.3*s,d+1.3],[u-bw-1.3*s,d+1.3]]; }
     for(var i=0;i<4;i++)L(q[i],q[(i+1)%4],0.8,'s');
   }
-  // ---- interfaces layer ----
-  // OLE: twin-track cantilever masts outside the Up line, contact wires over each route
-  var masts=[13,26,39,52];
-  masts.forEach(function(mu){L([mu,6.2,0],[mu,6.2,5.8],1.6,'i');L([mu,6.2,5.2],[mu,-0.6,5.2],1.1,'i');L([mu,6.2,5.75],[mu,1.6,5.2],0.8,'i')});
-  [30,46].forEach(function(mu){var vb=vc(mu)-3.1;L([mu,vb,0],[mu,vb,5.8],1.6,'i');L([mu,vb,5.2],[mu,vc(mu)+0.6,5.2],1.1,'i');L([mu,vb,5.75],[mu,vb+1.6,5.2],0.8,'i')}); // single-track cantilevers on the diverging route
+  // ===== ENE: OLE masts, cantilevers, contact wire =====
+  D='ene';
+  [13,26,39,52].forEach(function(mu){L([mu,6.2,0],[mu,6.2,5.8],1.6,'i');L([mu,6.2,5.2],[mu,-0.6,5.2],1.1,'i');L([mu,6.2,5.75],[mu,1.6,5.2],0.8,'i')});
+  [30,46].forEach(function(mu){var vb=vc(mu)-3.1;L([mu,vb,0],[mu,vb,5.8],1.6,'i');L([mu,vb,5.2],[mu,vc(mu)+0.6,5.2],1.1,'i');L([mu,vb,5.75],[mu,vb+1.6,5.2],0.8,'i')});
   P(function(u){return [u,0,4.7]},6,U1,2,0.7,'w'); P(function(u){return [u,T2,4.7]},6,U1,2,0.7,'w'); P(function(u){return [u,vc(u),4.7]},8,U1,1.5,0.7,'w');
-  // cable route (troughing) outside the masts
+  // ===== CCS: point machine, LOC, cable route, axle counters, signal S15 =====
+  D='ccs';
   for(var cu=4;cu<28;cu+=2){L([cu,6.95],[cu+1.4,6.95],0.9,'i');L([cu,7.35],[cu+1.4,7.35],0.9,'i')}
-  // point machine 101 beside the switch toe
-  (function(){var u0=0.6,u1=2.2,v0=-1.75,v1=-2.35,z=0.45,pts=[[u0,v0],[u1,v0],[u1,v1],[u0,v1]];
-    for(var i=0;i<4;i++){var a=pts[i],b=pts[(i+1)%4];L([a[0],a[1],0],[b[0],b[1],0],1,'i');L([a[0],a[1],z],[b[0],b[1],z],1,'i');L([a[0],a[1],0],[a[0],a[1],z],1,'i')}
-    L([1.4,-1.75,0.2],[1.4,-h,0.2],1,'i');})();
-  // location case LOC 101 in the cess, cabled to the point machine
-  (function(){var u0=6.4,u1=7.6,v0=-3.1,v1=-3.7,z=1.5,b=[[u0,v0],[u1,v0],[u1,v1],[u0,v1]];
-    for(var i=0;i<4;i++){var a=b[i],c=b[(i+1)%4];L([a[0],a[1],0],[c[0],c[1],0],1,'i');L([a[0],a[1],z],[c[0],c[1],z],1,'i');L([a[0],a[1],0],[a[0],a[1],z],1,'i')}
-    L([1.8,-2.35,0.1],[4,-2.9,0.1],0.8,'i');L([4,-2.9,0.1],[6.4,-3.4,0.1],0.8,'i');})();
-  // signal S15 on the Up line, before the platform
+  function box(u0,u1,v0,v1,z){var b=[[u0,v0],[u1,v0],[u1,v1],[u0,v1]];for(var i=0;i<4;i++){var a=b[i],c=b[(i+1)%4];L([a[0],a[1],0],[c[0],c[1],0],1,'i');L([a[0],a[1],z],[c[0],c[1],z],1,'i');L([a[0],a[1],0],[a[0],a[1],z],1,'i')}}
+  box(0.6,2.2,-1.75,-2.35,0.45); L([1.4,-1.75,0.2],[1.4,-h,0.2],1,'i');
+  box(6.4,7.6,-3.1,-3.7,1.5); L([1.8,-2.35,0.1],[4,-2.9,0.1],0.8,'i');L([4,-2.9,0.1],[6.4,-3.4,0.1],0.8,'i');
   var S15=[23,6.0]; L([S15[0],S15[1],0],[S15[0],S15[1],4.1],1.6,'i');
-  // platform on the Up line (FAC interface): edge, coping, back, wall posts, ramp
+  [[-14,-h],[34,-h],[34,vc(34)-h]].forEach(function(a){L([a[0]-0.3,a[1],0.05],[a[0]+0.3,a[1],0.05],2.4,'i');L([a[0],a[1],0],[a[0],a[1]-0.5,0],1,'i')});
+  // ===== FAC: platform on the Up line =====
+  D='fac';
   var PL0=31,PL1=U1,PE=T2+h+0.73,PB=PE+4,PZ=0.915;
   P(function(u){return [u,PE,PZ]},PL0,PL1,2,1.8,'f'); P(function(u){return [u,PE+0.3,PZ]},PL0,PL1,2,0.8,'f'); P(function(u){return [u,PB,PZ]},PL0,PL1,2,0.9,'f');
   for(var pu=PL0;pu<=PL1;pu+=4){L([pu,PE,0],[pu,PE,PZ],0.8,'f')} L([PL0,PE,PZ],[PL0,PB,PZ],1,'f'); L([PL0,PE,0],[PL0-3,PE,0],0.8,'f'); L([PL0-3,PE,0],[PL0,PE,PZ],0.8,'f');
-  // axle counter heads bounding track section T101
-  var ACs=[[-14,-h],[34,-h],[34,vc(34)-h]];
-  ACs.forEach(function(a){L([a[0]-0.3,a[1],0.05],[a[0]+0.3,a[1],0.05],2.4,'i');L([a[0],a[1],0],[a[0],a[1]-0.5,0],1,'i')});
 
+  // ---------- timeline (ms): one discipline at a time, ~29 s ----------
+  var PH={trk:{s:300,d:5600},ene:{s:9200,d:4000},ccs:{s:15200,d:3200},fac:{s:22200,d:3000}};
+  var ORDER=['trk','ene','ccs','fac'], END=28400;
+  var TITLES=[
+    {d:'trk',tin:500, tout:8000, big:'TRACK · P-WAY',      sub:'R 190 m · 1 in 8.09 crossing · cant deficiency 99.5 mm ✓', to:'nose'},
+    {d:'ene',tin:9300,tout:14000,big:'ENE · OVERHEAD LINE',sub:'6 masts clear of the running lines · contact wire 4.70 m ✓', to:'ole'},
+    {d:'ccs',tin:15300,tout:21000,big:'CCS · SIGNALLING',  sub:'Points 101 detected · route S12 set · S15 protecting ✓', to:'pm'},
+    {d:'fac',tin:22300,tout:26600,big:'FAC · PLATFORM',    sub:'Edge 730 mm from running edge · 915 mm high ✓', to:'plat'}];
   // ---------- camera ----------
   var W=0,H=0,dpr=1,narrow=false;
   function size(){var r=cv.getBoundingClientRect();dpr=Math.min(2,window.devicePixelRatio||1);W=r.width;H=r.height;cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);narrow=W<760}
   function camera(t){
-    var dr=reduce?0:Math.sin(t/8000)*1.6;
+    var dr=reduce?0:Math.sin(t/9000)*1.6;
     var Cm=narrow?[-20+dr,-12,15]:[-24+dr,-13,14], T=[18,0,0];
     var f=[T[0]-Cm[0],T[1]-Cm[1],T[2]-Cm[2]],fl=Math.hypot(f[0],f[1],f[2]);f=[f[0]/fl,f[1]/fl,f[2]/fl];
     var r=[f[1],-f[0],0],rl=Math.hypot(r[0],r[1]);r=[r[0]/rl,r[1]/rl,0];
@@ -845,111 +840,133 @@
     return function(p){var d=[p[0]-Cm[0],p[1]-Cm[1],(p[2]||0)-Cm[2]];var z=d[0]*f[0]+d[1]*f[1]+d[2]*f[2];if(z<0.6)return null;
       var x=d[0]*r[0]+d[1]*r[1];var y=d[0]*up[0]+d[1]*up[1]+d[2]*up[2];return [cx+foc*x/z,cy-foc*y/z,z]};
   }
-  // ---------- readouts ----------
+  // ---------- calc sheet ----------
   var $=function(id){return document.getElementById(id)};
   var rd={ch:$('pc-ch'),x:$('pc-x'),y:$('pc-y'),n:$('pc-n'),off:$('pc-off'),nose:$('pc-nose'),ang:$('pc-ang'),brg:$('pc-brg'),stamp:$('pc-stamp'),lock:$('pc-lock')};
   function fmtCh(u){var s=u<0?'−':'';u=Math.abs(u);var k=Math.floor(u/1000);return 'Ch '+s+k+'+'+('000'+(u-k*1000).toFixed(1)).slice(-5)}
-  var last={};
-  function setT(el,v,key){if(last[key]!==v){last[key]=v;el.textContent=v}}
-  // ---------- draw ----------
-  var start=null, DUR=10500, vis=false, raf=0, done=false;
-  var ixl={sig:false,pm:'Normal'}, userTab=false, cycle=0, page='geo', front_=-99;
-  var GROUPS={geo:['geo'],cant:['geo'],ixl:['ccs'],ifc:['ene','fac','ccs']};
-  function emph(g,showAt){ if(!done) return (front_-showAt<14)?1:0.42; return GROUPS[page].indexOf(g)>=0?1:0.3 }
+  var last={}; function setT(el,v,key){if(last[key]!==v){last[key]=v;el.textContent=v}}
+  var ixl={sig:false,pm:'Normal'}, userTab=false, cycle=0, page='geo', done=false;
   var tabs={geo:$('tb-geo'),cant:$('tb-cant'),ixl:$('tb-ixl'),ifc:$('tb-ifc')}, pages={geo:$('pg-geo'),cant:$('pg-cant'),ixl:$('pg-ixl'),ifc:$('pg-ifc')};
   function show(k){page=k;for(var n in pages){var on=n===k;pages[n].classList.toggle('act',on);tabs[n].setAttribute('aria-selected',on?'true':'false')}}
   for(var tk in tabs)(function(k){tabs[k].addEventListener('click',function(){userTab=true;clearInterval(cycle);show(k)})})(tk);
   function st(id,txt,cls){var b=$(id);b.textContent=txt;b.className='st '+cls}
-  var sch=$('sch'); function sc(){for(var i=0;i<arguments.length;i++)sch.classList.add(arguments[i])} function sx(c){sch.classList.remove(c)}
   function on(id){$(id).classList.add('on')}
+  var sch=$('sch'); function sc(){for(var i=0;i<arguments.length;i++)sch.classList.add(arguments[i])} function sx(c){sch.classList.remove(c)}
   function cantAt(v){var E=11.82*v*v/R;setT($('pc-v'),Math.round(v)+' km/h','v');setT($('pc-e'),E.toFixed(1)+' mm','e');setT($('pc-d'),E.toFixed(1)+' mm','d')}
-  function finalState(){cantAt(40);['cn-v','cn-e','cn-c','cn-d','cn-l','ix1','ix2','ix3','ix4','ix5','ix6'].forEach(on);
-    $('pc-lim').textContent='≤ 110 mm  ✓';st('ixs1','SET','ok');st('ixs2','DETECTED R','ok');st('ixs3','CLEAR','ok');st('ixs4','LOCKED N','ok');st('ixs5','LOCKED','ok');st('ixs6','OFF · JI 1','grn');
-    ['if1','if2','if3','if4','if5','if6'].forEach(on);st('ifs1','6 POSITIONS ✓','ok');st('ifs2','4.70 m ✓','ok');st('ifs3','730 mm ✓','ok');st('ifs4','915 mm ✓','ok');st('ifs5','CLEAR ✓','ok');st('ifs6','CLEAR ✓','ok');
-    ixl.sig=true;ixl.pm='Detected reverse';sc('rev','clr','set','off');rd.stamp.classList.add('on');rd.lock.classList.add('on')}
-  function sequence(){
-    var T=0; function at(ms,fn){T+=ms;setTimeout(fn,T)}
-    at(1400,function(){if(!userTab)show('cant');['cn-v','cn-e','cn-c','cn-d','cn-l'].forEach(on);
-      var t0=performance.now();(function tick(){var p=Math.min(1,(performance.now()-t0)/2600);cantAt(40*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(tick);else $('pc-lim').textContent='≤ 110 mm  ✓'})()});
-    at(4600,function(){if(!userTab)show('ixl');on('ix1');st('ixs1','REQUEST','wht');sc('req')});
-    at(1100,function(){on('ix2');st('ixs2','MOVING','wht');ixl.pm='Moving N → R';sc('mov')});
-    at(1500,function(){st('ixs2','DETECTED R','ok');ixl.pm='Detected reverse';sx('mov');sc('rev');on('ix3');st('ixs3','CLEAR','ok');sc('clr')});
-    at(1100,function(){on('ix4');st('ixs4','LOCKED N','ok')});
-    at(1100,function(){on('ix5');st('ixs5','LOCKED','ok');st('ixs1','SET','ok');sx('req');sc('set')});
-    at(1200,function(){on('ix6');st('ixs6','OFF · JI 1','grn');ixl.sig=true;sc('off')});
-    at(3200,function(){if(!userTab)show('ifc')});
-    at(900,function(){on('if1');st('ifs1','6 POSITIONS ✓','ok')});
-    at(800,function(){on('if2');st('ifs2','4.70 m ✓','ok')});
-    at(800,function(){on('if3');st('ifs3','730 mm ✓','ok')});
-    at(800,function(){on('if4');st('ifs4','915 mm ✓','ok')});
-    at(800,function(){on('if5');st('ifs5','CLEAR ✓','ok')});
-    at(800,function(){on('if6');st('ifs6','CLEAR ✓','ok')});
-    at(1200,function(){rd.stamp.classList.add('on')});
-    at(800,function(){rd.lock.classList.add('on')});
-    at(7000,function(){if(userTab)return;var order=['geo','cant','ixl','ifc'],i=0;show('geo');cycle=setInterval(function(){if(userTab)return clearInterval(cycle);i=(i+1)%4;show(order[i])},9000)});
-  }
-  function text(s,x,y,col,size,align){ctx.font='500 '+size+'px '+MONO;ctx.fillStyle=col;ctx.textAlign=align||'left';ctx.fillText(s,x,y)}
+  function showP(k){if(!userTab)show(k)}
+  var EV=[
+    [5900,function(){showP('cant');['cn-v','cn-e','cn-c','cn-d','cn-l'].forEach(on);var t0=performance.now();(function tick(){var p=Math.min(1,(performance.now()-t0)/2200);cantAt(40*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(tick);else $('pc-lim').textContent='≤ 110 mm  ✓'})()}],
+    [9200,function(){showP('ifc')}],
+    [11400,function(){on('if1');st('ifs1','6 POSITIONS ✓','ok')}],
+    [12400,function(){on('if2');st('ifs2','4.70 m ✓','ok')}],
+    [15200,function(){showP('ixl')}],
+    [15800,function(){on('ix1');st('ixs1','REQUEST','wht');sc('req')}],
+    [16700,function(){on('ix2');st('ixs2','MOVING','wht');ixl.pm='Moving N → R';sc('mov')}],
+    [17800,function(){st('ixs2','DETECTED R','ok');ixl.pm='Detected reverse';sx('mov');sc('rev');on('ix3');st('ixs3','CLEAR','ok');sc('clr')}],
+    [18600,function(){on('ix4');st('ixs4','LOCKED N','ok')}],
+    [19400,function(){on('ix5');st('ixs5','LOCKED','ok');st('ixs1','SET','ok');sx('req');sc('set')}],
+    [20300,function(){on('ix6');st('ixs6','OFF · JI 1','grn');ixl.sig=true;sc('off')}],
+    [22200,function(){showP('ifc')}],
+    [23500,function(){on('if3');st('ifs3','730 mm ✓','ok')}],
+    [24200,function(){on('if4');st('ifs4','915 mm ✓','ok')}],
+    [24900,function(){on('if5');st('ifs5','CLEAR ✓','ok')}],
+    [25600,function(){on('if6');st('ifs6','CLEAR ✓','ok')}],
+    [27400,function(){rd.stamp.classList.add('on')}],
+    [END,function(){rd.lock.classList.add('on');done=true}],
+    [END+7000,function(){if(userTab)return;var o=['geo','cant','ixl','ifc'],i=0;showP('geo');cycle=setInterval(function(){if(userTab)return clearInterval(cycle);i=(i+1)%4;show(o[i])},9000)}]
+  ], evN=0;
+  // ---------- drawing ----------
+  var start=null, vis=false, raf=0, el=0;
+  function ease(x){x=Math.max(0,Math.min(1,x));return 1-Math.pow(1-x,2.2)}
+  function lf(d){var p=PH[d];return U0+(U1-U0+6)*ease((el-p.s)/p.d)}           // reveal front for a layer (metres)
+  function phaseOf(){var c='trk';ORDER.forEach(function(k){if(el>=PH[k].s-200)c=k});return c}
+  var GROUPS={geo:['trk'],cant:['trk'],ixl:['ccs'],ifc:['ene','fac','ccs']};
+  function emph(g){ if(!done){var c=phaseOf();return g===c?1:0.4} return GROUPS[page].indexOf(g)>=0?1:0.3 }
+  function text(s,x,y,col,size,align,font,weight){ctx.font=(weight||'500')+' '+size+'px '+(font||MONO);ctx.fillStyle=col;ctx.textAlign=align||'left';ctx.fillText(s,x,y)}
+  // callouts: anchor point, offsets (desktop / phone), lines, layer, reveal-at (m along the layer), colour
+  function CO(){return {
+    toe: {g:'trk',pt:[0,-h],dx:narrow?-22:-30,dy:narrow?-44:-62,lines:['SWITCH TOE','Ch 0+000'],at:1,c:C1},
+    nose:{g:'trk',pt:[uX,-h],dx:narrow?-30:-60,dy:narrow?46:60,lines:['CROSSING NOSE','1 in 8.09 · Ch 0+023.3'],at:uX+1,c:C1},
+    rad: {g:'trk',pt:[44,vc(44)-h],dx:narrow?-20:-40,dy:narrow?-42:-56,lines:['R = 190.000 m'],at:46,c:C1},
+    ole: {g:'ene',pt:[39,6.2,5.8],dx:narrow?-24:30,dy:narrow?-16:-22,lines:narrow?['OLE · ENE']:['OLE MAST · ENE','2-track cantilever'],at:40,c:CI},
+    pm:  {g:'ccs',pt:[1.4,-2.35,0.45],dx:narrow?24:56,dy:narrow?26:34,lines:['PM 101 · CCS',ixl.pm],at:3,c:CI},
+    ac:  {g:'ccs',pt:[34,vc(34)-h],dx:-30,dy:64,lines:['AXLE COUNTER · T101'],at:35,c:CI,skipN:true},
+    loc: {g:'ccs',pt:[7,-3.7,1.5],dx:narrow?30:60,dy:narrow?-6:-10,lines:['LOC 101 · CCS','Location case'],at:8,c:CI},
+    plat:{g:'fac',pt:[36,PE,PZ],dx:narrow?22:14,dy:narrow?44:58,lines:narrow?['PLATFORM · FAC']:['PLATFORM · FAC','Edge 730 mm · 915 mm high'],at:37,c:CF}
+  }}
+  function labelPos(c,Pj){var p=Pj(c.pt);if(!p)return null;return [p[0]+c.dx+(c.dx<0?-60:0),p[1]+c.dy-6,p]}
+  function drawCallout(c,Pj,fs,hide){if(narrow&&c.skipN)return;var f=lf(c.g);if(f<c.at)return;var lp=labelPos(c,Pj);if(!lp)return;var p=lp[2];
+    var al=Math.min(1,(f-c.at)/4)*emph(c.g)*(hide?0:1); if(al<=0.01)return;
+    ctx.strokeStyle='rgba('+CT+','+(0.6*al)+')';ctx.lineWidth=1;ctx.beginPath();ctx.arc(p[0],p[1],3.5,0,6.283);ctx.moveTo(p[0],p[1]);ctx.lineTo(p[0]+c.dx,p[1]+c.dy);ctx.lineTo(p[0]+c.dx+(c.dx<0?-60:60),p[1]+c.dy);ctx.stroke();
+    c.lines.forEach(function(l,j){text(l,lp[0],lp[1]+j*(fs+4)+(j?8:0),'rgba('+(j?CT:c.c)+','+al+')',fs,'left')})}
   function frame(t){
-    if(start===null)start=t; var el=reduce?1e9:t-start;
+    if(start===null)start=t; el=reduce?1e9:t-start;
+    while(evN<EV.length&&EV[evN][0]<=el){EV[evN][1]();evN++}
     var Pj=camera(t); ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,W,H);
-    var k=Math.min(1,Math.max(0,(el-300)/DUR)), ke=1-Math.pow(1-k,2.2);
-    var front=U0+(U1-U0+6)*ke; front_=front;
-    var pulse=done&&!reduce?U0+(((el-DUR)/90)%(U1-U0+60)):-999;
+    var fronts={trk:lf('trk'),ene:lf('ene'),ccs:lf('ccs'),fac:lf('fac')};
+    var pulse=done&&!reduce?U0+(((el-END)/90)%(U1-U0+60)):-999;
     ctx.lineCap='round';
     for(var i=0;i<segs.length;i++){var s=segs[i],A=Pj(s.a),B=Pj(s.b);if(!A||!B)continue;
-      var df=Math.max(0.2,Math.min(1,1.5-A[2]/60)),a;
-      if(s.m>front)a=0.05*df;
-      else{var near=Math.max(0,1-(front-s.m)/5);a=(s.k==='s'?0.5:s.k==='t'?0.45:s.k==='w'?0.22:s.k==='i'?0.62:s.k==='f'?0.8:0.92)*df+near*0.45*(s.k==='w'?0.3:1);
-        var pd=Math.abs(s.m-pulse);if(pd<3.5&&(s.k==='r'||s.k==='b'))a+=0.45*(1-pd/3.5)}
-      ctx.strokeStyle='rgba('+(s.k==='t'?CT:(s.k==='i'||s.k==='w')?CI:s.k==='f'?CF:C1)+','+Math.min(1,a).toFixed(3)+')';
+      var fr=fronts[s.d], df=Math.max(0.2,Math.min(1,1.5-A[2]/60)), a;
+      if(s.m>fr){ if(s.d!=='trk')continue; a=0.05*df }
+      else{ var near=Math.max(0,1-(fr-s.m)/5);
+        a=(s.k==='s'?0.5:s.k==='w'?0.22:s.k==='i'?0.62:s.k==='f'?0.8:0.92)*df+near*0.45*(s.k==='w'?0.3:1);
+        if(s.d!=='trk'&&!done)a*=(phaseOf()===s.d?1:0.75);
+        var pd=Math.abs(s.m-pulse);if(pd<3.5&&(s.k==='r'||s.k==='b'))a+=0.45*(1-pd/3.5) }
+      ctx.strokeStyle='rgba('+((s.k==='i'||s.k==='w')?CI:s.k==='f'?CF:C1)+','+Math.min(1,a).toFixed(3)+')';
       ctx.lineWidth=s.w*(0.55+0.95*Math.min(1,16/A[2]));
       ctx.beginPath();ctx.moveTo(A[0],A[1]);ctx.lineTo(B[0],B[1]);ctx.stroke();
     }
-    // chainage labels
-    var fs=narrow?9:10.5;
-    // callouts
-    function callout(pt,dx,dy,lines,showAt,c1,g){c1=c1||C1;if(front<showAt)return;var p=Pj(pt);if(!p)return;var al=Math.min(1,(front-showAt)/4)*emph(g||'geo',showAt);
-      ctx.strokeStyle='rgba('+CT+','+(0.6*al)+')';ctx.lineWidth=1;ctx.beginPath();ctx.arc(p[0],p[1],3.5,0,6.283);ctx.moveTo(p[0],p[1]);ctx.lineTo(p[0]+dx,p[1]+dy);ctx.lineTo(p[0]+dx+(dx<0?-60:60),p[1]+dy);ctx.stroke();
-      lines.forEach(function(l,j){text(l,p[0]+dx+(dx<0?-60:0),p[1]+dy-6+j*(fs+4)+ (j?8:0),'rgba('+(j?CT:c1)+','+al+')',fs,'left')})}
-    callout([0,-h],narrow?-22:-30,narrow?-44:-62,['SWITCH TOE','Ch 0+000'],1);
-    callout([uX,-h],narrow?-30:-60,narrow?46:60,['CROSSING NOSE','1 in 8.09 · Ch 0+023.3'],uX+1);
-    callout([44,vc(44)-h],narrow?-20:-40,narrow?-42:-56,['R = 190.000 m'],46);
-    // interfaces
-    if(!narrow)callout([39,6.2,5.8],30,-22,['OLE MAST · ENE','2-track cantilever'],40,CI,'ene');
-    callout([1.4,-2.35,0.45],narrow?24:56,narrow?26:34,['PM 101 · CCS',ixl.pm],3,CI,'ccs');
-    if(!narrow)callout([34,vc(34)-h],-30,64,['AXLE COUNTER · T101'],35,CI,'ccs');
-    callout([7,-3.7,1.5],narrow?30:60,narrow?-6:-10,['LOC 101 · CCS','Location case'],8,CI,'ccs');
-    callout([36,PE,PZ],narrow?22:14,narrow?44:58,narrow?['PLATFORM · FAC']:['PLATFORM · FAC','Edge 730 mm · 915 mm high'],37,CF,'fac');
-    if(front>S15[0]){var sh=Pj([S15[0],S15[1],4.4]);if(sh){var sc=Math.max(0.6,Math.min(1.5,16/sh[2])),a2=Math.min(1,(front-S15[0])/4);
-      ctx.fillStyle='rgba(10,18,22,'+(0.95*a2)+')';ctx.strokeStyle='rgba('+CI+','+(0.8*a2)+')';ctx.lineWidth=1;ctx.beginPath();ctx.rect(sh[0]-5*sc,sh[1]-9*sc,10*sc,18*sc);ctx.fill();ctx.stroke();
-      ctx.fillStyle='rgba(255,107,94,'+a2+')';ctx.shadowColor='rgba(255,107,94,.9)';ctx.shadowBlur=8*sc;ctx.beginPath();ctx.arc(sh[0],sh[1]+3.5*sc,2.8*sc,0,6.283);ctx.fill();ctx.shadowBlur=0;
-      var e2=emph('ccs',S15[0])*a2;ctx.strokeStyle='rgba('+CT+','+(0.6*e2)+')';ctx.beginPath();ctx.moveTo(sh[0]-6*sc,sh[1]);ctx.lineTo(sh[0]-34,sh[1]-22);ctx.lineTo(sh[0]-94,sh[1]-22);ctx.stroke();
-      text('S15 · CCS',sh[0]-94,sh[1]-28,'rgba('+CI+','+e2+')',fs,'left');text('ON · protecting',sh[0]-94,sh[1]-28+fs+8,'rgba(255,107,94,'+e2+')',fs,'left')}}
-
-    // offset dimension at x = 40
-    if(front>41){var al=Math.min(1,(front-41)/4)*emph('geo',41),pa=Pj([40,0.0]),pb=Pj([40,vc(40)]);
+    var fs=narrow?9:10.5, C=CO();
+    // a callout is held back while its discipline title is still big
+    var hidden={}; TITLES.forEach(function(T){if(!reduce&&el<T.tout+700)hidden[T.to]=true});
+    for(var k in C)drawCallout(C[k],Pj,fs,hidden[k]);
+    // offset dimension at x = 40 (track)
+    var ft=fronts.trk; if(ft>41){var al=Math.min(1,(ft-41)/4)*emph('trk'),pa=Pj([40,0.0]),pb=Pj([40,vc(40)]);
       if(pa&&pb){ctx.strokeStyle='rgba(255,255,255,'+(0.55*al)+')';ctx.lineWidth=1;ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(pa[0],pa[1]);ctx.lineTo(pb[0],pb[1]);ctx.stroke();ctx.setLineDash([]);
         [pa,pb].forEach(function(p){ctx.beginPath();ctx.arc(p[0],p[1],2.5,0,6.283);ctx.fillStyle='rgba(255,255,255,'+(0.8*al)+')';ctx.fill()});
         text('y = 4.258 m',(pa[0]+pb[0])/2+8,(pa[1]+pb[1])/2-6,'rgba(255,255,255,'+(0.9*al)+')',fs,'left')}}
-    // survey crosshair on the draw front
-    if(!done||reduce){var cu=Math.min(U1,Math.max(0,front-1)),pc=Pj([cu,vc(cu)]);
-      if(pc&&k<1){ctx.strokeStyle='rgba(255,255,255,.75)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pc[0]-12,pc[1]);ctx.lineTo(pc[0]+12,pc[1]);ctx.moveTo(pc[0],pc[1]-12);ctx.lineTo(pc[0],pc[1]+12);ctx.stroke();
+    // signal S15 head
+    var fc=fronts.ccs; if(fc>S15[0]){var sh=Pj([S15[0],S15[1],4.4]);if(sh){var scl=Math.max(0.6,Math.min(1.5,16/sh[2])),a2=Math.min(1,(fc-S15[0])/4);
+      ctx.fillStyle='rgba(10,18,22,'+(0.95*a2)+')';ctx.strokeStyle='rgba('+CI+','+(0.8*a2)+')';ctx.lineWidth=1;ctx.beginPath();ctx.rect(sh[0]-5*scl,sh[1]-9*scl,10*scl,18*scl);ctx.fill();ctx.stroke();
+      ctx.fillStyle='rgba(255,107,94,'+a2+')';ctx.shadowColor='rgba(255,107,94,.9)';ctx.shadowBlur=8*scl;ctx.beginPath();ctx.arc(sh[0],sh[1]+3.5*scl,2.8*scl,0,6.283);ctx.fill();ctx.shadowBlur=0;
+      var e2=emph('ccs')*a2*(hidden.pm?0:1);if(e2>0.01){ctx.strokeStyle='rgba('+CT+','+(0.6*e2)+')';ctx.beginPath();ctx.moveTo(sh[0]-6*scl,sh[1]);ctx.lineTo(sh[0]-34,sh[1]-22);ctx.lineTo(sh[0]-94,sh[1]-22);ctx.stroke();
+      text('S15 · CCS',sh[0]-94,sh[1]-28,'rgba('+CI+','+e2+')',fs,'left');text('ON · protecting',sh[0]-94,sh[1]-28+fs+8,'rgba(255,107,94,'+e2+')',fs,'left')}}}
+    // survey crosshair rides the track front while it draws
+    if(el<PH.trk.s+PH.trk.d){var cu=Math.min(U1,Math.max(0,ft-1)),pc=Pj([cu,vc(cu)]);
+      if(pc&&ft>U0+1){ctx.strokeStyle='rgba(255,255,255,.75)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pc[0]-12,pc[1]);ctx.lineTo(pc[0]+12,pc[1]);ctx.moveTo(pc[0],pc[1]-12);ctx.lineTo(pc[0],pc[1]+12);ctx.stroke();
         ctx.beginPath();ctx.arc(pc[0],pc[1],6,0,6.283);ctx.stroke();
         var E=601245.312+cu*0.874, N=160418.904+cu*0.486+vc(cu)*0.874;
         text('E '+E.toFixed(3),pc[0]+14,pc[1]-16,'rgba(255,255,255,.85)',fs,'left');text('N '+N.toFixed(3),pc[0]+14,pc[1]-16+fs+3,'rgba(255,255,255,.85)',fs,'left')}}
-    // calc sheet
-    var xu=Math.max(0,Math.min(U1,front-1));
-    setT(rd.ch,fmtCh(Math.max(U0,Math.min(U1,front))),'ch');
-    if(front>0.5){rd.off.classList.add('on');setT(rd.x,xu.toFixed(3),'x');setT(rd.y,(-vc(xu)).toFixed(3)+' m','y')}
-    if(front>uX){rd.nose.classList.add('on')} if(front>uX+3){rd.ang.classList.add('on')}
-    var nb=bearerU.filter(function(u){return u<front}).length; if(nb>0){rd.brg.classList.add('on');setT(rd.n,String(nb),'n')}
-    if(k>=1&&!done){done=true;if(reduce)finalState();else sequence()}
+    // ---- big discipline titles: in, hold, then shrink onto their label ----
+    if(!reduce)TITLES.forEach(function(T){
+      if(el<T.tin||el>T.tout+900)return;
+      var bigS=narrow?24:42, subS=narrow?10:13;
+      var home=narrow?[16,40]:(T.d==='ene'||T.d==='fac'?[W*0.47,H*0.80]:[W*0.47,H*0.13]);
+      var aIn=Math.min(1,(el-T.tin)/450), sh=Math.max(0,Math.min(1,(el-T.tout)/900)), es=sh*sh*(3-2*sh);
+      var c=C[T.to], lp=c?labelPos(c,Pj):null, tgt=lp?[lp[0],lp[1]]:home;
+      var x=home[0]+(tgt[0]-home[0])*es, y=home[1]+(tgt[1]-home[1])*es, size=bigS+(fs-bigS)*es;
+      var col=T.d==='fac'?CF:T.d==='trk'?C1:'230,238,241';
+      ctx.font='700 '+size+'px '+DISP; var wBig=ctx.measureText(T.big).width; ctx.font='500 '+subS+'px '+MONO; var wSub=ctx.measureText(T.sub).width;
+      var pad=12*(1-es), wBox=Math.max(wBig,wSub*(1-es))+pad*2;
+      if(es<1){ctx.fillStyle='rgba(8,16,20,'+(0.72*aIn*(1-es))+')';ctx.fillRect(x-pad,y-size-pad*0.6,wBox,size+(subS+14)*(1-es)+pad*1.4);
+        ctx.fillStyle='rgba('+col+','+(0.95*aIn*(1-es))+')';ctx.fillRect(x-pad,y-size-pad*0.6,3,size+(subS+14)*(1-es)+pad*1.4)}
+      text(T.big,x,y,'rgba('+col+','+(aIn*(1-0.2*es))+')',size,'left',DISP,'700');
+      if(es<0.6)text(T.sub,x,y+subS+10,'rgba(214,224,229,'+(aIn*(1-es/0.6))+')',subS,'left');
+    });
+    // geometry page readouts follow the track front
+    var xu=Math.max(0,Math.min(U1,ft-1));
+    setT(rd.ch,fmtCh(Math.max(U0,Math.min(U1,ft))),'ch');
+    if(ft>0.5){rd.off.classList.add('on');setT(rd.x,xu.toFixed(3),'x');setT(rd.y,(-vc(xu)).toFixed(3)+' m','y')}
+    if(ft>uX)rd.nose.classList.add('on'); if(ft>uX+3)rd.ang.classList.add('on');
+    var nb=bearerU.filter(function(u){return u<ft}).length; if(nb>0){rd.brg.classList.add('on');setT(rd.n,String(nb),'n')}
     if(!reduce&&vis)raf=requestAnimationFrame(frame);
   }
+  function finalState(){EV.forEach(function(e){e[1]()});evN=EV.length;show('geo');userTab=true;clearInterval(cycle)}
   function go(){cancelAnimationFrame(raf);raf=requestAnimationFrame(frame)}
   size();
   var ro=window.ResizeObserver?new ResizeObserver(function(){size();if(reduce||!vis)requestAnimationFrame(frame)}):null; if(ro)ro.observe(cv);
-  if(reduce||!('IntersectionObserver' in window)){vis=true;requestAnimationFrame(frame);return}
+  if(reduce||!('IntersectionObserver' in window)){vis=true;if(reduce){el=1e9;finalState()}requestAnimationFrame(frame);return}
   var played=false;
   new IntersectionObserver(function(es){es.forEach(function(e){vis=e.isIntersecting;
     if(vis){if(!played){played=true;start=null}go()}else cancelAnimationFrame(raf)})},{threshold:0.3}).observe(band);
