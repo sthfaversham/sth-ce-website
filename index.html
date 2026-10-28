@@ -220,6 +220,32 @@
   .calc .r b{color:#e6ecee;font-weight:500}
   .calc .r i{font-style:normal;color:#5f7a86}
   .calc .f{grid-column:1/-1;color:#5f7a86;font-size:.74rem;margin:-2px 0 4px}
+  .calc .tabs{display:flex;gap:0;margin:-2px 0 8px;border-bottom:1px solid #1c3540}
+  .calc .tabs button{font:inherit;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:#5f7a86;background:none;border:0;border-bottom:2px solid transparent;padding:6px 10px 6px 0;margin-right:12px;cursor:pointer}
+  .calc .tabs button[aria-selected="true"]{color:#4fc0e6;border-bottom-color:#4fc0e6}
+  .calc .tabs button:focus-visible{outline:1px solid #4fc0e6;outline-offset:2px}
+  .calc .pages{display:grid}
+  .calc .pg{grid-area:1/1;display:grid;gap:2px;align-content:start;opacity:0;visibility:hidden;transition:opacity .45s ease,visibility 0s .45s}
+  .calc .pg.act{opacity:1;visibility:visible;transition:opacity .45s ease}
+  .calc .sch{width:100%;height:auto;max-width:100%;margin:2px 0 8px;display:block}
+  .sch path{fill:none;stroke-linecap:round}
+  .sch .trk{stroke:#2b4652;stroke-width:3}
+  .sch .sec{stroke:#4fc0e6;stroke-width:3;opacity:0;transition:opacity .5s}
+  .sch .route{stroke:#5fe08f;stroke-width:3;stroke-dasharray:1;stroke-dashoffset:1;opacity:0}
+  .sch .ac path{stroke:#e6ecee;stroke-width:1.5}
+  .sch .pts path{stroke:#e6ecee;stroke-width:2}.sch .pts .rev{opacity:0}
+  .sch .sig path{stroke:#9fb2ba;stroke-width:1.5}.sch .head{fill:#ff6b5e;transition:fill .3s}
+  .sch .ji circle{fill:#f0f4f6;opacity:0;transition:opacity .3s}
+  .sch text{font-family:var(--mono);font-size:9px;fill:#7f949e;letter-spacing:.06em}
+  .sch.clr .sec{opacity:.35}
+  .sch.mov .pts path{animation:blink .4s steps(2) infinite}
+  .sch.rev .pts path:first-child{opacity:0}.sch.rev .pts .rev{opacity:1}
+  .sch.req .route{opacity:.6;stroke-dashoffset:0;stroke-dasharray:.02 .02;animation:blink .6s steps(2) infinite}
+  .sch.set .route{opacity:1;stroke-dasharray:1;stroke-dashoffset:0;animation:none;transition:stroke-dashoffset .8s ease}
+  .sch.off .head{fill:#5fe08f}.sch.off .ji circle{opacity:1}
+  @keyframes blink{50%{opacity:.15}}
+  .calc .st{font-weight:500}
+  .calc .st.ok{color:#4fc0e6}.calc .st.red{color:#ff6b5e}.calc .st.grn{color:#5fe08f}.calc .st.wht{color:#e6ecee}
   .calc .stamp{margin-top:8px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid #1c3540;padding-top:8px;opacity:0;transition:opacity .5s ease}
   .calc .stamp.on{opacity:1}
   .calc .stamp span{color:#4fc0e6;border:1px solid #4fc0e6;padding:2px 8px;letter-spacing:.14em;font-size:.72rem}
@@ -232,7 +258,7 @@
   .precision .note{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;color:#4f6670;text-transform:uppercase}
   @media (max-width:760px){
     .precision::before{display:none}
-    .precision canvas{position:relative;height:380px;z-index:0}
+    .precision canvas{position:relative;height:440px;z-index:0}
     .precision .wrap{min-height:0;padding-block:40px 28px}
     .precision .panel{width:100%}
     .lockup .lk-mark{height:32px}
@@ -342,6 +368,13 @@
         <h2>Precision in every detail.</h2>
         <div class="calc" aria-live="off">
           <div class="hd"><span>Diverging route · illustrative</span><span id="pc-ch">Ch 0+000.0</span></div>
+          <div class="tabs" role="tablist" aria-label="Design check pages">
+            <button type="button" role="tab" id="tb-geo" aria-selected="true">Geometry</button>
+            <button type="button" role="tab" id="tb-cant" aria-selected="false">Speed &amp; cant</button>
+            <button type="button" role="tab" id="tb-ixl" aria-selected="false">Interlocking</button>
+          </div>
+          <div class="pages">
+            <div class="pg act" id="pg-geo">
           <div class="r on"><span>Radius <i>R</i></span><b>190.000 m</b></div>
           <div class="r on"><span>Track gauge <i>G</i></span><b>1435 mm</b></div>
           <div class="r" id="pc-off"><span>Offset at <i>x</i> = <span id="pc-x">0.000</span> m</span><b id="pc-y">0.000 m</b></div>
@@ -350,6 +383,36 @@
           <div class="f">x = √(2RG − G²)</div>
           <div class="r" id="pc-ang"><span>Crossing angle</span><b>7.05° · 1 in 8.09</b></div>
           <div class="r" id="pc-brg"><span>Bearers @ 650 mm</span><b id="pc-n">0</b></div>
+            </div>
+            <div class="pg" id="pg-cant">
+              <div class="r" id="cn-v"><span>Diverging speed <i>V</i></span><b id="pc-v">0 km/h</b></div>
+              <div class="r" id="cn-e"><span>Equilibrium cant <i>E</i></span><b id="pc-e">0.0 mm</b></div>
+              <div class="f">E = 11.82 · V² / R</div>
+              <div class="r" id="cn-c"><span>Applied cant <i>C</i></span><b>0 mm</b></div>
+              <div class="f">no cant through the S&amp;C</div>
+              <div class="r" id="cn-d"><span>Cant deficiency <i>D</i></span><b id="pc-d">0.0 mm</b></div>
+              <div class="f">D = E − C</div>
+              <div class="r" id="cn-l"><span>Limit (illustrative)</span><b id="pc-lim">≤ 110 mm</b></div>
+            </div>
+            <div class="pg" id="pg-ixl">
+              <svg class="sch" id="sch" viewBox="0 0 400 78" aria-hidden="true">
+                <path class="trk" d="M8 50 H392"/><path class="trk" d="M150 50 L222 18 H392"/>
+                <path class="sec" d="M64 50 H300 M150 50 L222 18 H300"/>
+                <path class="route" pathLength="1" d="M40 50 H150 L222 18 H392"/>
+                <g class="ac"><path d="M64 44 V56"/><path d="M300 44 V56"/><path d="M300 12 V24"/></g>
+                <g class="pts"><path d="M150 50 L164 50"/><path class="rev" d="M150 50 L162 44.7"/></g>
+                <g class="sig"><path d="M40 50 V34 M40 34 H46"/><circle class="head" cx="52" cy="34" r="5"/><g class="ji"><circle cx="61" cy="28" r="1.6"/><circle cx="66" cy="24.5" r="1.6"/><circle cx="71" cy="21" r="1.6"/></g></g>
+                <text x="34" y="70">S12</text><text x="140" y="70">101</text><text x="196" y="70">T101</text><text x="352" y="12">A</text><text x="352" y="44">Main</text>
+              </svg>
+              <div class="r" id="ix1"><span>Route S12 → A (diverging)</span><b class="st wht" id="ixs1">—</b></div>
+              <div class="r" id="ix2"><span>Points 101 · N → R</span><b class="st wht" id="ixs2">—</b></div>
+              <div class="r" id="ix3"><span>Track section T101</span><b class="st wht" id="ixs3">—</b></div>
+              <div class="r" id="ix4"><span>Flank protection 102</span><b class="st wht" id="ixs4">—</b></div>
+              <div class="r" id="ix5"><span>Route locking</span><b class="st wht" id="ixs5">—</b></div>
+              <div class="r" id="ix6"><span>Signal S12</span><b class="st red" id="ixs6">ON</b></div>
+              <div class="f">illustrative sequence, not a real control table</div>
+            </div>
+          </div>
           <div class="stamp" id="pc-stamp"><em class="note">Geometry consistent</em><span>Checked</span></div>
         </div>
         <div class="lockup" id="pc-lock" aria-hidden="true"><svg class="lk-mark" viewBox="0 0 1064 323" aria-hidden="true"><path fill="#0E6A8A" d="M16.0,66.0L16.0,66.0Q16.0,0.0 88.0,0.0L780.0,0.0Q791.0,0.0 798.0,10.0L867.0,107.0L784.0,107.0L753.0,66.0ZM16.0,86.0L89.0,86.0Q98.0,86.0 102.0,96.0Q106.0,108.0 120.0,108.0L295.0,108.0Q387.0,108.0 387.0,192.0L387.0,208.0Q387.0,283.0 298.0,283.0L0.0,283.0L31.0,224.0L295.0,224.0Q312.0,224.0 312.0,206.0L312.0,192.0Q312.0,174.0 295.0,174.0L77.0,174.0Q17.0,174.0 17.0,116.0Z"/><path fill="currentColor" d="M414.0,84.0L616.0,84.0L616.0,108.0L552.0,108.0L552.0,283.0L473.0,283.0L473.0,108.0L414.0,108.0ZM676.0,84.0L735.0,84.0L754.0,110.0L754.0,126.0L946.0,126.0L946.0,0.0L1024.0,0.0L1024.0,283.0L946.0,283.0L946.0,185.0L754.0,185.0L754.0,283.0L676.0,283.0Z"/></svg><div class="nm">Construction &amp; Engineering<small>Design · Assurance · Delivery</small></div></div>
@@ -693,7 +756,7 @@
   var cv=document.getElementById('turnout'); if(!cv||!cv.getContext)return;
   var band=document.getElementById('precision'), ctx=cv.getContext('2d');
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var C1='79,192,230', CT='159,178,186';
+  var C1='79,192,230', CT='159,178,186', CI='206,222,230';
   var MONO='"IBM Plex Mono", "Courier New", monospace';
   // ---------- geometry (metres): u along main line from switch toe, v across (diverging side negative) ----------
   var G=1.435, h=G/2, R=190, uX=Math.sqrt(2*R*G-G*G);
@@ -733,18 +796,33 @@
     for(var i=0;i<4;i++)L(q[i],q[(i+1)%4],0.8,'s');
   }
   // chainage ticks (right of main line)
-  var ticks=[]; for(var c=-20;c<=60;c+=10){ticks.push(c);L([c,5.9],[c,6.5],1,'t')}
-  L([U0,6.2],[U1,6.2],0.7,'t');
+  var ticks=[]; for(var c=-20;c<=60;c+=10){ticks.push(c);L([c,8.3],[c,8.9],1,'t')}
+  L([U0,8.6],[U1,8.6],0.7,'t');
+  // ---- interfaces layer ----
+  // OLE: twin-track cantilever masts outside the Up line, contact wires over each route
+  var masts=[26,52];
+  masts.forEach(function(mu){L([mu,6.2,0],[mu,6.2,5.8],1.6,'i');L([mu,6.2,5.2],[mu,-0.6,5.2],1.1,'i');L([mu,6.2,5.75],[mu,1.6,5.2],0.8,'i')});
+  P(function(u){return [u,0,4.7]},6,U1,2,0.7,'w'); P(function(u){return [u,T2,4.7]},6,U1,2,0.7,'w'); P(function(u){return [u,vc(u),4.7]},8,U1,1.5,0.7,'w');
+  // cable route (troughing) outside the masts
+  for(var cu=4;cu<U1;cu+=2){L([cu,6.95],[cu+1.4,6.95],0.9,'i');L([cu,7.35],[cu+1.4,7.35],0.9,'i')}
+  // point machine 101 beside the switch toe
+  (function(){var u0=0.6,u1=2.2,v0=-1.75,v1=-2.35,z=0.45,pts=[[u0,v0],[u1,v0],[u1,v1],[u0,v1]];
+    for(var i=0;i<4;i++){var a=pts[i],b=pts[(i+1)%4];L([a[0],a[1],0],[b[0],b[1],0],1,'i');L([a[0],a[1],z],[b[0],b[1],z],1,'i');L([a[0],a[1],0],[a[0],a[1],z],1,'i')}
+    L([1.4,-1.75,0.2],[1.4,-h,0.2],1,'i');})();
+  // axle counter heads bounding track section T101
+  var ACs=[[-14,-h],[34,-h],[34,vc(34)-h]];
+  ACs.forEach(function(a){L([a[0]-0.3,a[1],0.05],[a[0]+0.3,a[1],0.05],2.4,'i');L([a[0],a[1],0],[a[0],a[1]-0.5,0],1,'i')});
+
   // ---------- camera ----------
   var W=0,H=0,dpr=1,narrow=false;
   function size(){var r=cv.getBoundingClientRect();dpr=Math.min(2,window.devicePixelRatio||1);W=r.width;H=r.height;cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);narrow=W<760}
   function camera(t){
     var dr=reduce?0:Math.sin(t/8000)*1.6;
-    var Cm=narrow?[-6+dr,-11,13]:[-8+dr,-12,11.5], T=narrow?[20,0,0]:[22,-0.5,0];
+    var Cm=narrow?[-20+dr,-12,15]:[-24+dr,-13,14], T=[18,0,0];
     var f=[T[0]-Cm[0],T[1]-Cm[1],T[2]-Cm[2]],fl=Math.hypot(f[0],f[1],f[2]);f=[f[0]/fl,f[1]/fl,f[2]/fl];
     var r=[f[1],-f[0],0],rl=Math.hypot(r[0],r[1]);r=[r[0]/rl,r[1]/rl,0];
     var up=[r[1]*f[2]-r[2]*f[1],r[2]*f[0]-r[0]*f[2],r[0]*f[1]-r[1]*f[0]];
-    var foc=narrow?W*1.1:Math.min(W,H*1.9)*1.2, cx=narrow?W*0.5:W*0.66, cy=narrow?H*0.52:H*0.5;
+    var foc=narrow?W*1.18:Math.min(W,H*1.9)*1.3, cx=narrow?W*0.5:W*0.70, cy=H*0.5;
     return function(p){var d=[p[0]-Cm[0],p[1]-Cm[1],(p[2]||0)-Cm[2]];var z=d[0]*f[0]+d[1]*f[1]+d[2]*f[2];if(z<0.6)return null;
       var x=d[0]*r[0]+d[1]*r[1];var y=d[0]*up[0]+d[1]*up[1]+d[2]*up[2];return [cx+foc*x/z,cy-foc*y/z,z]};
   }
@@ -756,6 +834,31 @@
   function setT(el,v,key){if(last[key]!==v){last[key]=v;el.textContent=v}}
   // ---------- draw ----------
   var start=null, DUR=6000, vis=false, raf=0, done=false;
+  var ixl={sig:false,pm:'Normal'}, userTab=false, cycle=0;
+  var tabs={geo:$('tb-geo'),cant:$('tb-cant'),ixl:$('tb-ixl')}, pages={geo:$('pg-geo'),cant:$('pg-cant'),ixl:$('pg-ixl')};
+  function show(k){for(var n in pages){var on=n===k;pages[n].classList.toggle('act',on);tabs[n].setAttribute('aria-selected',on?'true':'false')}}
+  for(var tk in tabs)(function(k){tabs[k].addEventListener('click',function(){userTab=true;clearInterval(cycle);show(k)})})(tk);
+  function st(id,txt,cls){var b=$(id);b.textContent=txt;b.className='st '+cls}
+  var sch=$('sch'); function sc(){for(var i=0;i<arguments.length;i++)sch.classList.add(arguments[i])} function sx(c){sch.classList.remove(c)}
+  function on(id){$(id).classList.add('on')}
+  function cantAt(v){var E=11.82*v*v/R;setT($('pc-v'),Math.round(v)+' km/h','v');setT($('pc-e'),E.toFixed(1)+' mm','e');setT($('pc-d'),E.toFixed(1)+' mm','d')}
+  function finalState(){cantAt(40);['cn-v','cn-e','cn-c','cn-d','cn-l','ix1','ix2','ix3','ix4','ix5','ix6'].forEach(on);
+    $('pc-lim').textContent='≤ 110 mm  ✓';st('ixs1','SET','ok');st('ixs2','DETECTED R','ok');st('ixs3','CLEAR','ok');st('ixs4','LOCKED N','ok');st('ixs5','LOCKED','ok');st('ixs6','OFF · JI 1','grn');
+    ixl.sig=true;ixl.pm='Detected reverse';sc('rev','clr','set','off');rd.stamp.classList.add('on');rd.lock.classList.add('on')}
+  function sequence(){
+    var T=0; function at(ms,fn){T+=ms;setTimeout(fn,T)}
+    at(600,function(){if(!userTab)show('cant');['cn-v','cn-e','cn-c','cn-d','cn-l'].forEach(on);
+      var t0=performance.now();(function tick(){var p=Math.min(1,(performance.now()-t0)/1500);cantAt(40*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(tick);else $('pc-lim').textContent='≤ 110 mm  ✓'})()});
+    at(2600,function(){if(!userTab)show('ixl');on('ix1');st('ixs1','REQUEST','wht');sc('req')});
+    at(650,function(){on('ix2');st('ixs2','MOVING','wht');ixl.pm='Moving N → R';sc('mov')});
+    at(900,function(){st('ixs2','DETECTED R','ok');ixl.pm='Detected reverse';sx('mov');sc('rev');on('ix3');st('ixs3','CLEAR','ok');sc('clr')});
+    at(650,function(){on('ix4');st('ixs4','LOCKED N','ok')});
+    at(650,function(){on('ix5');st('ixs5','LOCKED','ok');st('ixs1','SET','ok');sx('req');sc('set')});
+    at(700,function(){on('ix6');st('ixs6','OFF · JI 1','grn');ixl.sig=true;sc('off')});
+    at(600,function(){rd.stamp.classList.add('on')});
+    at(500,function(){rd.lock.classList.add('on')});
+    at(6000,function(){if(userTab)return;var order=['geo','cant','ixl'],i=0;cycle=setInterval(function(){if(userTab)return clearInterval(cycle);i=(i+1)%3;show(order[i])},6500);show('geo')});
+  }
   function text(s,x,y,col,size,align){ctx.font='500 '+size+'px '+MONO;ctx.fillStyle=col;ctx.textAlign=align||'left';ctx.fillText(s,x,y)}
   function frame(t){
     if(start===null)start=t; var el=reduce?1e9:t-start;
@@ -767,9 +870,9 @@
     for(var i=0;i<segs.length;i++){var s=segs[i],A=Pj(s.a),B=Pj(s.b);if(!A||!B)continue;
       var df=Math.max(0.2,Math.min(1,1.5-A[2]/60)),a;
       if(s.m>front)a=0.05*df;
-      else{var near=Math.max(0,1-(front-s.m)/5);a=(s.k==='s'?0.5:s.k==='t'?0.45:0.92)*df+near*0.45;
-        var pd=Math.abs(s.m-pulse);if(pd<3.5&&s.k!=='s'&&s.k!=='t')a+=0.45*(1-pd/3.5)}
-      ctx.strokeStyle='rgba('+(s.k==='t'?CT:C1)+','+Math.min(1,a).toFixed(3)+')';
+      else{var near=Math.max(0,1-(front-s.m)/5);a=(s.k==='s'?0.5:s.k==='t'?0.45:s.k==='w'?0.22:s.k==='i'?0.62:0.92)*df+near*0.45*(s.k==='w'?0.3:1);
+        var pd=Math.abs(s.m-pulse);if(pd<3.5&&(s.k==='r'||s.k==='b'))a+=0.45*(1-pd/3.5)}
+      ctx.strokeStyle='rgba('+(s.k==='t'?CT:(s.k==='i'||s.k==='w')?CI:C1)+','+Math.min(1,a).toFixed(3)+')';
       ctx.lineWidth=s.w*(0.55+0.95*Math.min(1,16/A[2]));
       ctx.beginPath();ctx.moveTo(A[0],A[1]);ctx.lineTo(B[0],B[1]);ctx.stroke();
     }
@@ -777,12 +880,17 @@
     var fs=narrow?9:10.5;
     ticks.forEach(function(c){if(c>front)return;var p=Pj([c,7.0]);if(!p)return;text((c<0?'−':'')+'0+'+('000'+Math.abs(c)).slice(-3),p[0],p[1],'rgba('+CT+',.75)',fs,'center')});
     // callouts
-    function callout(pt,dx,dy,lines,showAt){if(front<showAt)return;var p=Pj(pt);if(!p)return;var al=Math.min(1,(front-showAt)/4);
+    function callout(pt,dx,dy,lines,showAt,c1){c1=c1||C1;if(front<showAt)return;var p=Pj(pt);if(!p)return;var al=Math.min(1,(front-showAt)/4);
       ctx.strokeStyle='rgba('+CT+','+(0.6*al)+')';ctx.lineWidth=1;ctx.beginPath();ctx.arc(p[0],p[1],3.5,0,6.283);ctx.moveTo(p[0],p[1]);ctx.lineTo(p[0]+dx,p[1]+dy);ctx.lineTo(p[0]+dx+(dx<0?-60:60),p[1]+dy);ctx.stroke();
-      lines.forEach(function(l,j){text(l,p[0]+dx+(dx<0?-60:0),p[1]+dy-6+j*(fs+4)+ (j?8:0),'rgba('+(j?CT:C1)+','+al+')',fs,'left')})}
-    callout([0,-h],narrow?-40:-70,narrow?-38:-52,['SWITCH TOE','Ch 0+000'],1);
+      lines.forEach(function(l,j){text(l,p[0]+dx+(dx<0?-60:0),p[1]+dy-6+j*(fs+4)+ (j?8:0),'rgba('+(j?CT:c1)+','+al+')',fs,'left')})}
+    callout([0,-h],narrow?-22:-30,narrow?-44:-62,['SWITCH TOE','Ch 0+000'],1);
     callout([uX,-h],narrow?-30:-60,narrow?46:60,['CROSSING NOSE','1 in 8.09 · Ch 0+023.3'],uX+1);
     callout([44,vc(44)-h],narrow?-20:-40,narrow?-42:-56,['R = 190.000 m'],46);
+    // interfaces
+    if(!narrow)callout([26,6.2,5.8],24,-26,['OLE MAST · ENE','2-track cantilever'],27,CI);
+    callout([1.4,-2.35,0.45],narrow?24:56,narrow?26:34,['PM 101 · CCS',ixl.pm],3,CI);
+    if(!narrow){callout([34,vc(34)-h],-30,64,['AXLE COUNTER · T101'],35,CI);callout([52,7.15],30,-30,['CABLE ROUTE · CCS'],53,CI)}
+
     // offset dimension at x = 40
     if(front>41){var al=Math.min(1,(front-41)/4),pa=Pj([40,0.0]),pb=Pj([40,vc(40)]);
       if(pa&&pb){ctx.strokeStyle='rgba(255,255,255,'+(0.55*al)+')';ctx.lineWidth=1;ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(pa[0],pa[1]);ctx.lineTo(pb[0],pb[1]);ctx.stroke();ctx.setLineDash([]);
@@ -800,7 +908,7 @@
     if(front>0.5){rd.off.classList.add('on');setT(rd.x,xu.toFixed(3),'x');setT(rd.y,(-vc(xu)).toFixed(3)+' m','y')}
     if(front>uX){rd.nose.classList.add('on')} if(front>uX+3){rd.ang.classList.add('on')}
     var nb=bearerU.filter(function(u){return u<front}).length; if(nb>0){rd.brg.classList.add('on');setT(rd.n,String(nb),'n')}
-    if(k>=1&&!done){done=true;rd.stamp.classList.add('on');setTimeout(function(){rd.lock.classList.add('on')},500)}
+    if(k>=1&&!done){done=true;if(reduce)finalState();else sequence()}
     if(!reduce&&vis)raf=requestAnimationFrame(frame);
   }
   function go(){cancelAnimationFrame(raf);raf=requestAnimationFrame(frame)}
