@@ -310,6 +310,22 @@
     .way,.svc,.case{transition:transform .2s ease,box-shadow .2s ease}
     .way:hover,.case:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.08)}
   }
+
+  /* ---------- polish: logo glint, rail underline on buttons, route progress ---------- */
+  .lg-glint{transform:translateX(0) skewX(-20deg);transform-box:view-box;opacity:0}
+  @media (prefers-reduced-motion:no-preference){
+    @keyframes glint{0%{transform:translateX(0) skewX(-20deg);opacity:1}4%{transform:translateX(1700px) skewX(-20deg);opacity:1}4.1%,100%{transform:translateX(1700px) skewX(-20deg);opacity:0}}
+    .lg-glint{animation:glint 20s cubic-bezier(.4,0,.2,1) 2.5s infinite}
+  }
+  .route-progress{position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left center;pointer-events:none}
+  .route-progress::after{content:"";position:absolute;right:-3px;top:-2px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+  .btn{position:relative;--rl:var(--accent)}
+  .hero .btn,.dark .btn,.precision .btn{--rl:#4fc0e6}
+  .btn::after{content:"";position:absolute;left:0;right:0;bottom:-9px;height:5px;pointer-events:none;
+    background:linear-gradient(var(--rl),var(--rl)) left top/100% 2px no-repeat, repeating-linear-gradient(90deg,var(--rl) 0 2px,transparent 2px 9px) left 2px/100% 3px no-repeat;
+    transform:scaleX(0);transform-origin:left center}
+  @media (prefers-reduced-motion:no-preference){.btn::after{transition:transform .45s cubic-bezier(.2,.7,.2,1)}}
+  .btn:hover::after,.btn:focus-visible::after,.btn:active::after{transform:scaleX(1)}
   @media (prefers-reduced-motion:no-preference){.btn,.copy{transition:background .15s,color .15s,filter .15s}}
 </style>
 <script type="application/ld+json">
@@ -321,7 +337,7 @@
 <header>
   <div class="wrap">
     <a class="mark" href="#top" aria-label="STH Construction & Engineering home">
-      <svg class="logo-mark" viewBox="0 0 1064 323" role="img" aria-label="STH"><path fill="#0E6A8A" d="M16.0,66.0L16.0,66.0Q16.0,0.0 88.0,0.0L780.0,0.0Q791.0,0.0 798.0,10.0L867.0,107.0L784.0,107.0L753.0,66.0ZM16.0,86.0L89.0,86.0Q98.0,86.0 102.0,96.0Q106.0,108.0 120.0,108.0L295.0,108.0Q387.0,108.0 387.0,192.0L387.0,208.0Q387.0,283.0 298.0,283.0L0.0,283.0L31.0,224.0L295.0,224.0Q312.0,224.0 312.0,206.0L312.0,192.0Q312.0,174.0 295.0,174.0L77.0,174.0Q17.0,174.0 17.0,116.0Z"/><path fill="currentColor" d="M414.0,84.0L616.0,84.0L616.0,108.0L552.0,108.0L552.0,283.0L473.0,283.0L473.0,108.0L414.0,108.0ZM676.0,84.0L735.0,84.0L754.0,110.0L754.0,126.0L946.0,126.0L946.0,0.0L1024.0,0.0L1024.0,283.0L946.0,283.0L946.0,185.0L754.0,185.0L754.0,283.0L676.0,283.0Z"/></svg>
+      <svg class="logo-mark" viewBox="0 0 1064 323" role="img" aria-label="STH"><path fill="#0E6A8A" d="M16.0,66.0L16.0,66.0Q16.0,0.0 88.0,0.0L780.0,0.0Q791.0,0.0 798.0,10.0L867.0,107.0L784.0,107.0L753.0,66.0ZM16.0,86.0L89.0,86.0Q98.0,86.0 102.0,96.0Q106.0,108.0 120.0,108.0L295.0,108.0Q387.0,108.0 387.0,192.0L387.0,208.0Q387.0,283.0 298.0,283.0L0.0,283.0L31.0,224.0L295.0,224.0Q312.0,224.0 312.0,206.0L312.0,192.0Q312.0,174.0 295.0,174.0L77.0,174.0Q17.0,174.0 17.0,116.0Z"/><path fill="currentColor" d="M414.0,84.0L616.0,84.0L616.0,108.0L552.0,108.0L552.0,283.0L473.0,283.0L473.0,108.0L414.0,108.0ZM676.0,84.0L735.0,84.0L754.0,110.0L754.0,126.0L946.0,126.0L946.0,0.0L1024.0,0.0L1024.0,283.0L946.0,283.0L946.0,185.0L754.0,185.0L754.0,283.0L676.0,283.0Z"/><defs><clipPath id="lg-clip"><path d="M16.0,66.0L16.0,66.0Q16.0,0.0 88.0,0.0L780.0,0.0Q791.0,0.0 798.0,10.0L867.0,107.0L784.0,107.0L753.0,66.0ZM16.0,86.0L89.0,86.0Q98.0,86.0 102.0,96.0Q106.0,108.0 120.0,108.0L295.0,108.0Q387.0,108.0 387.0,192.0L387.0,208.0Q387.0,283.0 298.0,283.0L0.0,283.0L31.0,224.0L295.0,224.0Q312.0,224.0 312.0,206.0L312.0,192.0Q312.0,174.0 295.0,174.0L77.0,174.0Q17.0,174.0 17.0,116.0Z"/><path d="M414.0,84.0L616.0,84.0L616.0,108.0L552.0,108.0L552.0,283.0L473.0,283.0L473.0,108.0L414.0,108.0ZM676.0,84.0L735.0,84.0L754.0,110.0L754.0,126.0L946.0,126.0L946.0,0.0L1024.0,0.0L1024.0,283.0L946.0,283.0L946.0,185.0L754.0,185.0L754.0,283.0L676.0,283.0Z"/></clipPath><linearGradient id="lg-grad" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".95"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><g clip-path="url(#lg-clip)" aria-hidden="true"><rect class="lg-glint" x="-420" y="-40" width="300" height="420" fill="url(#lg-grad)"/></g></svg>
       <span class="name">Construction &amp; Engineering<small>Business development · Rail · Civils · Kent, UK</small></span>
     </a>
     <nav aria-label="Sections">
@@ -333,6 +349,7 @@
       <a href="#contact" class="always">Contact</a>
     </nav>
   </div>
+  <div class="route-progress" aria-hidden="true"></div>
 </header>
 
 <main id="top">
@@ -991,6 +1008,14 @@
   document.addEventListener('visibilitychange',function(){if(document.hidden)cancelAnimationFrame(raf);else if(vis)go()});
   requestAnimationFrame(frame);
 })();
+</script>
+<script>
+  (function(){
+    var bar=document.querySelector('.route-progress'); if(!bar)return; var tick=false;
+    function upd(){tick=false;var d=document.documentElement,max=d.scrollHeight-d.clientHeight,p=max>0?(window.scrollY||d.scrollTop)/max:0;bar.style.transform='scaleX('+Math.max(0,Math.min(1,p)).toFixed(4)+')'}
+    function req(){if(!tick){tick=true;requestAnimationFrame(upd)}}
+    window.addEventListener('scroll',req,{passive:true}); window.addEventListener('resize',req); upd();
+  })();
 </script>
 </body>
 </html>
