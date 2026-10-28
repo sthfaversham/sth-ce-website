@@ -251,6 +251,8 @@
   .alignment .rail{stroke-width:1.5;opacity:.42}
   .alignment .cl{stroke-width:1;opacity:.35;stroke-dasharray:6 10}
   .alignment .draw{stroke-dasharray:1;stroke-dashoffset:0}
+  .alignment .sleepers line{stroke:var(--accent);stroke-width:1;opacity:.32;vector-effect:non-scaling-stroke}
+  .alignment .pulse{stroke:#6cc4e3;stroke-width:1.8;opacity:0;stroke-dasharray:.07 .93;stroke-dashoffset:.07}
   .strip figure img{transform-origin:center}
   @media (prefers-reduced-motion:no-preference){
     @keyframes kb{from{transform:scale(1.02) translate(0,0)}to{transform:scale(1.12) translate(-2%,-1.5%)}}
@@ -266,6 +268,12 @@
     .alignment.pre .draw{stroke-dashoffset:1}
     .alignment.in .draw{animation:draw 2.6s cubic-bezier(.4,0,.2,1) both}
     .alignment.in .draw.r2{animation-delay:.15s}.alignment.in .cl{animation:rise 1s 1.6s both}
+    @keyframes tick{from{opacity:0}to{opacity:.32}}
+    .alignment.pre .sleepers line{opacity:0}
+    .alignment.in .sleepers line{animation:tick .35s ease both;animation-delay:var(--sd,0s)}
+    @keyframes run{0%{stroke-dashoffset:.07;opacity:0}6%{opacity:.5}88%{opacity:.5}100%{stroke-dashoffset:-1;opacity:0}}
+    .alignment.in .pulse{animation:run 7s cubic-bezier(.45,0,.55,1) 3s infinite}
+    .alignment.in .pulse+.pulse{animation-delay:3.08s}
     @keyframes drift{from{transform:scale(1)}to{transform:scale(1.08)}}
     .strip figure img{animation:drift 14s ease-in-out infinite alternate}
     .strip figure:nth-child(2) img{animation-delay:-5s}.strip figure:nth-child(3) img{animation-delay:-9s}
@@ -448,6 +456,9 @@
       <path class="rail draw" pathLength="1" d="M-20 330 C 260 330, 420 300, 600 220 S 960 80, 1220 70"/>
       <path class="rail draw r2" pathLength="1" d="M-20 352 C 262 352, 426 322, 608 242 S 966 102, 1220 92"/>
       <path class="cl" d="M-20 341 C 261 341, 423 311, 604 231 S 963 91, 1220 81"/>
+      <g class="sleepers"></g>
+      <path class="pulse" pathLength="1" d="M-20 330 C 260 330, 420 300, 600 220 S 960 80, 1220 70"/>
+      <path class="pulse" pathLength="1" d="M-20 352 C 262 352, 426 322, 608 242 S 966 102, 1220 92"/>
     </svg>
     <div class="wrap">
       <p class="label"><b>02</b> · How I work</p>
@@ -627,6 +638,21 @@
 </script>
 
 
+<script>
+  (function(){
+    var svg=document.querySelector('.alignment'); if(!svg)return;
+    var rails=svg.querySelectorAll('.rail'), g=svg.querySelector('.sleepers'); if(rails.length<2||!g||!rails[0].getTotalLength)return;
+    var a=rails[0],b=rails[1],la=a.getTotalLength(),lb=b.getTotalLength(),n=64,ns='http://www.w3.org/2000/svg';
+    for(var i=1;i<n;i++){
+      var t=i/n,p=a.getPointAtLength(la*t),q=b.getPointAtLength(lb*t),dx=q.x-p.x,dy=q.y-p.y;
+      var l=document.createElementNS(ns,'line');
+      l.setAttribute('x1',(p.x-dx*0.35).toFixed(1));l.setAttribute('y1',(p.y-dy*0.35).toFixed(1));
+      l.setAttribute('x2',(q.x+dx*0.35).toFixed(1));l.setAttribute('y2',(q.y+dy*0.35).toFixed(1));
+      l.style.setProperty('--sd',(0.15+t*2.4).toFixed(2)+'s');
+      g.appendChild(l);
+    }
+  })();
+</script>
 <script>
   (function(){
     var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
