@@ -220,6 +220,9 @@
   .calc .r b{color:#e6ecee;font-weight:500}
   .calc .r i{font-style:normal;color:#5f7a86}
   .calc .f{grid-column:1/-1;color:#5f7a86;font-size:.74rem;margin:-2px 0 4px}
+  .pc-replay{position:absolute;right:max(16px,env(safe-area-inset-right,0px));bottom:14px;z-index:2;font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#9fb2ba;background:rgba(8,16,20,.75);border:1px solid #1c3540;padding:7px 12px;cursor:pointer}
+  .pc-replay:hover,.pc-replay:focus-visible{color:#e6ecee;border-color:#4fc0e6}
+  @media (prefers-reduced-motion:reduce){.pc-replay{display:none!important}}
   .calc .tabs{display:flex;gap:0;margin:-2px 0 8px;border-bottom:1px solid #1c3540}
   .calc .tabs button{font:inherit;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:#5f7a86;background:none;border:0;border-bottom:2px solid transparent;padding:6px 0;margin-right:14px;cursor:pointer}
   .calc .tabs button:last-child{margin-right:0}
@@ -430,6 +433,7 @@
       </div>
     </div>
     <canvas id="turnout" aria-hidden="true"></canvas>
+    <button type="button" class="pc-replay" id="pc-replay" hidden>↻ Replay</button>
   </section>
 
   <section class="band" id="services">
@@ -872,7 +876,7 @@
     [24900,function(){on('if5');st('ifs5','CLEAR ✓','ok')}],
     [25600,function(){on('if6');st('ifs6','CLEAR ✓','ok')}],
     [27400,function(){rd.stamp.classList.add('on')}],
-    [END,function(){rd.lock.classList.add('on');done=true}],
+    [END,function(){rd.lock.classList.add('on');done=true;if(btn&&!reduce)btn.hidden=false}],
     [END+7000,function(){if(userTab)return;var o=['geo','cant','ixl','ifc'],i=0;showP('geo');cycle=setInterval(function(){if(userTab)return clearInterval(cycle);i=(i+1)%4;show(o[i])},9000)}]
   ], evN=0;
   // ---------- drawing ----------
@@ -962,14 +966,28 @@
     var nb=bearerU.filter(function(u){return u<ft}).length; if(nb>0){rd.brg.classList.add('on');setT(rd.n,String(nb),'n')}
     if(!reduce&&vis)raf=requestAnimationFrame(frame);
   }
+  var calcEl=document.querySelector('#precision .calc'), btn=$('pc-replay');
+  var SNAP=[].map.call(calcEl.querySelectorAll('*'),function(n){return [n,n.getAttribute('class')]}).concat([[rd.lock,rd.lock.getAttribute('class')]]);
+  var TXT=['pc-ch','pc-x','pc-y','pc-n','pc-v','pc-e','pc-d','pc-lim','ixs1','ixs2','ixs3','ixs4','ixs5','ixs6','ifs1','ifs2','ifs3','ifs4','ifs5','ifs6'].map(function(id){var n=$(id);return [n,n.textContent]});
+  function replay(){
+    clearInterval(cycle); SNAP.forEach(function(p){if(p[1]===null)p[0].removeAttribute('class');else p[0].setAttribute('class',p[1])});
+    TXT.forEach(function(p){p[0].textContent=p[1]}); show('geo'); last={}; ixl={sig:false,pm:'Normal'}; userTab=false; page='geo'; done=false; evN=0; start=null;
+    if(btn)btn.hidden=true; go();
+  }
+  if(btn)btn.addEventListener('click',replay);
   function finalState(){EV.forEach(function(e){e[1]()});evN=EV.length;show('geo');userTab=true;clearInterval(cycle)}
   function go(){cancelAnimationFrame(raf);raf=requestAnimationFrame(frame)}
   size();
   var ro=window.ResizeObserver?new ResizeObserver(function(){size();if(reduce||!vis)requestAnimationFrame(frame)}):null; if(ro)ro.observe(cv);
   if(reduce||!('IntersectionObserver' in window)){vis=true;if(reduce){el=1e9;finalState()}requestAnimationFrame(frame);return}
-  var played=false;
-  new IntersectionObserver(function(es){es.forEach(function(e){vis=e.isIntersecting;
-    if(vis){if(!played){played=true;start=null}go()}else cancelAnimationFrame(raf)})},{threshold:0.3}).observe(band);
+  var played=false, awayAt=0;
+  new IntersectionObserver(function(es){es.forEach(function(e){
+    if(e.intersectionRatio>=0.3){ vis=true;
+      if(!played){played=true;start=null;go()}
+      else if(awayAt&&performance.now()-awayAt>1500&&el>4000){awayAt=0;replay()}
+      else {awayAt=0;go()} }
+    else if(!e.isIntersecting){ vis=false; cancelAnimationFrame(raf); awayAt=performance.now() }
+  })},{threshold:[0,0.3]}).observe(band);
   document.addEventListener('visibilitychange',function(){if(document.hidden)cancelAnimationFrame(raf);else if(vis)go()});
   requestAnimationFrame(frame);
 })();
