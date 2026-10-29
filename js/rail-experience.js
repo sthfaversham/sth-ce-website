@@ -436,19 +436,19 @@ function apply(p) {
 }
 
 // ---------- UI ----------
-const PHASES = ['Project initiation', 'Development & selection', 'Project design', 'Project delivery', 'Project close', 'How STH helps'];
+const PHASES = ['Design development', 'Constructability', 'Integration & assurance', 'Delivery & commercial insight', 'STH services'];
 function ui(p) {
   barEl.style.transform = `scaleX(${p.toFixed(4)})`;
   let active = 0, vis = 0;
   stages.forEach((s, i) => {
     const a = +s.dataset.from, b = +s.dataset.to, last = i === stages.length - 1;
     const o = last ? span(p, a, a + 0.03) : (i === 0 ? 1 - span(p, b - 0.03, b) : win(p, a, b, 0.03));
-    s.style.opacity = o.toFixed(3); s.style.transform = `translateY(${((1 - o) * 18).toFixed(1)}px)`;
+    s.style.opacity = o.toFixed(3);
     s.style.visibility = o > 0.01 ? 'visible' : 'hidden'; s.inert = o < 0.5;
     if (p >= a - 0.01) active = i; vis = Math.max(vis, o);
   });
   stageEl.style.setProperty('--veil', (0.25 + 0.75 * vis).toFixed(3));
-  stageNumEl.textContent = active < 5 ? `PACE ${active + 1} / 5 · ${PHASES[active]}` : PHASES[5];
+  stageNumEl.textContent = active < 4 ? `0${active + 1} / 04 · ${PHASES[active]}` : PHASES[4];
   dots.forEach((d, i) => d.setAttribute('aria-current', i === active ? 'step' : 'false'));
   steps.forEach(li => { const a = +li.dataset.a, b = +li.dataset.b; li.classList.toggle('now', p >= a && p < b); li.classList.toggle('done', p >= b); });
   for (const L of LABELS) {

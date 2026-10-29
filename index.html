@@ -422,6 +422,20 @@
   .xp-steps li.now{color:#f3f6f6}.xp-steps li.now::after{background:#4fc0e6;border-color:#4fc0e6;box-shadow:0 0 10px #4fc0e6}
   .xp-steps li.done{color:#4fc0e6}.xp-steps li.done::after{background:#4fc0e6;border-color:#4fc0e6}
   @media (max-width:760px){.xp-steps{grid-template-columns:1fr 1fr;font-size:.66rem;gap:3px 10px}.xp-stage>p.xp-sth{font-size:.86rem !important}}
+
+  /* four phase panels: prominent headline, small technical label, secondary description */
+  .xp-stage:not(.xp-services){max-width:540px}
+  .xp-stage:not(.xp-services) .label{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:#8fb0ba}
+  .xp-stage:not(.xp-services) h2{font-size:clamp(2.1rem,4.4vw,3.4rem);line-height:1;margin-top:14px;max-width:14ch}
+  .xp-stage:not(.xp-services)>p:not(.label){font-size:1rem;line-height:1.6;color:#a9bcc2;max-width:44ch;margin-top:18px}
+  @media (max-width:760px){
+    .xp-stage:not(.xp-services) .label{font-size:.66rem}
+    .xp-stage:not(.xp-services) h2{font-size:clamp(1.9rem,8.4vw,2.4rem);max-width:none}
+    .xp-stage:not(.xp-services)>p:not(.label){font-size:.95rem;line-height:1.55;color:#b6c7cc}
+    .xp-bar{display:none}
+    .xp-stagenum{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  }
+  .xp .nw{white-space:nowrap}
   /* static presentation: reduced motion, no WebGL, or script failure */
   .xp-static{height:auto}
   .xp-static .xp-sticky{position:relative;height:auto;min-height:100svh}
@@ -487,44 +501,25 @@
       <div class="xp-veil" aria-hidden="true"></div>
       <div class="xp-labels" aria-hidden="true"></div>
       <div class="xp-stages">
-        <div class="xp-stage" data-from="0" data-to="0.12">
-          <p class="label"><b>PACE 1</b> · Project initiation</p>
-          <h2 id="xp-h">Define the need.</h2>
-          <p>The problem, the outputs and the constraints are pinned down: survey, site boundary, access and budget.</p>
-          <p class="xp-sth"><b>Where STH helps:</b> early delivery and commercial input, so the remit is buildable and affordable.</p>
+        <div class="xp-stage" data-from="0" data-to="0.395">
+          <p class="label"><b>01</b> / Design development</p>
+          <h2 id="xp-h">Precision begins with the geometry.</h2>
+          <p>From alignment and tolerances to critical interfaces, sound engineering decisions start with a clear understanding of the design.</p>
         </div>
-        <div class="xp-stage" data-from="0.13" data-to="0.25">
-          <p class="label"><b>PACE 2</b> · Development &amp; project selection</p>
-          <h2>Develop the options. Pick one.</h2>
-          <p>Feasibility options are worked up and compared, then a single option is selected to take forward.</p>
-          <p class="xp-sth"><b>Where STH helps:</b> buildability, access and possession input before an option is locked in.</p>
+        <div class="xp-stage" data-from="0.415" data-to="0.6">
+          <p class="label"><b>02</b> / Constructability</p>
+          <h2>Engineered for <span class="nw">real-world</span> delivery.</h2>
+          <p>Access, methodology, sequencing and programme considered from the outset, with practical construction knowledge informing every decision.</p>
         </div>
-        <div class="xp-stage" data-from="0.26" data-to="0.39">
-          <p class="label"><b>PACE 3</b> · Project design</p>
-          <h2>Design it properly.</h2>
-          <p>Outline then detailed design, design checks and approval, consents, and access and possessions planned.</p>
-          <p class="xp-sth"><b>Where STH helps:</b> interface management and design assurance, so every interface is owned before it reaches site.</p>
+        <div class="xp-stage" data-from="0.6" data-to="0.835">
+          <p class="label"><b>03</b> / Integration &amp; assurance</p>
+          <h2>Every interface accounted for.</h2>
+          <p>Bringing permanent way, civils and railway systems together through coordinated engineering, technical challenge and effective interface management.</p>
         </div>
-        <div class="xp-stage" data-from="0.43" data-to="0.835">
-          <p class="label"><b>PACE 4</b> · Project delivery</p>
-          <h2>Build it in the right order.</h2>
-          <ol class="xp-steps">
-            <li data-a="0.44" data-b="0.48">Formation</li>
-            <li data-a="0.48" data-b="0.52">Bottom ballast</li>
-            <li data-a="0.52" data-b="0.6">Bearers</li>
-            <li data-a="0.6" data-b="0.71">Rails, switches &amp; crossing</li>
-            <li data-a="0.7" data-b="0.73">Baseplates &amp; fastenings</li>
-            <li data-a="0.73" data-b="0.765">Top ballast</li>
-            <li data-a="0.765" data-b="0.8">Tamping</li>
-            <li data-a="0.8" data-b="0.83">Test &amp; commission</li>
-          </ol>
-          <p class="xp-sth"><b>Where STH helps:</b> methods, sequencing and site engineering that work inside the possession.</p>
-        </div>
-        <div class="xp-stage" data-from="0.84" data-to="0.91">
-          <p class="label"><b>PACE 5</b> · Project close</p>
-          <h2>Hand it back right.</h2>
-          <p>Handback, as-built records, handover to maintenance and close-out.</p>
-          <p class="xp-sth"><b>Where STH helps:</b> completion documentation and handback packs, done properly first time.</p>
+        <div class="xp-stage" data-from="0.84" data-to="0.915">
+          <p class="label"><b>04</b> / Delivery &amp; commercial insight</p>
+          <h2>Experience beyond the drawing.</h2>
+          <p>Combining practical engineering expertise, commercial understanding and leadership experience to support successful projects and stronger businesses.</p>
         </div>
         <div class="xp-stage xp-services" data-from="0.92" data-to="1">
           <p class="label"><b>STH</b> · Across the whole lifecycle</p>
@@ -538,15 +533,14 @@
         </div>
       </div>
       <div class="xp-hud">
-        <div class="xp-stagenum">PACE 1 / 5 · Project initiation</div>
+        <div class="xp-stagenum">01 / 04 · Design development</div>
         <div class="xp-bar" aria-hidden="true"><i></i></div>
-        <div class="xp-dots" role="group" aria-label="Jump to a PACE phase">
-          <button type="button" data-p="0.06" aria-label="PACE 1, project initiation">1</button>
-          <button type="button" data-p="0.19" aria-label="PACE 2, development and project selection">2</button>
-          <button type="button" data-p="0.33" aria-label="PACE 3, project design">3</button>
-          <button type="button" data-p="0.6" aria-label="PACE 4, project delivery">4</button>
-          <button type="button" data-p="0.875" aria-label="PACE 5, project close">5</button>
-          <button type="button" data-p="0.97" aria-label="How STH helps">STH</button>
+        <div class="xp-dots" role="group" aria-label="Jump to a phase">
+          <button type="button" data-p="0.2" aria-label="01, design development">01</button>
+          <button type="button" data-p="0.52" aria-label="02, constructability">02</button>
+          <button type="button" data-p="0.72" aria-label="03, integration and assurance">03</button>
+          <button type="button" data-p="0.875" aria-label="04, delivery and commercial insight">04</button>
+          <button type="button" data-p="0.97" aria-label="STH services">STH</button>
         </div>
         <a class="xp-skip" href="#growth">Skip <span aria-hidden="true">↓</span><span class="vh"> the animation</span></a>
       </div>
