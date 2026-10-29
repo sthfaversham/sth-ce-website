@@ -189,6 +189,10 @@
   .hero .facts{background:rgba(14,17,20,.55);border-color:rgba(255,255,255,.18);backdrop-filter:blur(4px)}
   .hero .fact{border-color:rgba(255,255,255,.18)}
   .hero .fact .t{color:#c9ced3}
+  .hero{background-image:url('images/hero-dlr-1920.jpg');background-position:center 55%}
+  .hero .hero-bg{background-position:center 55%}
+  @media (max-width:1280px){.hero{background-image:url('images/hero-dlr-1280.jpg')}}
+  @media (max-width:640px){.hero{background-image:url('images/hero-dlr-mobile.jpg');background-position:center}.hero .hero-bg{background-position:center}}
   .hero .credit{position:absolute;right:16px;bottom:10px;font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;color:#9aa2a8;text-transform:uppercase}
   /* photo strip */
   .strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
@@ -471,7 +475,7 @@
 </header>
 
 <main id="top">
-  <section class="hero" style="background-image:url('images/hero-ctrl-viaduct.jpg')">
+  <section class="hero">
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="wrap grid">
       <div>
@@ -491,7 +495,7 @@
         <div class="fact"><div class="n">MD</div><div class="t">Former MD of a Network Rail Principal Contractor</div></div>
       </div>
     </div>
-    <span class="credit">New track, CTRL St Pancras approach viaduct</span>
+    <span class="credit">Switches &amp; crossings, DLR Canary Wharf</span>
   </section>
 
   <section class="xp" id="xp" aria-labelledby="xp-h">
