@@ -351,7 +351,7 @@
   @media (prefers-reduced-motion:no-preference){.btn,.copy{transition:background .15s,color .15s,filter .15s}}
 
   /* ===== 3D turnout experience ===== */
-  .xp{position:relative;height:640vh;background:#061019;color:#e6f1f4}
+  .xp{position:relative;height:900vh;background:#061019;color:#e6f1f4}
   .xp-sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;
     background:radial-gradient(ellipse at 65% 45%,rgba(30,110,140,.22),transparent 60%),
       repeating-linear-gradient(0deg,rgba(79,192,230,.05) 0 1px,transparent 1px 64px),
@@ -370,7 +370,7 @@
   @media (max-width:760px){.xp-veil{background:linear-gradient(180deg,rgba(6,16,25,.92) 0%,rgba(6,16,25,.7) 42%,rgba(6,16,25,0) 66%)}}
   .xp-stages{position:absolute;inset:0;display:grid;align-items:center;padding:96px max(20px,calc((100% - 1100px)/2)) 110px;pointer-events:none}
   .xp-stage{grid-area:1/1;max-width:500px;pointer-events:auto;opacity:0;visibility:hidden;text-shadow:0 2px 26px rgba(6,16,25,.95)}
-  .xp-stage.xp-hero{max-width:640px;opacity:1;visibility:visible}
+  .xp-stage:first-child{opacity:1;visibility:visible}
   .xp .label{color:#9fb6bf}.xp .label b{color:#4fc0e6}
   .xp .rule{background:#4fc0e6}
   .xp h1{color:#f3f6f6;font-size:clamp(2.4rem,5vw,4.3rem)}
@@ -401,7 +401,7 @@
   .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
   .xp-concept{position:absolute;right:max(20px,calc((100% - 1100px)/2));bottom:58px;margin:0;font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(159,182,191,.75)}
   @media (max-width:760px){
-    .xp{height:560vh}
+    .xp{height:820vh}
     .xp-stages{align-items:start;padding:84px 18px 96px}
     .xp-stage h1{font-size:clamp(2.1rem,9vw,2.9rem)}
     .xp .lede{font-size:.98rem}
@@ -412,6 +412,16 @@
     .xp-concept{top:auto;bottom:52px;left:18px;right:18px}
     .xp-hud{bottom:16px;gap:12px}
   }
+
+  .xp-sth{font-size:.95rem !important;color:#a9c9d3 !important;border-left:2px solid #4fc0e6;padding-left:12px;margin-top:16px !important}
+  .xp-sth b{color:#e6f1f4;font-weight:600}
+  .xp-steps{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:4px;font-family:var(--mono);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:#6f8b95;counter-reset:st}
+  .xp-steps li{counter-increment:st;display:flex;gap:10px;align-items:center;transition:color .25s}
+  .xp-steps li::before{content:counter(st,decimal-leading-zero);width:2.2em;color:inherit;opacity:.7}
+  .xp-steps li::after{content:"";flex:0 0 auto;width:6px;height:6px;border-radius:50%;background:transparent;border:1px solid currentColor}
+  .xp-steps li.now{color:#f3f6f6}.xp-steps li.now::after{background:#4fc0e6;border-color:#4fc0e6;box-shadow:0 0 10px #4fc0e6}
+  .xp-steps li.done{color:#4fc0e6}.xp-steps li.done::after{background:#4fc0e6;border-color:#4fc0e6}
+  @media (max-width:760px){.xp-steps{grid-template-columns:1fr 1fr;font-size:.66rem;gap:3px 10px}.xp-stage>p.xp-sth{font-size:.86rem !important}}
   /* static presentation: reduced motion, no WebGL, or script failure */
   .xp-static{height:auto}
   .xp-static .xp-sticky{position:relative;height:auto;min-height:100svh}
@@ -447,41 +457,77 @@
 </header>
 
 <main id="top">
-  <section class="xp" id="xp" aria-label="Interactive concept visualisation: a railway turnout assembled as you scroll">
+  <section class="hero" style="background-image:url('images/hero-ctrl-viaduct.jpg')">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="wrap grid">
+      <div>
+        <p class="label"><b>STH-CE</b> · Business development &amp; engineering consultancy</p>
+        <div class="rule"></div>
+        <h1>Growth and work-winning support for rail and civils contractors.</h1>
+        <p class="lede" style="margin-top:22px">Business and growth advisory for contractor owners. Tender and commercial support. Railway engineering, interface management and design assurance for programmes and clients. From someone who has priced the work, won it and run the company that delivered it.</p>
+        <div class="ctas">
+          <a class="btn" href="#contact">Talk to Steve</a>
+          <a class="btn ghost" href="#services">What I do</a>
+        </div>
+      </div>
+      <div class="facts" aria-label="Track record">
+        <div class="fact"><div class="n">25+</div><div class="t">years in UK rail and civils</div></div>
+        <div class="fact"><div class="n">12 yrs</div><div class="t">running a rail contractor as MD</div></div>
+        <div class="fact"><div class="n">2000</div><div class="t">on the railway since CTRL Phase 1</div></div>
+        <div class="fact"><div class="n">MD</div><div class="t">Former MD of a Network Rail Principal Contractor</div></div>
+      </div>
+    </div>
+    <span class="credit">New track, CTRL St Pancras approach viaduct</span>
+  </section>
+
+  <section class="xp" id="xp" aria-labelledby="xp-h">
     <div class="xp-sticky">
       <canvas id="xp-canvas" aria-hidden="true"></canvas>
-      <img class="xp-poster" src="images/xp-poster.jpg" alt="Concept visualisation of a railway turnout: concrete bearers, steel rails, switch blades and crossing on ballast" loading="lazy">
+      <img class="xp-poster" src="images/xp-poster.jpg" alt="Concept visualisation of a railway turnout on ballast: concrete bearers, steel rails, switch blades and crossing" loading="lazy">
       <div class="xp-veil" aria-hidden="true"></div>
       <div class="xp-labels" aria-hidden="true"></div>
       <div class="xp-stages">
-        <div class="xp-stage xp-hero" data-from="0" data-to="0.17">
-          <p class="label"><b>STH-CE</b> · Business development &amp; engineering consultancy</p>
-          <div class="rule"></div>
-          <h1>Growth and work-winning support for rail and civils contractors.</h1>
-          <p class="lede">Business and growth advisory for contractor owners. Tender and commercial support. Railway engineering, interface management and design assurance for programmes and clients. From someone who has priced the work, won it and run the company that delivered it.</p>
-          <div class="ctas">
-            <a class="btn" href="#contact">Discuss your project</a>
-            <a class="btn ghost" href="#services">What I do</a>
-          </div>
-          <p class="xp-cue" aria-hidden="true">Scroll to build the railway <span>↓</span></p>
+        <div class="xp-stage" data-from="0" data-to="0.12">
+          <p class="label"><b>PACE 1</b> · Project initiation</p>
+          <h2 id="xp-h">Define the need.</h2>
+          <p>The problem, the outputs and the constraints are pinned down: survey, site boundary, access and budget.</p>
+          <p class="xp-sth"><b>Where STH helps:</b> early delivery and commercial input, so the remit is buildable and affordable.</p>
         </div>
-        <div class="xp-stage" data-from="0.19" data-to="0.37">
-          <p class="label"><b>01</b> · Setting out &amp; bearers</p>
-          <h2>Every bearer in the right place.</h2>
-          <p>Setting out comes first. Then the bearers go down in sequence, square to the main line and lengthening through the turnout.</p>
+        <div class="xp-stage" data-from="0.13" data-to="0.25">
+          <p class="label"><b>PACE 2</b> · Development &amp; project selection</p>
+          <h2>Develop the options. Pick one.</h2>
+          <p>Feasibility options are worked up and compared, then a single option is selected to take forward.</p>
+          <p class="xp-sth"><b>Where STH helps:</b> buildability, access and possession input before an option is locked in.</p>
         </div>
-        <div class="xp-stage" data-from="0.39" data-to="0.6">
-          <p class="label"><b>02</b> · Rails, switch &amp; crossing</p>
-          <h2>Steel goes in, in order.</h2>
-          <p>Stock rails, switch blades, closure rails, the crossing and check rails, then baseplates and fastenings. A build sequence a site team would recognise.</p>
+        <div class="xp-stage" data-from="0.26" data-to="0.39">
+          <p class="label"><b>PACE 3</b> · Project design</p>
+          <h2>Design it properly.</h2>
+          <p>Outline then detailed design, design checks and approval, consents, and access and possessions planned.</p>
+          <p class="xp-sth"><b>Where STH helps:</b> interface management and design assurance, so every interface is owned before it reaches site.</p>
         </div>
-        <div class="xp-stage" data-from="0.62" data-to="0.83">
-          <p class="label"><b>03</b> · Checked in 3D</p>
-          <h2>Correct on paper. Right on site.</h2>
-          <p>Seeing the build in three dimensions is where access, sequencing and interface problems get caught: in a meeting, not in a possession.</p>
+        <div class="xp-stage" data-from="0.43" data-to="0.835">
+          <p class="label"><b>PACE 4</b> · Project delivery</p>
+          <h2>Build it in the right order.</h2>
+          <ol class="xp-steps">
+            <li data-a="0.44" data-b="0.48">Formation</li>
+            <li data-a="0.48" data-b="0.52">Bottom ballast</li>
+            <li data-a="0.52" data-b="0.6">Bearers</li>
+            <li data-a="0.6" data-b="0.71">Rails, switches &amp; crossing</li>
+            <li data-a="0.7" data-b="0.73">Baseplates &amp; fastenings</li>
+            <li data-a="0.73" data-b="0.765">Top ballast</li>
+            <li data-a="0.765" data-b="0.8">Tamping</li>
+            <li data-a="0.8" data-b="0.83">Test &amp; commission</li>
+          </ol>
+          <p class="xp-sth"><b>Where STH helps:</b> methods, sequencing and site engineering that work inside the possession.</p>
         </div>
-        <div class="xp-stage xp-services" data-from="0.86" data-to="1">
-          <p class="label"><b>04</b> · How STH helps</p>
+        <div class="xp-stage" data-from="0.84" data-to="0.91">
+          <p class="label"><b>PACE 5</b> · Project close</p>
+          <h2>Hand it back right.</h2>
+          <p>Handback, as-built records, handover to maintenance and close-out.</p>
+          <p class="xp-sth"><b>Where STH helps:</b> completion documentation and handback packs, done properly first time.</p>
+        </div>
+        <div class="xp-stage xp-services" data-from="0.92" data-to="1">
+          <p class="label"><b>STH</b> · Across the whole lifecycle</p>
           <h2>Engineering expertise. Commercial sense.</h2>
           <div class="xp-cards">
             <a href="#svc-growth"><span>1</span><b>Business growth &amp; leadership advisory</b><i>Structure, numbers, work-winning and commercial oversight for owner-run contractors.</i></a>
@@ -491,15 +537,16 @@
           <a class="btn" href="#contact">Discuss your project</a>
         </div>
       </div>
-      <div class="xp-hud" aria-hidden="false">
-        <div class="xp-stagenum" aria-live="off">01 / 05 · Design</div>
+      <div class="xp-hud">
+        <div class="xp-stagenum">PACE 1 / 5 · Project initiation</div>
         <div class="xp-bar" aria-hidden="true"><i></i></div>
-        <div class="xp-dots" role="group" aria-label="Jump to a stage">
-          <button type="button" data-p="0" aria-label="Design">01</button>
-          <button type="button" data-p="0.27" aria-label="Bearers">02</button>
-          <button type="button" data-p="0.5" aria-label="Rails, switch and crossing">03</button>
-          <button type="button" data-p="0.74" aria-label="3D model">04</button>
-          <button type="button" data-p="0.95" aria-label="Services">05</button>
+        <div class="xp-dots" role="group" aria-label="Jump to a PACE phase">
+          <button type="button" data-p="0.06" aria-label="PACE 1, project initiation">1</button>
+          <button type="button" data-p="0.19" aria-label="PACE 2, development and project selection">2</button>
+          <button type="button" data-p="0.33" aria-label="PACE 3, project design">3</button>
+          <button type="button" data-p="0.6" aria-label="PACE 4, project delivery">4</button>
+          <button type="button" data-p="0.875" aria-label="PACE 5, project close">5</button>
+          <button type="button" data-p="0.97" aria-label="How STH helps">STH</button>
         </div>
         <a class="xp-skip" href="#growth">Skip <span aria-hidden="true">↓</span><span class="vh"> the animation</span></a>
       </div>
