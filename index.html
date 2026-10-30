@@ -493,12 +493,12 @@
 <body>
 <div id="ld" aria-hidden="true">
   <style>
-    #ld{position:fixed;inset:0;z-index:100;background:#061019;color:#e6f1f4;display:grid;place-items:center;clip-path:inset(0 0 0 0);transition:clip-path 1.7s cubic-bezier(.76,0,.24,1);overflow:hidden}
+    #ld{position:fixed;inset:0;z-index:100;background:#061019;color:#e6f1f4;display:grid;place-items:center;clip-path:inset(0 0 0 0);transition:clip-path 3s cubic-bezier(.65,0,.35,1);overflow:hidden}
     #ld::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 55%,rgba(30,110,140,.22),transparent 62%)}
     #ld.out{clip-path:inset(0 0 100% 0)}
     #ld .in{position:relative;width:min(760px,90vw);display:grid;gap:22px;transition:opacity .5s,transform 1.1s cubic-bezier(.76,0,.24,1)}
     #ld.out .in{opacity:0;transform:translateY(-50px)}
-    #ld .in{transition:opacity .7s,transform 1.7s cubic-bezier(.76,0,.24,1)}
+    #ld .in{transition:opacity 1.2s,transform 3s cubic-bezier(.65,0,.35,1)}
     #ld img{width:min(240px,52vw);height:auto;filter:brightness(0) invert(1);opacity:0;transition:opacity 1s}
     #ld svg{width:100%;height:auto;overflow:visible}
     #ld [data-a]{transition:none}
@@ -572,7 +572,7 @@
       var cap=Math.min(target,100*(now-t0)/MIN);
       shown+=(cap-shown)*0.08; if(cap-shown<0.3)shown=cap;
       set(shown/100);
-      if(shown>=99.9&&done){setTimeout(function(){ld.classList.add('out');setTimeout(function(){document.documentElement.classList.remove('ld-wait')},reduce?0:700);setTimeout(function(){ld.remove()},1900)},reduce?0:600);return}
+      if(shown>=99.9&&done){setTimeout(function(){ld.classList.add('out');setTimeout(function(){document.documentElement.classList.remove('ld-wait')},reduce?0:1300);setTimeout(function(){ld.remove()},3200)},reduce?0:600);return}
       requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);
@@ -681,13 +681,13 @@
     </div>
   </section>
 
-  <section class="chap" data-range="0,0.35" data-beats="0.095,0.18,0.26,0.35" style="height:260vh" aria-label="Design development">
+  <section class="chap" data-range="0,0.35" data-beats="0.35" style="height:260vh" aria-label="Design development">
     <div class="chap-in"><div class="chap-cap">
       <p class="label"><b>01</b> / Design development</p>
       <h2>Precision begins with the geometry.</h2>
       <p>From survey and alignment options to a checked design, sound decisions start with a clear understanding of the geometry.</p>
       <div class="chap-bar"><i></i></div>
-      <p class="chap-more">Scroll for the next step <span>↓</span></p>
+      <p class="chap-more">Scroll to continue <span>↓</span></p>
     </div></div>
   </section>
 
@@ -821,13 +821,13 @@
     </div>
   </section>
 
-  <section class="chap" data-range="0.35,0.632" data-beats="0.4,0.47,0.515,0.56,0.632" style="height:340vh" aria-label="Constructability">
+  <section class="chap" data-range="0.35,0.632" data-beats="0.632" style="height:340vh" aria-label="Constructability">
     <div class="chap-in"><div class="chap-cap">
       <p class="label"><b>02</b> / Constructability</p>
       <h2>Engineered for real-world delivery.</h2>
       <p>Plain line built in place, then the switch, closure and crossing panels lifted in by Kirow in one possession. Access, sequence and plant planned from the outset.</p>
       <div class="chap-bar"><i></i></div>
-      <p class="chap-more">Scroll for the next step <span>↓</span></p>
+      <p class="chap-more">Scroll to continue <span>↓</span></p>
     </div></div>
   </section>
 
@@ -861,13 +861,13 @@
     </div>
   </section>
 
-  <section class="chap" data-range="0.632,0.778" data-beats="0.70,0.74,0.778" style="height:220vh" aria-label="Integration &amp; assurance">
+  <section class="chap" data-range="0.632,0.778" data-beats="0.778" style="height:220vh" aria-label="Integration &amp; assurance">
     <div class="chap-in"><div class="chap-cap">
       <p class="label"><b>03</b> / Integration &amp; assurance</p>
       <h2>Every interface accounted for.</h2>
       <p>Top ballast dropped, the S&amp;C tamped to design, then tested. Permanent way, civils and systems brought together and verified.</p>
       <div class="chap-bar"><i></i></div>
-      <p class="chap-more">Scroll for the next step <span>↓</span></p>
+      <p class="chap-more">Scroll to continue <span>↓</span></p>
     </div></div>
   </section>
 
@@ -968,13 +968,13 @@
     </div>
   </section>
 
-  <section class="chap" data-range="0.778,1" data-beats="0.86,0.93,1" style="height:240vh" aria-label="Delivery &amp; commercial insight">
+  <section class="chap" data-range="0.778,1" data-beats="1" style="height:240vh" aria-label="Delivery &amp; commercial insight">
     <div class="chap-in"><div class="chap-cap">
       <p class="label"><b>04</b> / Delivery &amp; commercial insight</p>
       <h2>Experience beyond the drawing.</h2>
       <p>OLE wired, line tested and handed back on time. Practical engineering and commercial sense, from bid to handback.</p>
       <div class="chap-bar"><i></i></div>
-      <p class="chap-more">Scroll for the next step <span>↓</span></p>
+      <p class="chap-more">Scroll to continue <span>↓</span></p>
     </div></div>
   </section>
 

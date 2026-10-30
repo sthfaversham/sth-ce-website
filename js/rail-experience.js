@@ -1216,18 +1216,18 @@ function resize() {
 }
 let target = 0, cur = 0, dirty = true, visible = true, raf = 0, lastT = performance.now();
 // four chapters, each a full-screen window onto the same scene. Each chapter is split into beats:
-// one scroll step triggers the next beat, which then plays out smoothly on its own, like a film.
+// scrolling into a chapter plays the whole chapter through on its own, like a film; scroll again to move on.
 const BEAT_VH = 80;
 const CHAPS = [...document.querySelectorAll('.chap')].map(el => {
   const r = el.dataset.range.split(',').map(Number), beats = el.dataset.beats.split(',').map(Number);
-  el.style.height = `calc(100vh + ${(beats.length - 1) * BEAT_VH + 35}vh)`;
+  el.style.height = `calc(100vh + ${(beats.length - 1) * BEAT_VH + 60}vh)`;
   beats.forEach((_, j) => { const m = document.createElement('div'); m.className = 'chap-snap'; m.style.top = `${j * BEAT_VH}vh`; el.prepend(m); });
   return { el, r, beats, cap: el.querySelector('.chap-cap'), bar: el.querySelector('.chap-bar i'), more: el.querySelector('.chap-more'), idx: -1 };
 });
 let chapIdx = -1, inView = false, tw = null;
 function setDest(d) {
   if (Math.abs(d - target) < 1e-6 && (tw || Math.abs(cur - d) < 1e-6)) return;
-  target = d; tw = { from: cur, to: d, t0: performance.now(), dur: clamp(Math.abs(d - cur) * 75, 0.9, 6.5) * 1000 };
+  target = d; tw = { from: cur, to: d, t0: performance.now(), dur: clamp(Math.abs(d - cur) * 48, 0.9, 20) * 1000 };
 }
 function readScroll() {
   let best = -1, bestVis = 0;
@@ -1249,7 +1249,7 @@ function readScroll() {
 function updateCaption() {
   const c = CHAPS[chapIdx]; if (!c) return;
   c.bar.style.transform = `scaleX(${clamp((cur - c.r[0]) / (c.r[1] - c.r[0])).toFixed(3)})`;
-  c.more.classList.toggle('on', !tw && c.idx < c.beats.length - 1);
+  c.more.classList.toggle('on', !tw && cur >= c.r[1] - 1e-4);
 }
 const scrollProgress = () => { readScroll(); return target; };
 function kick() { if (!raf && visible) { lastT = performance.now(); raf = requestAnimationFrame(frame); } }
