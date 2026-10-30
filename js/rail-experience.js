@@ -346,7 +346,16 @@ plainLeg(U1, 0, 1, 0, PL, { b0: 1, hide: lz => lz > CUT });                     
 { const l = Math.hypot(1, TA); plainLeg(U1, vc(U1), 1 / l, -TA / l, 160, { b0: 1 }); } // diverging route onward
 plainLeg(-PL, ZA, 1, 0, PL * 2, { hide: lz => lz < CUT - ZA });                   // adjacent existing line
 
-// ---------- plant kit: boxes/cylinders merged into one mesh per part, vertex coloured ----------
+// ---------- plant kit: rounded boxes/cylinders merged into one mesh per part, vertex coloured ----------
+const RBOX = new Map();
+function roundedBox(w, h, d, r) {
+  const k = [w, h, d, r].map(v => v.toFixed(3)).join(','); if (RBOX.has(k)) return RBOX.get(k).clone();
+  const iw = w / 2 - r, ih = h / 2 - r, c = Math.min(r * 0.6, iw, ih) * 0.999, s = new THREE.Shape();
+  s.moveTo(-iw + c, -ih); s.lineTo(iw - c, -ih); s.quadraticCurveTo(iw, -ih, iw, -ih + c); s.lineTo(iw, ih - c); s.quadraticCurveTo(iw, ih, iw - c, ih);
+  s.lineTo(-iw + c, ih); s.quadraticCurveTo(-iw, ih, -iw, ih - c); s.lineTo(-iw, -ih + c); s.quadraticCurveTo(-iw, -ih, -iw + c, -ih);
+  const g = new THREE.ExtrudeGeometry(s, { depth: Math.max(0.001, d - 2 * r), bevelEnabled: true, bevelThickness: r, bevelSize: r, bevelSegments: 2, curveSegments: 2 });
+  g.translate(0, 0, -(d - 2 * r) / 2); g.computeVertexNormals(); RBOX.set(k, g); return g.clone();
+}
 function kit() {
   const parts = [];
   function push(g, x, y, z, col, ry = 0, rz = 0, rx = 0) {
@@ -356,7 +365,12 @@ function kit() {
     g.setAttribute('color', new THREE.BufferAttribute(ca, 3)); parts.push(g);
   }
   const api = {
-    box(w, h, d, x, y, z, col, ry, rz, rx) { push(new THREE.BoxGeometry(w, h, d), x, y, z, col, ry, rz, rx); return api; },
+    box(w, h, d, x, y, z, col, ry, rz, rx) {
+      const m = Math.min(w, h, d);
+      push(m >= 0.22 && Math.max(w, h, d) >= 0.5 ? roundedBox(w, h, d, clamp(m * 0.14, 0.025, 0.13)) : new THREE.BoxGeometry(w, h, d), x, y, z, col, ry, rz, rx); return api;
+    },
+    seams(x0, x1, step, y, h, d, col = '#1a2228') { for (let x = x0; x <= x1 + 1e-3; x += step) api.box(0.03, h, d + 0.02, x, y, 0, col); return api; },
+    mullions(x0, x1, step, y, h, d) { for (let x = x0; x <= x1 + 1e-3; x += step) api.box(0.06, h + 0.04, d + 0.03, x, y, 0, '#2a3238'); return api; },
     cyl(r, len, x, y, z, col, axis = 'z', seg = 12, r2) { const g = new THREE.CylinderGeometry(r2 ?? r, r, len, seg); if (axis === 'z') g.rotateX(Math.PI / 2); else if (axis === 'x') g.rotateZ(Math.PI / 2); push(g, x, y, z, col); return api; },
     // a sloped-front cab: box with a raked windscreen face
     wheelset(x, r = 0.45) { for (const s of [-1, 1]) { api.cyl(r, 0.14, x, RAIL_TOP + r - 0.02, s * 0.74, '#1b1d1f', 'z', 14); api.cyl(r * 0.55, 0.16, x, RAIL_TOP + r - 0.02, s * 0.76, '#5c6266', 'z', 10); } api.cyl(0.08, 1.4, x, RAIL_TOP + r - 0.02, 0, '#3a3d40'); return api; },
@@ -378,7 +392,16 @@ const STH_W = '#e4eaec', STH_T = '#1c5d74', STH_C = '#3fb7d9', STH_D = '#14303f'
 function decal(parent, mat, w, h, x, y, z, ry = 0) { const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), mat); m.position.set(x, y, z); m.rotation.y = ry; parent.add(m); return m; }
 function logoSides(parent, len, x, y, halfW) { for (const s of [-1, 1]) decal(parent, matLogo, len, len * 156 / 440, x, y, s * (halfW + 0.012), s > 0 ? 0 : Math.PI); }
 function chevrons(parent, x, y, w, h, dir) { decal(parent, matChev, w, h, x + dir * 0.012, y, 0, dir > 0 ? Math.PI / 2 : -Math.PI / 2); }
-function bogie(k, x, axles, frameCol = DK) { k.box(axles * 1.5 + 0.7, 0.42, 2.3, x, 1.02, 0, frameCol); for (const s of [-1, 1]) k.box(axles * 1.5 + 0.5, 0.22, 0.12, x, 0.9, s * 1.12, '#2c3136'); const s = (axles - 1) / 2 * 1.5; for (let i = 0; i < axles; i++) k.wheelset(x - s + i * 1.5); }
+function bogie(k, x, axles, frameCol = DK) {
+  k.box(axles * 1.5 + 0.7, 0.36, 2.2, x, 1.08, 0, frameCol);
+  for (const s of [-1, 1]) { k.box(axles * 1.5 + 0.6, 0.26, 0.16, x, 0.95, s * 1.1, '#2c3136'); k.box(axles * 1.5 + 0.2, 0.06, 0.2, x, 1.2, s * 1.1, '#3b4147'); }
+  const s0 = (axles - 1) / 2 * 1.5;
+  for (let i = 0; i < axles; i++) {
+    const ax = x - s0 + i * 1.5; k.wheelset(ax);
+    for (const s of [-1, 1]) { k.box(0.34, 0.3, 0.24, ax, RAIL_TOP + 0.43, s * 1.0, '#2a2e32'); k.cyl(0.1, 0.3, ax - 0.12, RAIL_TOP + 0.72, s * 1.0, '#59606a', 'y', 8).cyl(0.1, 0.3, ax + 0.12, RAIL_TOP + 0.72, s * 1.0, '#59606a', 'y', 8); }
+    if (i < axles - 1) for (const s of [-1, 1]) k.cyl(0.11, 0.32, ax + 0.75, 0.95, s * 0.55, '#3a3f44', 'x', 10);
+  }
+}
 
 // lamp glows: one points cloud for every lamp in the scene, positioned each frame
 const GLOWS = [];
@@ -519,6 +542,8 @@ const kirow = new THREE.Group(); kirow.visible = false; scene.add(kirow);
   k.box(14.6, 0.75, 2.9, 0, 2.05, 0, STH_T).box(14.62, 0.08, 2.92, 0, 2.2, 0, STH_C);
   for (const s of [-1, 1]) { k.box(0.35, 0.6, 2.8, s * 7.55, 1.55, 0, DK); for (const z of [-0.95, 0.95]) k.cyl(0.15, 0.4, s * 7.85, 1.55, z, STEEL, 'x'); }
   for (const s of [-1, 1]) k.rail(-6.5, 6.5, 3.35, s * 1.38, '#d0d6d9');
+  for (const ox of [-6.2, 6.2]) for (const s of [-1, 1]) { k.box(0.42, 0.42, 2.4, ox, 1.6, s * 2.2, STH_D); k.box(0.3, 1.4, 0.3, ox, 0.95, s * 3.25, '#3a4248'); k.box(0.9, 0.12, 0.9, ox, 0.2, s * 3.25, '#22282c'); }
+  k.seams(-6, 6, 2, 2.05, 0.7, 2.9);
   kirow.add(k.mesh());
   for (const dir of [-1, 1]) chevrons(kirow, dir * 7.73, 2.05, 2.9, 0.75, dir);
 }
@@ -528,7 +553,8 @@ const kSlew = new THREE.Group(); kSlew.position.set(0, 2.45, 0); kirow.add(kSlew
   k.cyl(1.35, 0.3, 0, 0.15, 0, DK, 'y', 20);
   k.box(6.6, 2.0, 2.9, -1.1, 1.3, 0, STH_W).box(6.62, 0.5, 2.92, -1.1, 0.55, 0, STH_T).box(6.64, 0.08, 2.94, -1.1, 0.85, 0, STH_C);
   k.box(1.9, 2.4, 3.0, -5.2, 1.4, 0, STH_D).box(1.92, 0.08, 3.02, -5.2, 2.0, 0, STH_C);
-  k.box(2.2, 2.0, 1.25, 2.9, 1.3, 0.85, STH_W).box(2.22, 0.9, 1.27, 3.0, 1.75, 0.85, WIN).box(0.06, 0.9, 1.1, 4.02, 1.75, 0.85, WIN);
+  k.box(2.2, 2.0, 1.25, 2.9, 1.3, 0.85, STH_W).box(2.22, 0.9, 1.27, 3.0, 1.75, 0.85, WIN).box(0.06, 0.9, 1.1, 4.02, 1.75, 0.85, WIN).box(0.06, 0.94, 1.3, 2.4, 1.75, 0.85, '#2a3238').box(0.06, 0.94, 1.3, 3.4, 1.75, 0.85, '#2a3238');
+  k.box(0.04, 1.7, 2.92, -3.0, 1.2, 0, '#173948').box(0.04, 1.7, 2.92, 0.8, 1.2, 0, '#173948');
   k.box(2.0, 0.5, 2.0, -2.2, 2.55, 0, GRY);
   // A-frame
   for (const s of [-1, 1]) { k.box(0.22, 3.6, 0.22, -2.9, 3.9, s * 0.9, STH_D, 0, -0.25); }
@@ -597,6 +623,8 @@ function locoKit(k, body = '#2f3b46', roof = GRY) {
   k.box(6, 0.8, 2.2, 0, 0.95, 0, DK).box(5.6, 0.1, 2.25, 0, 1.3, 0, '#3a3f44');
   k.box(18.4, 2.4, 2.66, 0, 2.9, 0, body).box(18, 0.3, 2.3, 0, 4.2, 0, roof);
   k.box(18.42, 0.22, 2.68, 0, 2.15, 0, '#b9c3c9');
+  k.seams(-7.5, 7.5, 2.5, 2.9, 2.3, 2.66);
+  for (const s of [-1, 1]) { k.box(0.9, 1.9, 0.04, s * 7.6, 2.75, 1.34, '#1a2228').box(0.9, 1.9, 0.04, s * 7.6, 2.75, -1.34, '#1a2228'); }
   for (let x = -6; x <= 6; x += 1.5) k.box(0.9, 0.9, 2.68, x, 3.3, 0, '#26313a');
   k.box(3, 0.35, 1.2, 1.5, 4.45, 0, '#22292f').box(1.0, 0.4, 0.8, -4.5, 4.5, 0, '#22292f');
   for (const s of [-1, 1]) {
@@ -623,7 +651,7 @@ for (let i = 0; i < NHOP; i++) {
   for (const s of [-1, 1]) k.box(10.6, 1.25, 0.12, 0, 2.15, s * 1.05, YEL2, 0, 0, s * 0.62);
   k.box(13.2, 1.45, 2.95, 0, 3.15, 0, YEL);
   for (let j = -2; j <= 2; j++) k.box(0.09, 1.47, 3.0, j * 2.6, 3.15, 0, YEL2);
-  k.box(13.2, 0.08, 3.0, 0, 3.86, 0, YEL2);
+  k.box(13.2, 0.08, 3.0, 0, 3.86, 0, YEL2).box(13.24, 0.1, 3.0, 0, 2.45, 0, YEL2);
   for (let j = 0; j < 9; j++) k.box(1.4, 0.22 + (j % 3) * 0.06, 2.6, -5.6 + j * 1.4, 3.98, 0, j % 2 ? '#6d6a66' : '#7a7671');
   for (const z of [-1.15, 0, 1.15]) k.box(0.7, 0.55, 0.45, 0, 1.2, z, DK);
   for (const s of [-1, 1]) { k.box(0.4, 0.3, 0.3, s * 7.1, 1.4, 0, DK); k.ladder(s * 6.4, 1.1, 3.9, 1.5); }
@@ -643,11 +671,12 @@ const tamper = new THREE.Group(); tamper.visible = false; scene.add(tamper);
   k.box(26.4, 0.45, 2.8, 0, 1.45, 0, DK);
   bogie(k, -9.6, 2); bogie(k, 9.6, 2);
   k.box(13.2, 2.4, 3.0, -4.9, 2.85, 0, STH_W).box(13.22, 0.55, 3.02, -4.9, 1.95, 0, STH_T).box(13.24, 0.08, 3.04, -4.9, 2.27, 0, STH_C);
-  for (let x = -10.5; x <= 0.5; x += 1.6) k.box(0.9, 1.3, 3.04, x, 3.2, 0, '#c9d1d5');
+  for (let x = -10.5; x <= 0.5; x += 1.6) k.box(0.9, 1.3, 3.04, x, 3.2, 0, '#c9d1d5').box(0.7, 0.05, 3.06, x, 3.5, 0, '#8f9aa0').box(0.7, 0.05, 3.06, x, 3.2, 0, '#8f9aa0').box(0.7, 0.05, 3.06, x, 2.9, 0, '#8f9aa0');
+  k.seams(-11.3, 1.5, 3.2, 2.85, 2.3, 3.0);
   k.box(5.6, 0.55, 1.9, -6.2, 4.3, 0, GRY).box(2.2, 0.45, 1.6, -1.6, 4.25, 0, GRY); k.cyl(0.16, 1.0, -9.5, 4.6, 0.6, DK, 'y');
   for (const [cx, len, dir] of [[11.0, 4.2, 1], [-11.0, 4.0, -1]]) {
     k.box(len, 2.8, 3.0, cx, 3.05, 0, STH_W).box(len + 0.02, 0.55, 3.02, cx, 1.95, 0, STH_T).box(len + 0.04, 0.08, 3.04, cx, 2.27, 0, STH_C);
-    k.box(len - 0.6, 0.85, 3.04, cx, 3.75, 0, WIN);
+    k.box(len - 0.6, 0.85, 3.04, cx, 3.75, 0, WIN).mullions(cx - len / 2 + 0.3, cx + len / 2 - 0.3, (len - 0.6) / 3, 3.75, 0.85, 3.04);
     k.box(0.5, 0.9, 2.6, cx + dir * (len / 2 - 0.05), 3.75, 0, WIN, 0, dir * 0.2);
     k.box(len, 0.25, 3.0, cx, 4.55, 0, STH_T);
     k.ladder(cx - dir * (len / 2 - 0.4), 1.2, 3.0, 1.55);
@@ -901,21 +930,7 @@ sheetText('EXISTING LINE', -24, ZA + 0.7, 0.55, [0.07, T.descend[1]], { k: 0.7 }
 buildGlows();
 
 // ---------- labels ----------
-const LABELS = [
-  { t: 'Laser scan', p: [0, 2, 0], dyn: 'scan', w: [T.scan[0] + 0.004, T.scan[1]] },
-  { t: 'Survey control', p: [CONTROL[2][0], 0, CONTROL[2][1]], w: [T.survey[0] + 0.03, T.survey[1] + 0.01] },
-  { t: 'Option B selected', p: [44, 0, vc(44)], w: [T.select[0] + 0.005, T.design[0] + 0.02] },
-  { t: '3D design model', p: [16, 0.4, vc(16) - HC], w: [T.extrude[0] + 0.02, T.descend[0] + 0.01] },
-  { t: 'Formation', p: [6, -0.42, -4.6], w: [T.formation[0] + 0.004, T.bottom[0] + 0.006] },
-  { t: 'OLE masts · RRV', p: [0, 0, 0], dyn: 'rrv', w: [T.bottom[0], T.masts[1] - 0.004] },
-  { t: 'Plain line', p: [-12, 0.4, 0], w: [T.plainSlp[0] + 0.01, T.plainFix[1]] },
-  ...PANELS.map((pn, i) => ({ t: `Kirow lift · ${pn.name}`, p: [0, 0, 0], dyn: 'load' + i, w: [T.lifts[i][0] + 0.004, T.lifts[i][0] + 0.75 * (T.lifts[i][1] - T.lifts[i][0])] })),
-  { t: 'Ballast train · top ballast', p: [0, 4.4, 0], dyn: 'train', w: [T.top[0] - 0.008, T.top[1]] },
-  { t: 'Tamping', p: [0, 0.4, 0], dyn: 'tamp', w: [T.tamp[0], T.tamp[1]] },
-  { t: 'Test & commission', p: [0, 0.4, -HC], dyn: 'test', w: [T.test[0], T.test[1]] },
-  { t: 'Wiring train · OLE', p: [0, 0, 0], dyn: 'wire', w: [T.wire[0] + 0.012, T.wire[1] - 0.006] },
-  { t: 'Handed back', p: [uX + 6, 0.4, vc(uX + 6)], w: [T.close[0] + 0.02, T.close[1] - 0.005] },
-];
+const LABELS = []; // chapter captions carry the words now
 for (const L of LABELS) { const d = document.createElement('div'); d.className = 'xp-label'; d.textContent = L.t; labelsEl.appendChild(d); L.el = d; L.v = new THREE.Vector3(...L.p); }
 
 // ---------- camera ----------
@@ -965,8 +980,8 @@ function placeCamera(p) {
   camera.position.set(tx - Math.cos(e) * Math.cos(a) * d, Math.sin(e) * d, tz + Math.cos(e) * Math.sin(a) * d);
   camera.lookAt(tx, 0, tz);
   const shift = 1 - 0.7 * win(p, T.close[0], T.close[1], 0.02) - span(p, 0.9, 0.95) * 0.6;
-  if (aspect >= 1) camera.setViewOffset(viewW, viewH, -viewW * 0.17 * shift, 0, viewW, viewH);
-  else camera.setViewOffset(viewW, viewH, 0, -viewH * 0.17 * shift, viewW, viewH);
+  if (aspect >= 1) camera.setViewOffset(viewW, viewH, -viewW * 0.1 * shift, 0, viewW, viewH);
+  else camera.setViewOffset(viewW, viewH, 0, viewH * 0.12 * shift, viewW, viewH);
   camera.updateProjectionMatrix();
 }
 
@@ -1200,18 +1215,30 @@ function resize() {
   dirty = true;
 }
 let target = 0, cur = 0, dirty = true, visible = true, raf = 0, lastT = performance.now();
-// the build plays out over the whole page: from the hero leaving the screen to the bottom of the page
-const hero = document.querySelector('.hero');
+// four chapters, each a full-screen window onto the same scene and each owning one slice of the build
+const CHAPS = [...document.querySelectorAll('.chap')].map(el => ({ el, r: el.dataset.range.split(',').map(Number), cap: el.querySelector('.chap-cap'), bar: el.querySelector('.chap-bar i') }));
+let chapIdx = -1, inView = false;
 const scrollProgress = () => {
-  const start = hero ? hero.offsetTop + hero.offsetHeight - innerHeight * 0.6 : 0;
-  const end = document.documentElement.scrollHeight - innerHeight;
-  return end > start ? clamp((scrollY - start) / (end - start)) : 0;
+  let best = -1, bestVis = 0, kBest = 0;
+  CHAPS.forEach((c, i) => {
+    const r = c.el.getBoundingClientRect(), vis = Math.min(r.bottom, innerHeight) - Math.max(r.top, 0);
+    const k = clamp(-r.top / Math.max(1, r.height - innerHeight));
+    c.cap.classList.toggle('on', vis > innerHeight * 0.5 && k < 0.985); c.bar.style.transform = `scaleX(${k.toFixed(3)})`;
+    if (vis > bestVis) { bestVis = vis; best = i; kBest = k; }
+  });
+  inView = best >= 0;
+  if (!inView) return target;
+  if (best !== chapIdx) { chapIdx = best; snap = true; }
+  const c = CHAPS[best]; return lerp(c.r[0], c.r[1], kBest);
 };
+let snap = false;
 function kick() { if (!raf && visible) { lastT = performance.now(); raf = requestAnimationFrame(frame); } }
 let slow = 0, frames = 0, degraded = false;
 function frame(now) {
   raf = 0;
   const dt = Math.min(0.1, (now - lastT) / 1000); lastT = now;
+  if (snap) { cur = target; snap = false; }
+  if (!inView) { raf = 0; return; }
   const diff = target - cur;
   cur = Math.abs(diff) < 0.0002 ? target : cur + diff * (1 - Math.exp(-dt * 7));
   apply(cur); ui(cur); renderer.render(scene, camera);

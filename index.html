@@ -442,20 +442,26 @@
   .xp .nw{white-space:nowrap}
   /* static presentation: reduced motion, no WebGL, or script failure */
 
-  /* ===== live mode: the 3D build runs as a fixed background behind the whole page (set by js/rail-experience.js) ===== */
-  body.xp-live{--bg:#061019;--surface:rgba(8,19,27,.86);--ink:#e9eff1;--ink-2:#a8b7be;--line:rgba(110,160,180,.24);--accent:#3fb0d6;--accent-ink:#06121a;--dark:transparent;--dark-fg:#e9ebe8;--dark-muted:#9aa8ae;--dark-line:rgba(110,160,180,.2);background:#061019;color:var(--ink);color-scheme:dark}
+  /* ===== live mode (set by js/rail-experience.js): one fixed 3D layer, seen through four full-screen chapters ===== */
+  .chap{display:none}
+  body.xp-live{--bg:#071017;--surface:#0e1b23;--ink:#e9eff1;--ink-2:#a8b7be;--line:#1f323c;--accent:#3fb0d6;--accent-ink:#06121a;--dark:#0b161d;--dark-fg:#e9ebe8;--dark-muted:#9aa8ae;--dark-line:#1f323c;background:#071017;color:var(--ink);color-scheme:dark}
   body.xp-live .xp{position:fixed;inset:0;height:100vh;height:100lvh;z-index:0;pointer-events:none}
-  body.xp-live .xp-sticky{position:absolute;inset:0;height:100%}
-  body.xp-live .xp-stages,body.xp-live .xp-dots,body.xp-live .xp-skip,body.xp-live .xp-concept{display:none}
-  body.xp-live main>section:not(.xp),body.xp-live main>.strip,body.xp-live footer{position:relative;z-index:1}
+  body.xp-live .xp-sticky{position:absolute;inset:0;height:100%;background:#061019}
+  body.xp-live .xp-stages,body.xp-live .xp-hud,body.xp-live .xp-concept,body.xp-live .xp-veil,body.xp-live .xp-labels{display:none}
+  body.xp-live main>section:not(.xp):not(.chap),body.xp-live main>.strip,body.xp-live footer{position:relative;z-index:1;background-color:var(--bg)}
   body.xp-live .hero{z-index:2}
-  body.xp-live .band,body.xp-live .band.dark{background:transparent !important}
-  body.xp-live footer{background:rgba(6,16,25,.92)}
-  body.xp-live header{background:rgba(6,16,25,.88);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
-  body.xp-live .xp-veil{opacity:1;background:linear-gradient(90deg,rgba(6,16,25,.88) 0%,rgba(6,16,25,.66) 38%,rgba(6,16,25,.18) 68%,rgba(6,16,25,.05) 100%)}
-  body.xp-live .band h2,body.xp-live .band .lede,body.xp-live .band .label{text-shadow:0 2px 18px rgba(6,16,25,.9)}
-  body.xp-live .xp-hud{position:fixed;left:auto;right:16px;bottom:14px;width:min(380px,calc(100vw - 32px));z-index:3;background:rgba(6,16,25,.78);padding:8px 12px;border:1px solid rgba(79,192,230,.25);gap:12px}
-  @media (max-width:760px){body.xp-live .xp-veil{background:rgba(6,16,25,.55)}body.xp-live .xp-hud{bottom:10px;right:10px;font-size:.62rem}}
+  body.xp-live header{background:rgba(6,16,25,.9);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+  body.xp-live .chap{display:block;position:relative;z-index:1;pointer-events:none}
+  .chap-in{position:sticky;top:0;height:100vh;height:100svh;display:flex;align-items:flex-end;padding:0 max(20px,calc((100% - 1100px)/2)) clamp(28px,6vh,64px)}
+  .chap-in::before{content:"";position:absolute;inset:auto 0 0 0;height:46%;background:linear-gradient(0deg,rgba(6,16,25,.86),rgba(6,16,25,0));pointer-events:none}
+  .chap-cap{position:relative;max-width:560px;color:#e6f1f4;opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s;text-shadow:0 2px 20px rgba(6,16,25,.9)}
+  .chap-cap.on{opacity:1;transform:none}
+  .chap-cap .label{color:#8fb0ba}.chap-cap .label b{color:#4fc0e6}
+  .chap-cap h2{font-size:clamp(1.9rem,4vw,3.1rem);line-height:1;margin:10px 0 0}
+  .chap-cap p:not(.label){color:#b4c5cb;margin:12px 0 0;max-width:46ch}
+  .chap-bar{margin-top:18px;height:2px;width:min(320px,70vw);background:rgba(159,182,191,.22)}
+  .chap-bar i{display:block;height:100%;background:#4fc0e6;transform-origin:left center;transform:scaleX(0)}
+  @media (max-width:760px){.chap-cap p:not(.label){font-size:.92rem}.chap-in::before{height:55%}}
   .xp-static{height:auto}
   .xp-static .xp-sticky{position:relative;height:auto;min-height:100svh}
   .xp-static #xp-canvas,.xp-static .xp-labels,.xp-static .xp-dots,.xp-static .xp-bar,.xp-static .xp-stagenum,.xp-static .xp-cue{display:none}
@@ -472,50 +478,91 @@
 <body>
 <div id="ld" aria-hidden="true">
   <style>
-    #ld{position:fixed;inset:0;z-index:100;background:#061019;color:#e6f1f4;display:grid;place-items:center;clip-path:inset(0 0 0 0);transition:clip-path .9s cubic-bezier(.76,0,.24,1)}
+    #ld{position:fixed;inset:0;z-index:100;background:#061019;color:#e6f1f4;display:grid;place-items:center;clip-path:inset(0 0 0 0);transition:clip-path 1.1s cubic-bezier(.76,0,.24,1);overflow:hidden}
+    #ld::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 55%,rgba(30,110,140,.22),transparent 62%)}
     #ld.out{clip-path:inset(0 0 100% 0)}
-    #ld .in{width:min(560px,86vw);display:grid;gap:26px;transition:opacity .4s,transform .9s cubic-bezier(.76,0,.24,1)}
-    #ld.out .in{opacity:0;transform:translateY(-40px)}
-    #ld img{width:min(260px,58vw);height:auto;filter:brightness(0) invert(1);opacity:0;animation:ldin .8s .1s ease-out forwards}
+    #ld .in{position:relative;width:min(760px,90vw);display:grid;gap:22px;transition:opacity .5s,transform 1.1s cubic-bezier(.76,0,.24,1)}
+    #ld.out .in{opacity:0;transform:translateY(-50px)}
+    #ld img{width:min(240px,52vw);height:auto;filter:brightness(0) invert(1);opacity:0;transition:opacity 1s}
     #ld svg{width:100%;height:auto;overflow:visible}
-    #ld .r{fill:none;stroke:#4fd3f0;stroke-width:2.2;stroke-dasharray:1;stroke-dashoffset:1}
-    #ld .sl rect{fill:rgba(169,171,164,.55);transform-box:fill-box;transform-origin:center;transform:scaleY(0)}
-    #ld .row{display:flex;justify-content:space-between;font-family:"IBM Plex Mono","Courier New",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#7fa3ae}
-    #ld .row b{color:#4fd3f0;font-weight:500;font-variant-numeric:tabular-nums}
-    @keyframes ldin{to{opacity:1}}
+    #ld [data-a]{transition:none}
+    #ld .ln{fill:none;stroke:#4fd3f0;stroke-width:1.8;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
+    #ld .ln.thin{stroke-width:.8;stroke:#7fa3ae}
+    #ld .gd{stroke:rgba(79,192,230,.10);stroke-width:.6}
+    #ld .gd.mj{stroke:rgba(79,192,230,.2)}
+    #ld .br{fill:none;stroke:rgba(200,214,220,.55);stroke-width:.9;transform-box:fill-box;transform-origin:center;transform:scaleY(0)}
+    #ld text{font:500 9px "IBM Plex Mono","Courier New",monospace;letter-spacing:.12em;fill:#7fa3ae;opacity:0}
+    #ld text.hi{fill:#4fd3f0}
+    #ld .pen{fill:#bff3ff;filter:drop-shadow(0 0 6px #4fd3f0)}
+    #ld .row{display:flex;justify-content:space-between;align-items:baseline;font-family:"IBM Plex Mono","Courier New",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#7fa3ae}
+    #ld .row b{color:#4fd3f0;font-weight:500;font-size:1.05rem;font-variant-numeric:tabular-nums}
+    #ld .bar{height:2px;background:rgba(159,182,191,.18)}#ld .bar i{display:block;height:100%;background:#4fd3f0;transform-origin:left;transform:scaleX(0)}
     @media (prefers-reduced-motion:reduce){#ld,#ld .in{transition:opacity .3s}#ld.out{clip-path:none;opacity:0}}
   </style>
   <div class="in">
     <img src="images/sth-email-signature-logo.png" alt="">
-    <svg viewBox="0 0 560 60"><g class="sl"></g>
-      <path class="r" pathLength="1" d="M0 22 H560"/><path class="r" pathLength="1" d="M0 38 H560"/>
-      <path class="r" pathLength="1" d="M300 38 C 400 38, 470 46, 560 58" style="stroke-opacity:.7"/></svg>
-    <div class="row"><span id="ld-t">Setting out</span><b id="ld-n">000%</b></div>
+    <svg viewBox="0 0 760 230" id="ld-svg"></svg>
+    <div class="bar"><i id="ld-b"></i></div>
+    <div class="row"><span id="ld-t">Survey</span><b id="ld-n">000%</b></div>
   </div>
   <script>
   (function(){
-    var ld=document.getElementById('ld'),n=document.getElementById('ld-n'),t=document.getElementById('ld-t'),rs=ld.querySelectorAll('.r'),sl=ld.querySelector('.sl');
-    var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,shown=0,target=12,t0=performance.now(),done=false,MIN=reduce?200:1500;
-    for(var i=0;i<28;i++){var r=document.createElementNS('http://www.w3.org/2000/svg','rect');r.setAttribute('x',8+i*20);r.setAttribute('y',14);r.setAttribute('width',6);r.setAttribute('height',32);sl.appendChild(r);}
-    var bars=sl.children,words=[[0,'Setting out'],[30,'Survey & design'],[60,'Building the model'],[90,'Handing back']];
+    var ld=document.getElementById('ld'),svg=document.getElementById('ld-svg'),n=document.getElementById('ld-n'),t=document.getElementById('ld-t'),bar=document.getElementById('ld-b'),logo=ld.querySelector('img');
+    var NS='http://www.w3.org/2000/svg',els=[];
+    function el(tag,at,a,b,txt){var e=document.createElementNS(NS,tag);for(var k in at)e.setAttribute(k,at[k]);if(txt)e.textContent=txt;svg.appendChild(e);if(a!=null)els.push({e:e,a:a,b:b,tag:tag,cls:at['class']||''});return e;}
+    // geometry: main line y 92/108, turnout toe at x 230, diverging curve to the bottom right
+    var Y1=92,Y2=108,X0=40,X1=720,TOE=230;
+    function cv(x,y){var u=Math.max(0,x-TOE);return y+u*u*0.00062+(u>300?(u-300)*0.0:0);}
+    function path(fn,a,b){var d='',s=4;for(var x=a;x<=b;x+=s)d+=(x==a?'M':'L')+x.toFixed(1)+' '+fn(x).toFixed(1);return d;}
+    // survey grid
+    for(var gx=X0;gx<=X1;gx+=20)el('line',{x1:gx,y1:20,x2:gx,y2:215,'class':'gd'+((gx-X0)%100==0?' mj':'')},0.02+((gx-X0)/(X1-X0))*0.12,0.06+((gx-X0)/(X1-X0))*0.12);
+    for(var gy=20;gy<=215;gy+=20)el('line',{x1:X0,y1:gy,x2:X1,y2:gy,'class':'gd'+((gy-20)%100==0?' mj':'')},0.03+gy/215*0.1,0.08+gy/215*0.1);
+    // control stations
+    [[90,40],[330,36],[560,48],[650,196],[120,190]].forEach(function(p,i){el('path',{d:'M'+p[0]+' '+(p[1]-7)+' L'+(p[0]+6)+' '+(p[1]+4)+' L'+(p[0]-6)+' '+(p[1]+4)+' Z','class':'ln thin',pathLength:1},0.1+i*0.02,0.16+i*0.02);el('text',{x:p[0]+9,y:p[1]+3},0.13+i*0.02,0.2+i*0.02,'STN 0'+(i+1));});
+    // bearers: plain then long turnout bearers following the diverging route
+    for(var x=X0+6,i=0;x<X1;x+=13,i++){var yb=x<TOE?Y2+10:Math.min(cv(x,Y2)+10,cv(x,Y2)+10);var ytop=Y1-10;var ybot=x<TOE+330?Math.max(Y2+10,cv(x,Y2)+10):Y2+10;
+      el('rect',{x:x,y:ytop,width:4,height:(ybot-ytop),'class':'br'},0.32+i/52*0.22,0.36+i/52*0.22);
+      if(x>TOE+330){el('rect',{x:x,y:cv(x,Y1)-10,width:4,height:36,'class':'br'},0.32+i/52*0.22,0.36+i/52*0.22);}}
+    // rails
+    el('path',{d:'M'+X0+' '+Y1+' H'+X1,'class':'ln',pathLength:1},0.42,0.66);
+    el('path',{d:'M'+X0+' '+Y2+' H'+X1,'class':'ln',pathLength:1},0.44,0.68);
+    el('path',{d:path(function(x){return cv(x,Y1)},TOE,X1),'class':'ln',pathLength:1},0.55,0.78);
+    el('path',{d:path(function(x){return cv(x,Y2)},TOE,X1),'class':'ln',pathLength:1},0.57,0.8);
+    // crossing V and check rails
+    var XN=520;el('path',{d:'M'+(XN-30)+' '+(Y2-6)+' L'+XN+' '+Y2+' L'+(XN-30)+' '+(cv(XN,Y1)+6),'class':'ln thin',pathLength:1},0.7,0.76);
+    // dimensions and chainage
+    el('path',{d:'M'+X0+' 24 H'+X1,'class':'ln thin',pathLength:1},0.6,0.72);
+    for(var c=0;c<=6;c++){var cx=X0+c*((X1-X0)/6);el('line',{x1:cx,y1:20,x2:cx,y2:30,stroke:'#7fa3ae','stroke-width':.8},0.64+c*0.012,0.66+c*0.012);el('text',{x:cx-14,y:16},0.65+c*0.012,0.69+c*0.012,'0+'+('00'+c*10).slice(-3));}
+    el('text',{x:TOE-12,y:Y1-16,'class':'hi'},0.74,0.78,'TOE');el('text',{x:XN-22,y:Y2+30,'class':'hi'},0.76,0.8,'X NOSE');
+    el('text',{x:560,y:cv(560,Y2)+26},0.78,0.84,'R 190 m · 1 IN 8');
+    el('text',{x:X0,y:150},0.8,0.86,'S&C LAYOUT · DRG STH-001 · REV A');
+    var pen=el('circle',{r:3.2,'class':'pen',cx:-20,cy:-20});
+    var words=[[0,'Survey'],[18,'Setting out'],[32,'Bearers'],[44,'Plain line'],[56,'Diverging route'],[70,'Crossing'],[80,'Checking the drawing'],[94,'Ready']];
+    var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,shown=0,target=10,t0=performance.now(),done=false,MIN=reduce?250:3600;
     function set(k){
-      for(var i=0;i<rs.length;i++)rs[i].style.strokeDashoffset=1-Math.min(1,k*(i==2?1.6:1.15));
-      for(var j=0;j<bars.length;j++)bars[j].style.transform='scaleY('+Math.max(0,Math.min(1,k*1.2*28-j))+')';
-      var w='';for(var q=0;q<words.length;q++)if(k*100>=words[q][0])w=words[q][1];t.textContent=w;
-      n.textContent=('00'+Math.round(k*100)).slice(-3)+'%';
+      for(var i=0;i<els.length;i++){var o=els[i],q=Math.max(0,Math.min(1,(k-o.a)/(o.b-o.a)));
+        if(o.tag=='path'&&o.cls.indexOf('ln')>=0)o.e.style.strokeDashoffset=1-q;
+        else if(o.tag=='rect')o.e.style.transform='scaleY('+q+')';
+        else o.e.style.opacity=q;}
+      // pen follows the rail being drawn
+      var pk=k<0.42?-1:k<0.68?(k-0.42)/0.26:k<0.8?(k-0.55)/0.25:-1;
+      if(pk>=0&&pk<=1){var px=k<0.68?X0+(X1-X0)*pk:TOE+(X1-TOE)*pk;pen.setAttribute('cx',px);pen.setAttribute('cy',k<0.68?Y1:cv(px,Y2));pen.style.opacity=1}else pen.style.opacity=0;
+      logo.style.opacity=Math.min(1,k*5);
+      var w='';for(var q2=0;q2<words.length;q2++)if(k*100>=words[q2][0])w=words[q2][1];t.textContent=w;
+      n.textContent=('00'+Math.round(k*100)).slice(-3)+'%';bar.style.transform='scaleX('+k+')';
     }
     function tick(now){
       var cap=Math.min(target,100*(now-t0)/MIN);
-      shown+= (cap-shown)*0.12; if(cap-shown<0.4)shown=cap;
+      shown+=(cap-shown)*0.08; if(cap-shown<0.3)shown=cap;
       set(shown/100);
-      if(shown>=99.9&&done){ld.classList.add('out');setTimeout(function(){ld.remove()},1000);return}
+      if(shown>=99.9&&done){setTimeout(function(){ld.classList.add('out');setTimeout(function(){ld.remove()},1200)},reduce?0:450);return}
       requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);
-    document.addEventListener('DOMContentLoaded',function(){target=Math.max(target,35)});
+    document.addEventListener('DOMContentLoaded',function(){target=Math.max(target,40)});
     window.addEventListener('xp-ready',function(){target=Math.max(target,85)});
-    window.addEventListener('load',function(){target=Math.max(target,70);setTimeout(function(){target=100;done=true},reduce?0:350)});
-    setTimeout(function(){target=100;done=true},7000);
+    window.addEventListener('load',function(){target=Math.max(target,75);setTimeout(function(){target=100;done=true},reduce?0:300)});
+    setTimeout(function(){target=100;done=true},9000);
   })();
   </script>
 </div>
@@ -614,6 +661,15 @@
       </div>
       <p class="xp-concept">Concept visualisation · illustrative geometry · not for construction</p>
     </div>
+  </section>
+
+  <section class="chap" data-range="0,0.35" style="height:260vh" aria-label="Design development">
+    <div class="chap-in"><div class="chap-cap">
+      <p class="label"><b>01</b> / Design development</p>
+      <h2>Precision begins with the geometry.</h2>
+      <p>From survey and alignment options to a checked design, sound decisions start with a clear understanding of the geometry.</p>
+      <div class="chap-bar"><i></i></div>
+    </div></div>
   </section>
 
   <div class="strip" aria-label="Site photographs">
@@ -746,6 +802,15 @@
     </div>
   </section>
 
+  <section class="chap" data-range="0.35,0.632" style="height:340vh" aria-label="Constructability">
+    <div class="chap-in"><div class="chap-cap">
+      <p class="label"><b>02</b> / Constructability</p>
+      <h2>Engineered for real-world delivery.</h2>
+      <p>Plain line built in place, then the switch, closure and crossing panels lifted in by Kirow in one possession. Access, sequence and plant planned from the outset.</p>
+      <div class="chap-bar"><i></i></div>
+    </div></div>
+  </section>
+
   <section class="band dark" id="approach" style="background-image:url('images/approach-night-portal.jpg')">
     <svg class="alignment" viewBox="0 0 1200 400" preserveAspectRatio="none" aria-hidden="true">
       <path class="rail draw" pathLength="1" d="M-20 330 C 260 330, 420 300, 600 220 S 960 80, 1220 70"/>
@@ -774,6 +839,15 @@
         </div>
       </div>
     </div>
+  </section>
+
+  <section class="chap" data-range="0.632,0.778" style="height:220vh" aria-label="Integration &amp; assurance">
+    <div class="chap-in"><div class="chap-cap">
+      <p class="label"><b>03</b> / Integration &amp; assurance</p>
+      <h2>Every interface accounted for.</h2>
+      <p>Top ballast dropped, the S&amp;C tamped to design, then tested. Permanent way, civils and systems brought together and verified.</p>
+      <div class="chap-bar"><i></i></div>
+    </div></div>
   </section>
 
   <section class="band" id="projects">
@@ -871,6 +945,15 @@
         </div>
       </div>
     </div>
+  </section>
+
+  <section class="chap" data-range="0.778,1" style="height:240vh" aria-label="Delivery &amp; commercial insight">
+    <div class="chap-in"><div class="chap-cap">
+      <p class="label"><b>04</b> / Delivery &amp; commercial insight</p>
+      <h2>Experience beyond the drawing.</h2>
+      <p>OLE wired, line tested and handed back on time. Practical engineering and commercial sense, from bid to handback.</p>
+      <div class="chap-bar"><i></i></div>
+    </div></div>
   </section>
 
   <section class="band" id="about" style="padding-top:0">
