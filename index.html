@@ -537,7 +537,7 @@
     el('text',{x:560,y:cv(560,Y2)+26},0.78,0.84,'R 190 m · 1 IN 8');
     el('text',{x:X0,y:150},0.8,0.86,'S&C LAYOUT · DRG STH-001 · REV A');
     var pen=el('circle',{r:3.2,'class':'pen',cx:-20,cy:-20});
-    var words=[[0,'Survey'],[18,'Setting out'],[32,'Bearers'],[44,'Plain line'],[56,'Diverging route'],[70,'Crossing'],[80,'Checking the drawing'],[94,'Ready']];
+    var words=[[0,'Survey'],[15,'Design'],[32,'Interfaces'],[48,'Setting out'],[64,'Delivery'],[80,'Commissioning'],[94,'Handback']];
     var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,shown=0,target=10,t0=performance.now(),done=false,MIN=reduce?250:3600;
     function set(k){
       for(var i=0;i<els.length;i++){var o=els[i],q=Math.max(0,Math.min(1,(k-o.a)/(o.b-o.a)));
