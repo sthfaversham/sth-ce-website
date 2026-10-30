@@ -960,8 +960,8 @@ const KEYS = [
   [0.795, 14, 1, 34, 20, 40, 38],
   [0.825, 30, 2, 44, 18, 70, 38],
   [0.890, 27, -1.5, 16, 15, 64, 40],
-  [0.950, 28, -1, 46, 40, 96, 34],
-  [1.000, 28, -1, 66, 54, 118, 32],
+  [0.945, uX + 2, -1.5, 15, 17, 104, 38],
+  [1.000, uX + 3, -1.8, 19, 21, 146, 36],
 ];
 const cr = (p0, p1, p2, p3, t) => { const t2 = t * t, t3 = t2 * t; return 0.5 * (2 * p1 + (-p0 + p2) * t + (2 * p0 - 5 * p1 + 4 * p2 - p3) * t2 + (-p0 + 3 * p1 - 3 * p2 + p3) * t3); };
 function camAt(p) {
@@ -1157,7 +1157,7 @@ function apply(p) {
       stand(engineer, -6, -3.6, -6, 0, p); stand(ops[0], -14, -2.9, -14, 0, p); stand(ops[1], XB + 8, vc(XB + 8) - 2.9, XB + 8, 0, p);
     } else if (p > T.train[0] && p < T.test[0]) {
       stand(engineer, -7, -4.4, 0, -4.4, p); stand(ops[0], -34, -3.4, -40, -3.4, p);
-    } else if (p >= T.test[0] && p < T.services[0]) {
+    } else if (p >= T.test[0]) {
       stand(engineer, uX + 5, vc(uX + 5) - 3.0, uX, -HC, p); stand(ops[0], uX - 1, vc(uX - 1) - 3.4, uX, -HC, p); stand(ops[1], uX - 2.6, vc(uX - 2.6) - 3.6, uX, -HC, p);
     }
   }
@@ -1165,7 +1165,7 @@ function apply(p) {
   moon.intensity = 0.9 * lit; hemi.intensity = 0.15 + 0.38 * lit; rim.intensity = 0.8 * lit; scene.environmentIntensity = 0.2 * lit;
   towerSpots.forEach(s => s.intensity = 3600 * lit);
   updateGlows(lit);
-  const away = ease(span(p, 0.93, 0.99));
+  const away = 0;
   scene.fog.density = lerp(0.004, 0.0085, lit) + 0.006 * away; renderer.toneMappingExposure = 1.05 + 0.15 * lit - 0.3 * away;
   placeCamera(p);
 }
