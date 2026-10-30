@@ -1215,50 +1215,68 @@ function resize() {
   dirty = true;
 }
 let target = 0, cur = 0, dirty = true, visible = true, raf = 0, lastT = performance.now();
-// four chapters, each a full-screen window onto the same scene and each owning one slice of the build
-const CHAPS = [...document.querySelectorAll('.chap')].map(el => ({ el, r: el.dataset.range.split(',').map(Number), cap: el.querySelector('.chap-cap'), bar: el.querySelector('.chap-bar i') }));
-let chapIdx = -1, inView = false;
-const scrollProgress = () => {
-  let best = -1, bestVis = 0, kBest = 0;
+// four chapters, each a full-screen window onto the same scene. Each chapter is split into beats:
+// one scroll step triggers the next beat, which then plays out smoothly on its own, like a film.
+const BEAT_VH = 80;
+const CHAPS = [...document.querySelectorAll('.chap')].map(el => {
+  const r = el.dataset.range.split(',').map(Number), beats = el.dataset.beats.split(',').map(Number);
+  el.style.height = `calc(100vh + ${(beats.length - 1) * BEAT_VH + 35}vh)`;
+  beats.forEach((_, j) => { const m = document.createElement('div'); m.className = 'chap-snap'; m.style.top = `${j * BEAT_VH}vh`; el.prepend(m); });
+  return { el, r, beats, cap: el.querySelector('.chap-cap'), bar: el.querySelector('.chap-bar i'), more: el.querySelector('.chap-more'), idx: -1 };
+});
+let chapIdx = -1, inView = false, tw = null;
+function setDest(d) {
+  if (Math.abs(d - target) < 1e-6 && (tw || Math.abs(cur - d) < 1e-6)) return;
+  target = d; tw = { from: cur, to: d, t0: performance.now(), dur: clamp(Math.abs(d - cur) * 75, 0.9, 6.5) * 1000 };
+}
+function readScroll() {
+  let best = -1, bestVis = 0;
   CHAPS.forEach((c, i) => {
     const r = c.el.getBoundingClientRect(), vis = Math.min(r.bottom, innerHeight) - Math.max(r.top, 0);
-    const k = clamp(-r.top / Math.max(1, r.height - innerHeight));
-    c.cap.classList.toggle('on', vis > innerHeight * 0.5 && k < 0.985); c.bar.style.transform = `scaleX(${k.toFixed(3)})`;
-    if (vis > bestVis) { bestVis = vis; best = i; kBest = k; }
+    c.cap.classList.toggle('on', vis > innerHeight * 0.5); c.rect = r;
+    if (vis > bestVis) { bestVis = vis; best = i; }
   });
   inView = best >= 0;
-  if (!inView) return target;
-  if (best !== chapIdx) { chapIdx = best; snap = true; }
-  const c = CHAPS[best]; return lerp(c.r[0], c.r[1], kBest);
-};
-let snap = false;
+  if (!inView) return;
+  const c = CHAPS[best], s = -c.rect.top / (innerHeight * BEAT_VH / 100);
+  const idx = s < -0.35 ? -1 : clamp(Math.floor(s + 0.35), 0, c.beats.length - 1);
+  const dest = idx < 0 ? c.r[0] : c.beats[idx];
+  if (best !== chapIdx) { // arriving in a new chapter: start from its first frame (or its current beat if coming back up)
+    chapIdx = best; tw = null; cur = target = s <= 0.3 ? c.r[0] : dest;
+  }
+  c.idx = idx; setDest(dest);
+}
+function updateCaption() {
+  const c = CHAPS[chapIdx]; if (!c) return;
+  c.bar.style.transform = `scaleX(${clamp((cur - c.r[0]) / (c.r[1] - c.r[0])).toFixed(3)})`;
+  c.more.classList.toggle('on', !tw && c.idx < c.beats.length - 1);
+}
+const scrollProgress = () => { readScroll(); return target; };
 function kick() { if (!raf && visible) { lastT = performance.now(); raf = requestAnimationFrame(frame); } }
 let slow = 0, frames = 0, degraded = false;
 function frame(now) {
   raf = 0;
   const dt = Math.min(0.1, (now - lastT) / 1000); lastT = now;
-  if (snap) { cur = target; snap = false; }
   if (!inView) { raf = 0; return; }
-  const diff = target - cur;
-  cur = Math.abs(diff) < 0.0002 ? target : cur + diff * (1 - Math.exp(-dt * 7));
-  apply(cur); ui(cur); renderer.render(scene, camera);
+  if (tw) { const k = clamp((now - tw.t0) / tw.dur); cur = lerp(tw.from, tw.to, 0.5 - 0.5 * Math.cos(Math.PI * k)); if (k >= 1) { cur = tw.to; tw = null; } }
+  apply(cur); ui(cur); updateCaption(); renderer.render(scene, camera);
   frames++; if (dt > 0.045) slow++;
   if (!degraded && frames > 40 && slow > 18) {
     degraded = true; renderer.setPixelRatio(1); renderer.shadowMap.enabled = false; moon.castShadow = false; towerSpots.forEach(s => s.castShadow = false); MATS.forEach(m => m.needsUpdate = true);
     for (const c of CADS) c.material.uniforms.uW.value /= DPR; resize();
   }
-  if (cur !== target || dirty) { dirty = false; raf = requestAnimationFrame(frame); }
+  if (tw || dirty) { dirty = false; raf = requestAnimationFrame(frame); }
 }
 new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible) kick(); }, { rootMargin: '200px' }).observe(root);
-addEventListener('scroll', () => { target = scrollProgress(); kick(); }, { passive: true });
-addEventListener('resize', () => { resize(); target = scrollProgress(); kick(); });
+addEventListener('scroll', () => { readScroll(); kick(); }, { passive: true });
+addEventListener('resize', () => { resize(); readScroll(); kick(); });
 dots.forEach(d => d.addEventListener('click', () => { const r = root.getBoundingClientRect(), total = r.height - innerHeight; scrollTo({ top: scrollY + r.top + total * +d.dataset.p, behavior: 'smooth' }); }));
 canvas.addEventListener('webglcontextlost', e => { e.preventDefault(); fallback('context-lost'); });
 
-document.body.classList.add('xp-live');
+document.body.classList.add('xp-live'); document.documentElement.classList.add('xp-snap');
 resize();
-target = cur = scrollProgress();
+readScroll(); cur = target; tw = null;
 apply(cur); ui(cur); renderer.render(scene, camera);
 root.classList.add('xp-ready');
 dispatchEvent(new Event('xp-ready'));
-window.__xp = { progress: scrollProgress, set(p) { target = cur = p; apply(p); ui(p); renderer.render(scene, camera); }, info: () => renderer.info };
+window.__xp = { progress: scrollProgress, set(p) { tw = null; target = cur = p; apply(p); ui(p); renderer.render(scene, camera); }, info: () => renderer.info };
