@@ -441,6 +441,21 @@
   }
   .xp .nw{white-space:nowrap}
   /* static presentation: reduced motion, no WebGL, or script failure */
+
+  /* ===== live mode: the 3D build runs as a fixed background behind the whole page (set by js/rail-experience.js) ===== */
+  body.xp-live{--bg:#061019;--surface:rgba(8,19,27,.86);--ink:#e9eff1;--ink-2:#a8b7be;--line:rgba(110,160,180,.24);--accent:#3fb0d6;--accent-ink:#06121a;--dark:transparent;--dark-fg:#e9ebe8;--dark-muted:#9aa8ae;--dark-line:rgba(110,160,180,.2);background:#061019;color:var(--ink);color-scheme:dark}
+  body.xp-live .xp{position:fixed;inset:0;height:100vh;height:100lvh;z-index:0;pointer-events:none}
+  body.xp-live .xp-sticky{position:absolute;inset:0;height:100%}
+  body.xp-live .xp-stages,body.xp-live .xp-dots,body.xp-live .xp-skip,body.xp-live .xp-concept{display:none}
+  body.xp-live main>section:not(.xp),body.xp-live main>.strip,body.xp-live footer{position:relative;z-index:1}
+  body.xp-live .hero{z-index:2}
+  body.xp-live .band,body.xp-live .band.dark{background:transparent !important}
+  body.xp-live footer{background:rgba(6,16,25,.92)}
+  body.xp-live header{background:rgba(6,16,25,.88);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+  body.xp-live .xp-veil{opacity:1;background:linear-gradient(90deg,rgba(6,16,25,.88) 0%,rgba(6,16,25,.66) 38%,rgba(6,16,25,.18) 68%,rgba(6,16,25,.05) 100%)}
+  body.xp-live .band h2,body.xp-live .band .lede,body.xp-live .band .label{text-shadow:0 2px 18px rgba(6,16,25,.9)}
+  body.xp-live .xp-hud{position:fixed;left:auto;right:16px;bottom:14px;width:min(380px,calc(100vw - 32px));z-index:3;background:rgba(6,16,25,.78);padding:8px 12px;border:1px solid rgba(79,192,230,.25);gap:12px}
+  @media (max-width:760px){body.xp-live .xp-veil{background:rgba(6,16,25,.55)}body.xp-live .xp-hud{bottom:10px;right:10px;font-size:.62rem}}
   .xp-static{height:auto}
   .xp-static .xp-sticky{position:relative;height:auto;min-height:100svh}
   .xp-static #xp-canvas,.xp-static .xp-labels,.xp-static .xp-dots,.xp-static .xp-bar,.xp-static .xp-stagenum,.xp-static .xp-cue{display:none}
@@ -455,6 +470,55 @@
 </script>
 </head>
 <body>
+<div id="ld" aria-hidden="true">
+  <style>
+    #ld{position:fixed;inset:0;z-index:100;background:#061019;color:#e6f1f4;display:grid;place-items:center;clip-path:inset(0 0 0 0);transition:clip-path .9s cubic-bezier(.76,0,.24,1)}
+    #ld.out{clip-path:inset(0 0 100% 0)}
+    #ld .in{width:min(560px,86vw);display:grid;gap:26px;transition:opacity .4s,transform .9s cubic-bezier(.76,0,.24,1)}
+    #ld.out .in{opacity:0;transform:translateY(-40px)}
+    #ld img{width:min(260px,58vw);height:auto;filter:brightness(0) invert(1);opacity:0;animation:ldin .8s .1s ease-out forwards}
+    #ld svg{width:100%;height:auto;overflow:visible}
+    #ld .r{fill:none;stroke:#4fd3f0;stroke-width:2.2;stroke-dasharray:1;stroke-dashoffset:1}
+    #ld .sl rect{fill:rgba(169,171,164,.55);transform-box:fill-box;transform-origin:center;transform:scaleY(0)}
+    #ld .row{display:flex;justify-content:space-between;font-family:"IBM Plex Mono","Courier New",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#7fa3ae}
+    #ld .row b{color:#4fd3f0;font-weight:500;font-variant-numeric:tabular-nums}
+    @keyframes ldin{to{opacity:1}}
+    @media (prefers-reduced-motion:reduce){#ld,#ld .in{transition:opacity .3s}#ld.out{clip-path:none;opacity:0}}
+  </style>
+  <div class="in">
+    <img src="images/sth-email-signature-logo.png" alt="">
+    <svg viewBox="0 0 560 60"><g class="sl"></g>
+      <path class="r" pathLength="1" d="M0 22 H560"/><path class="r" pathLength="1" d="M0 38 H560"/>
+      <path class="r" pathLength="1" d="M300 38 C 400 38, 470 46, 560 58" style="stroke-opacity:.7"/></svg>
+    <div class="row"><span id="ld-t">Setting out</span><b id="ld-n">000%</b></div>
+  </div>
+  <script>
+  (function(){
+    var ld=document.getElementById('ld'),n=document.getElementById('ld-n'),t=document.getElementById('ld-t'),rs=ld.querySelectorAll('.r'),sl=ld.querySelector('.sl');
+    var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,shown=0,target=12,t0=performance.now(),done=false,MIN=reduce?200:1500;
+    for(var i=0;i<28;i++){var r=document.createElementNS('http://www.w3.org/2000/svg','rect');r.setAttribute('x',8+i*20);r.setAttribute('y',14);r.setAttribute('width',6);r.setAttribute('height',32);sl.appendChild(r);}
+    var bars=sl.children,words=[[0,'Setting out'],[30,'Survey & design'],[60,'Building the model'],[90,'Handing back']];
+    function set(k){
+      for(var i=0;i<rs.length;i++)rs[i].style.strokeDashoffset=1-Math.min(1,k*(i==2?1.6:1.15));
+      for(var j=0;j<bars.length;j++)bars[j].style.transform='scaleY('+Math.max(0,Math.min(1,k*1.2*28-j))+')';
+      var w='';for(var q=0;q<words.length;q++)if(k*100>=words[q][0])w=words[q][1];t.textContent=w;
+      n.textContent=('00'+Math.round(k*100)).slice(-3)+'%';
+    }
+    function tick(now){
+      var cap=Math.min(target,100*(now-t0)/MIN);
+      shown+= (cap-shown)*0.12; if(cap-shown<0.4)shown=cap;
+      set(shown/100);
+      if(shown>=99.9&&done){ld.classList.add('out');setTimeout(function(){ld.remove()},1000);return}
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+    document.addEventListener('DOMContentLoaded',function(){target=Math.max(target,35)});
+    window.addEventListener('xp-ready',function(){target=Math.max(target,85)});
+    window.addEventListener('load',function(){target=Math.max(target,70);setTimeout(function(){target=100;done=true},reduce?0:350)});
+    setTimeout(function(){target=100;done=true},7000);
+  })();
+  </script>
+</div>
 
 <header>
   <div class="wrap">

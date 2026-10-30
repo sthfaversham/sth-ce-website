@@ -1156,6 +1156,7 @@ function apply(p) {
 }
 
 // ---------- UI ----------
+const PHASE_AT = [0, 0.345, 0.61, 0.84, 0.92];
 const PHASES = ['Design development', 'Constructability', 'Integration & assurance', 'Delivery & commercial insight', 'STH services'];
 function ui(p) {
   barEl.style.transform = `scaleX(${p.toFixed(4)})`;
@@ -1168,7 +1169,8 @@ function ui(p) {
     if (p >= a - 0.01) active = i; vis = Math.max(vis, o);
   });
   stageEl.style.setProperty('--veil', (0.25 + 0.75 * vis).toFixed(3));
-  stageNumEl.textContent = active < 4 ? `0${active + 1} / 04 · ${PHASES[active]}` : PHASES[4];
+  active = PHASE_AT.filter(a => p >= a).length - 1;
+  stageNumEl.textContent = active < 4 ? `0${active + 1} / 04 · ${PHASES[active]}` : 'Concept visualisation';
   dots.forEach((d, i) => d.setAttribute('aria-current', i === active ? 'step' : 'false'));
   steps.forEach(li => { const a = +li.dataset.a, b = +li.dataset.b; li.classList.toggle('now', p >= a && p < b); li.classList.toggle('done', p >= b); });
   for (const L of LABELS) {
@@ -1198,7 +1200,13 @@ function resize() {
   dirty = true;
 }
 let target = 0, cur = 0, dirty = true, visible = true, raf = 0, lastT = performance.now();
-const scrollProgress = () => { const r = root.getBoundingClientRect(), total = r.height - innerHeight; return total > 0 ? clamp(-r.top / total) : 0; };
+// the build plays out over the whole page: from the hero leaving the screen to the bottom of the page
+const hero = document.querySelector('.hero');
+const scrollProgress = () => {
+  const start = hero ? hero.offsetTop + hero.offsetHeight - innerHeight * 0.6 : 0;
+  const end = document.documentElement.scrollHeight - innerHeight;
+  return end > start ? clamp((scrollY - start) / (end - start)) : 0;
+};
 function kick() { if (!raf && visible) { lastT = performance.now(); raf = requestAnimationFrame(frame); } }
 let slow = 0, frames = 0, degraded = false;
 function frame(now) {
@@ -1220,8 +1228,10 @@ addEventListener('resize', () => { resize(); target = scrollProgress(); kick(); 
 dots.forEach(d => d.addEventListener('click', () => { const r = root.getBoundingClientRect(), total = r.height - innerHeight; scrollTo({ top: scrollY + r.top + total * +d.dataset.p, behavior: 'smooth' }); }));
 canvas.addEventListener('webglcontextlost', e => { e.preventDefault(); fallback('context-lost'); });
 
+document.body.classList.add('xp-live');
 resize();
 target = cur = scrollProgress();
 apply(cur); ui(cur); renderer.render(scene, camera);
 root.classList.add('xp-ready');
-window.__xp = { set(p) { target = cur = p; apply(p); ui(p); renderer.render(scene, camera); }, info: () => renderer.info };
+dispatchEvent(new Event('xp-ready'));
+window.__xp = { progress: scrollProgress, set(p) { target = cur = p; apply(p); ui(p); renderer.render(scene, camera); }, info: () => renderer.info };
