@@ -277,10 +277,10 @@
       </div>
       <div class="extra reveal"><div><span class="script">Mane &amp; tail trims</span><div>Tidy-ups available on their own or with any clip.</div></div><a class="btn" data-book href="#book">Book a clip</a></div>
       <div class="callout reveal">
-        <div><b>£25</b><span>minimum call-out per visit</span></div>
-        <p>Legs and trims on their own are best added to a clip, or booked alongside another horse at the same yard. Several horses at one yard all count towards the minimum.</p>
-        <div><b>Free</b><span>travel within 20 minutes</span></div>
-        <p>Yards 20 to 40 minutes away have a £5 travel charge. Use the postcode check below to see which applies to you.</p>
+        <div><b>£0</b><span>no call-out fee</span></div>
+        <p>No call-out or travel charge anywhere within about 40 minutes. Just the price of the clip.</p>
+        <div><b>2+</b><span>horses over 40 minutes away</span></div>
+        <p>Happy to travel further for yards with at least two horses to clip. Use the postcode check below to see where you are.</p>
       </div>
 
       <div class="know">
@@ -348,7 +348,7 @@
     <div class="wrap two" style="margin-top:0;align-items:start">
       <div>
         <h2 class="reveal"><span class="script">Where</span> I cover</h2>
-        <p class="lede reveal">Mobile across north and east Kent, within about 40 minutes of Faversham.</p>
+        <p class="lede reveal">Mobile across north and east Kent, within about 40 minutes of Faversham. Further afield for two or more horses at the same yard.</p>
         <div class="towns reveal">
           <span>Faversham</span><span>Whitstable</span><span>Canterbury</span><span>Herne Bay</span><span>Sittingbourne</span><span>Isle of Sheppey</span><span>Ashford</span><span>Maidstone</span><span>Chatham &amp; Gillingham</span><span>Margate</span><span>Ramsgate</span><span>Sandwich</span><span>&amp; villages in between</span>
         </div>
@@ -407,14 +407,14 @@
     <div class="wrap">
       <h2 class="reveal"><span class="script">Good</span> to know</h2>
       <div class="faq reveal">
-        <details><summary>How long does a clip take?</summary><p>Most full and blanket clips take about one and a half to two hours. A bib, chaser or trace is quicker, and legs only is quicker still. Nervy or first-time horses take as long as they need.</p></details>
+        <details><summary>How long does a clip take?</summary><p>Allow about an hour per horse. Nervy or first-time horses take as long as they need.</p></details>
         <details><summary>How often should I clip?</summary><p>Usually every four to six weeks from autumn through to late winter, depending on how fast your horse's coat grows back and how hard they're working.</p></details>
         <details><summary>Does my horse need a rug after clipping?</summary><p>Yes. Clipping takes away your horse's winter coat, so they'll need rugging to keep warm, especially overnight and when turned out. Have rugs ready for when I finish.</p></details>
         <details><summary>What if my horse is wet or muddy on the day?</summary><p>Clippers can't get through a wet or muddy coat, so please bring your horse in and keep them dry beforehand. If they're soaked when I arrive we may need to rebook.</p></details>
         <details><summary>What if I need to cancel?</summary><p>No problem. Just let me know as soon as you can, ideally at least 24 hours before, so I can offer the slot to someone else.</p></details>
         <details><summary>Will you clip a horse that needs sedating?</summary><p>If your vet advises sedation, please arrange it with your vet for the time of the clip. Your horse's safety, and mine, always come first.</p></details>
         <details><summary>How do I pay?</summary><p>Cash or bank transfer on the day.</p></details>
-        <details><summary>Do you have a minimum charge?</summary><p>Yes, £25 per visit. Several horses at the same yard all count towards it, and there's no travel charge within 20 minutes. Further out, up to 40 minutes, there's a £5 travel charge.</p></details>
+        <details><summary>Do you charge for travel?</summary><p>No, there's no call-out fee. Within about 40 minutes of Faversham you just pay for the clip. For yards further away, I need at least two horses to clip on the same visit.</p></details>
       </div>
     </div>
   </section>
@@ -478,7 +478,7 @@ const d = new Date().getDay(); const li = document.querySelector(`#week li[data-
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
 $$('.reveal').forEach(el => io.observe(el));
 // postcode check: straight-line distance from Faversham town centre (about 40 min drive ≈ 27 miles)
-const BASE = [51.3155, 0.8905], NEAR = 12, OK = 24, EDGE = 30;
+const BASE = [51.3155, 0.8905], OK = 24, FAR = 40;
 const miles = (a, b) => { const R = 3958.8, r = x => x * Math.PI / 180, dl = r(b[0] - a[0]), dn = r(b[1] - a[1]); const h = Math.sin(dl / 2) ** 2 + Math.cos(r(a[0])) * Math.cos(r(b[0])) * Math.sin(dn / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(h)); };
 document.getElementById('check').addEventListener('submit', async e => {
   e.preventDefault();
@@ -488,10 +488,9 @@ document.getElementById('check').addEventListener('submit', async e => {
     const r = await fetch('https://api.postcodes.io/postcodes/' + encodeURIComponent(pc)); const j = await r.json();
     if (!j.result) { out.textContent = "I couldn't find that postcode. Please check it, or just message me."; return; }
     const m = miles(BASE, [j.result.latitude, j.result.longitude]), town = j.result.admin_district;
-    if (m <= NEAR) { out.className = 'yes'; out.textContent = `Yes, ${town} is in my area, with no travel charge ♡`; }
-    else if (m <= OK) { out.className = 'yes'; out.textContent = `Yes, ${town} is in my area ♡ A £5 travel charge applies.`; }
-    else if (m <= EDGE) { out.className = 'maybe'; out.textContent = `${town} is on the edge of my area. Message me and I'll see what I can do.`; }
-    else { out.className = 'maybe'; out.textContent = `Sorry, ${town} is a bit far for me at the moment.`; }
+    if (m <= OK) { out.className = 'yes'; out.textContent = `Yes, ${town} is in my area, with no call-out fee ♡`; }
+    else if (m <= FAR) { out.className = 'maybe'; out.textContent = `${town} is over 40 minutes away, so I'll need at least two horses at the yard. Message me to arrange.`; }
+    else { out.className = 'maybe'; out.textContent = `${town} is quite a distance for me. Message me with how many horses and I'll see what I can do.`; }
   } catch { out.textContent = "Couldn't check right now. Please message me with your postcode."; }
 });
 </script>
