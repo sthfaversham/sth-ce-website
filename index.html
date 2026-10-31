@@ -291,7 +291,7 @@
   <section class="avail" id="availability">
     <div class="wrap">
       <h2 class="reveal"><span class="script">When</span> I'm available</h2>
-      <p class="lede reveal">I clip part-time, so weekday evenings and weekends are when you'll find me. Pick a slot on Booksy and I'll confirm.</p>
+      <p class="lede reveal">I clip part-time, so weekday evenings and weekends are when you'll find me. <span data-if-booksy>Pick a slot on Booksy and I'll confirm.</span><span data-no-booksy>Message me with a day that suits and I'll confirm.</span></p>
       <div class="two">
         <div class="card reveal">
           <h3>My week</h3>
@@ -359,10 +359,10 @@
   <section class="contact" id="book">
     <div class="wrap">
       <h2><span class="script">Book</span> your clip</h2>
-      <p class="lede">The quickest way is Booksy, where you can see my free slots and book straight in. Prefer to chat first? Message, call or email.</p>
+      <p class="lede"><span data-if-booksy>The quickest way is Booksy, where you can see my free slots and book straight in. Prefer to chat first? Message, call or email.</span><span data-no-booksy>The quickest way is WhatsApp. Tell me your horse, the clip you'd like, your yard postcode and a day that suits, and I'll confirm.</span></p>
       <div class="ways">
-        <a class="main" data-book href="#"><svg><use href="#i-cal"/></svg>Book on Booksy<small>See free slots</small></a>
-        <a data-wa href="#"><svg><use href="#i-wa"/></svg>WhatsApp<small>Quickest reply</small></a>
+        <a class="main" data-book data-if-booksy href="#"><svg><use href="#i-cal"/></svg>Book on Booksy<small>See free slots</small></a>
+        <a data-wa data-wa-main href="#"><svg><use href="#i-wa"/></svg>WhatsApp<small>Quickest reply</small></a>
         <a data-tel href="#"><svg><use href="#i-phone"/></svg>Call or text<small data-tel-text></small></a>
         <a data-mail href="#"><svg><use href="#i-mail"/></svg>Email<small data-mail-text></small></a>
         <a data-fb href="#" target="_blank" rel="noopener"><svg><use href="#i-fb"/></svg>Facebook<small>Aliyah Rose Clipping</small></a>
@@ -402,7 +402,9 @@ $$('[data-tel]').forEach(a => a.href = 'tel:' + SITE.phone.replace(/\s/g, ''));
 $$('[data-tel-text]').forEach(s => s.textContent = SITE.phone);
 $$('[data-mail]').forEach(a => a.href = 'mailto:' + SITE.email + '?subject=' + encodeURIComponent('Clipping booking'));
 $$('[data-mail-text]').forEach(s => s.textContent = SITE.email);
-$$('[data-book]').forEach(a => { if (SITE.booksy) { a.href = SITE.booksy; a.target = '_blank'; a.rel = 'noopener'; } else if (a.closest('.ways')) a.href = wa; else a.href = '#book'; });
+$$('[data-book]').forEach(a => { if (SITE.booksy) { a.href = SITE.booksy; a.target = '_blank'; a.rel = 'noopener'; } else a.href = '#book'; });
+$$(SITE.booksy ? '[data-no-booksy]' : '[data-if-booksy]').forEach(el => el.style.display = 'none');
+if (!SITE.booksy) $$('[data-wa-main]').forEach(a => a.classList.add('main'));
 $$('[data-fb]').forEach(a => { if (SITE.facebook) a.href = SITE.facebook; else a.style.display = 'none'; });
 $$('[data-tt]').forEach(a => a.href = SITE.tiktok);
 document.getElementById('yr').textContent = new Date().getFullYear();
