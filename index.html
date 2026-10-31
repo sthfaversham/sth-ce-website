@@ -116,6 +116,16 @@
   .callout span{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--rose-d)}
   .callout p{margin:0;font-size:.94rem;color:var(--ink-2)}
   @media (max-width:820px){.callout{grid-template-columns:auto 1fr}}
+  .reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+  @media (max-width:820px){.reviews{grid-template-columns:1fr}}
+  .rev{margin:0;background:var(--blush);border:1px solid var(--line);border-radius:22px;padding:16px 18px 20px;display:flex;flex-direction:column;gap:10px}
+  .rev-pic{height:170px;border-radius:16px;overflow:hidden;background:#fff}
+  .rev-pic img{width:100%;height:100%;object-fit:cover}
+  .rev-badge{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,var(--rose),var(--rose-d));color:#fff;font-weight:700}
+  .rev-badge svg{width:44px;height:44px}
+  .stars{color:var(--rose);letter-spacing:.2em;font-size:.95rem}
+  .rev blockquote{margin:0;font-family:var(--serif);font-size:1.35rem;font-weight:600;line-height:1.2;color:var(--rose-d);flex:1}
+  .rev figcaption{font-weight:700;color:var(--ink-2);font-size:.92rem}
   /* availability */
   .avail{background:linear-gradient(180deg,#fff 0%,var(--blush) 100%)}
   .two{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:34px}
@@ -303,20 +313,30 @@
         <figure class="reveal"><img src="img/work3.jpg" alt="Skewbald pony freshly clipped, with a white heart shape on its side" loading="lazy"><figcaption>Neat lines, happy pony</figcaption></figure>
         <figure class="reveal"><img src="img/work1.jpg" alt="Black cob standing in a stable after being clipped" loading="lazy"><figcaption>Clipped and ready for winter</figcaption></figure>
       </div>
-      <div class="quote reveal">
-        <img src="img/duchess-wide.jpg" alt="Duchess, a black and white mare, standing in a field after her clip" loading="lazy">
-        <blockquote>
-          <p>“Got you again, this is Duchess and her clip turned out perfect.”</p>
-          <cite>Duchess's owner</cite>
-          <a class="btn ghost" data-tt href="#" target="_blank" rel="noopener"><svg><use href="#i-tt"/></svg>See more clips on TikTok</a>
-        </blockquote>
+      <h3 class="reveal" style="margin-top:46px;font-size:clamp(1.8rem,3.6vw,2.4rem);text-transform:uppercase"><span class="script">What</span> owners say</h3>
+      <div class="reviews">
+        <figure class="rev reveal">
+          <div class="rev-pic"><img src="img/duchess-wide.jpg" alt="Duchess, a black and white mare, after her clip" loading="lazy"></div>
+          <div class="stars" aria-label="Recommended">♥ ♥ ♥ ♥ ♥</div>
+          <blockquote>“Got you again, this is Duchess and her clip turned out perfect.”</blockquote>
+          <figcaption>Duchess's owner</figcaption>
+        </figure>
+        <figure class="rev reveal">
+          <div class="rev-pic"><img src="img/odin.jpg" alt="Odin, a bay horse with a neatly pulled mane" loading="lazy" style="object-position:center 8%;transform:scale(1.25);transform-origin:70% 0"></div>
+          <div class="stars" aria-label="Recommended">♥ ♥ ♥ ♥ ♥</div>
+          <blockquote>“Big thanks to Aliyah Rose Clipping for fixing Odin's mane.”</blockquote>
+          <figcaption>Xena, Odin's owner</figcaption>
+        </figure>
+        <figure class="rev reveal">
+          <div class="rev-pic rev-badge"><svg><use href="#i-fb"/></svg><span>Recommended on Facebook</span></div>
+          <div class="stars" aria-label="Recommended">♥ ♥ ♥ ♥ ♥</div>
+          <blockquote>“Lovely clip for my big boy. Very prompt. Highly recommended.”</blockquote>
+          <figcaption>Carole H.</figcaption>
+        </figure>
       </div>
-      <div class="quote flip reveal">
-        <blockquote>
-          <p>“Big thanks to Aliyah Rose Clipping for fixing Odin's mane.”</p>
-          <cite>Xena, Odin's owner</cite>
-        </blockquote>
-        <img src="img/odin.jpg" alt="Odin, a bay horse, tacked up with a neatly pulled mane" loading="lazy">
+      <div class="reveal" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:22px">
+        <a class="btn ghost" data-fb-reviews href="#" target="_blank" rel="noopener"><svg><use href="#i-fb"/></svg>Leave me a review</a>
+        <a class="btn ghost" data-tt href="#" target="_blank" rel="noopener"><svg><use href="#i-tt"/></svg>See more clips on TikTok</a>
       </div>
     </div>
   </section>
@@ -479,6 +499,7 @@ $$(SITE.booksy ? '[data-no-booksy]' : '[data-if-booksy]').forEach(el => el.style
 if (!SITE.booksy) $$('[data-wa-main]').forEach(a => a.classList.add('main'));
 $$('[data-fb]').forEach(a => { if (SITE.facebook) a.href = SITE.facebook; else a.style.display = 'none'; });
 $$('[data-tt]').forEach(a => a.href = SITE.tiktok);
+$$('[data-fb-reviews]').forEach(a => { if (SITE.facebook) a.href = SITE.facebook; else a.style.display = 'none'; });
 document.getElementById('yr').textContent = new Date().getFullYear();
 // today in the week list
 const d = new Date().getDay(); const li = document.querySelector(`#week li[data-d="${d}"]`); if (li) li.classList.add('today');
