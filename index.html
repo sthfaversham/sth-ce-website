@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aliyah Rose Clipping | Mobile Horse Clipping, Kent</title>
+<meta name="description" content="Professional mobile horse clipping across Faversham, Whitstable, Canterbury and surrounding Kent. Full, blanket, chaser, trace and bib clips. Nervy and first-time horses welcome. Book online.">
+<meta property="og:title" content="Aliyah Rose Clipping">
+<meta property="og:description" content="Professional mobile horse clipping in Kent. Keeping your horse comfortable, healthy &amp; happy.">
+<meta property="og:image" content="img/work2.jpg">
+<link rel="icon" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:wght@500;600;700&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --rose:#c8487a; --rose-d:#9c2c58; --rose-l:#e98fb0;
+    --blush:#fbe7ef; --blush-2:#f6d4e1; --cream:#fffafc;
+    --ink:#3b2430; --ink-2:#7a5866; --line:#f0c9d8;
+    --script:"Allura",cursive; --serif:"Cormorant Garamond",Georgia,serif; --sans:"Nunito Sans",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--cream);color:var(--ink);font:400 17px/1.6 var(--sans)}
+  img{max-width:100%;display:block}
+  a{color:var(--rose-d)}
+  .wrap{width:min(1080px,100% - 32px);margin-inline:auto}
+  h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.05;margin:0;color:var(--rose-d)}
+  h2{font-size:clamp(2.2rem,5vw,3.2rem);text-transform:uppercase;letter-spacing:.02em}
+  .script{font-family:var(--script);font-weight:400;color:var(--rose);text-transform:none;letter-spacing:0;font-size:1.25em;line-height:.9}
+  .heart{color:var(--rose)}
+  .lede{color:var(--ink-2);font-size:1.08rem;max-width:56ch;margin:14px 0 0}
+  section{padding:clamp(56px,9vw,96px) 0}
+  .divider{display:flex;align-items:center;gap:12px;color:var(--rose);margin:16px 0 0;max-width:260px}
+  .divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--rose-l)}
+
+  /* buttons */
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:999px;font-weight:700;text-decoration:none;font-size:1rem;transition:transform .15s,box-shadow .15s,background .15s}
+  .btn.primary{background:var(--rose);color:#fff;box-shadow:0 8px 22px rgba(200,72,122,.3)}
+  .btn.primary:hover{background:var(--rose-d);transform:translateY(-1px)}
+  .btn.ghost{background:#fff;color:var(--rose-d);border:1.5px solid var(--rose-l)}
+  .btn.ghost:hover{border-color:var(--rose)}
+  .btn svg{width:18px;height:18px}
+
+  /* header */
+  header{position:sticky;top:0;z-index:10;background:rgba(255,250,252,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 0}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .brand img{width:46px;height:46px}
+  .brand span{font-family:var(--script);font-size:1.9rem;color:var(--rose);line-height:1}
+  nav{display:flex;gap:22px;align-items:center}
+  nav a{text-decoration:none;color:var(--ink);font-weight:600;font-size:.95rem}
+  nav a:hover{color:var(--rose)}
+  nav .btn{padding:9px 18px;font-size:.92rem}
+  @media (max-width:820px){nav a:not(.btn){display:none}}
+
+  /* hero */
+  .hero{position:relative;overflow:hidden;background:radial-gradient(ellipse at 80% 20%,#fff 0,transparent 55%),linear-gradient(160deg,var(--blush) 0%,#fff3f8 60%,var(--blush-2) 100%);padding:clamp(40px,7vw,80px) 0}
+  .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+  .hero h1{font-size:clamp(2.8rem,7.5vw,5.2rem);text-transform:uppercase;letter-spacing:.01em}
+  .hero h1 .script{display:block;font-size:.62em;margin-bottom:4px}
+  .hero .tag{font-family:var(--script);font-size:clamp(1.6rem,3.4vw,2.1rem);color:var(--rose-d);margin:18px 0 0}
+  .hero .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+  .hero .area{margin-top:22px;display:flex;align-items:center;gap:8px;color:var(--ink-2);font-weight:600;font-size:.95rem}
+  .hero .area svg{width:18px;height:18px;color:var(--rose)}
+  .badge{position:relative;justify-self:center;width:min(440px,90%)}
+  .badge img{width:100%;filter:drop-shadow(0 24px 40px rgba(156,44,88,.25));animation:float 7s ease-in-out infinite}
+  @keyframes float{50%{transform:translateY(-10px)}}
+  .petal{position:absolute;color:var(--rose-l);opacity:.55;font-size:22px;pointer-events:none}
+  @media (prefers-reduced-motion:reduce){.badge img{animation:none}}
+  @media (max-width:820px){.hero .wrap{grid-template-columns:1fr;text-align:center}.hero .ctas,.hero .area{justify-content:center}.badge{order:-1;width:min(300px,78%)}.divider{margin-inline:auto}}
+
+  /* prices */
+  .prices{background:#fff}
+  .grid-clips{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:18px;margin-top:36px}
+  .clip{position:relative;background:var(--blush);border-radius:22px;padding:22px 22px 20px;display:grid;grid-template-columns:1fr auto;gap:6px 14px;border:1px solid var(--line);transition:transform .2s,box-shadow .2s}
+  .clip:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(156,44,88,.12)}
+  .clip .pic{grid-column:1/-1;height:120px;display:grid;place-items:center;border-radius:14px;background:#fff;overflow:hidden}
+  .clip .pic img{height:118px;width:auto}
+  .clip h3{font-size:1.65rem;text-transform:uppercase;margin-top:10px}
+  .clip .price{align-self:end;justify-self:end;width:78px;height:78px;border-radius:50%;background:var(--rose);color:#fff;display:grid;place-content:center;text-align:center;line-height:1;grid-row:2/4;grid-column:2;box-shadow:0 8px 18px rgba(200,72,122,.3)}
+  .clip .price small{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;opacity:.85}
+  .clip .price b{font-family:var(--serif);font-size:1.75rem}
+  .clip .for{color:var(--rose);font-weight:700;font-size:.92rem}
+  .clip p{margin:6px 0 0;color:var(--ink-2);font-size:.95rem;grid-column:1/-1}
+  .extra{margin-top:22px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;background:linear-gradient(90deg,var(--rose),var(--rose-d));color:#fff;border-radius:22px;padding:20px 26px}
+  .extra .script{color:#fff;font-size:2.1rem}
+  .extra .btn{background:#fff;color:var(--rose-d)}
+  .note{margin-top:14px;color:var(--ink-2);font-size:.9rem}
+
+  /* good to know */
+  .know{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:34px}
+  .know div{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;display:flex;gap:14px;align-items:flex-start}
+  .know svg{flex:0 0 38px;width:38px;height:38px;color:var(--rose)}
+  .know p{margin:0;font-size:.95rem}
+  .know b{display:block;color:var(--rose-d);margin-bottom:2px}
+
+  /* my work */
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px}
+  .gallery figure{margin:0;border-radius:22px;overflow:hidden;background:#fff;border:1px solid var(--line);box-shadow:0 12px 28px rgba(156,44,88,.1)}
+  .gallery img{width:100%;aspect-ratio:3/4;object-fit:cover;transition:transform .6s}
+  .gallery figure:hover img{transform:scale(1.04)}
+  .quote{margin-top:22px;display:grid;grid-template-columns:1.1fr .9fr;border-radius:22px;overflow:hidden;background:var(--blush);border:1px solid var(--line)}
+  .quote img{width:100%;height:100%;object-fit:cover;min-height:260px}
+  .quote blockquote{margin:0;padding:clamp(22px,4vw,40px);display:flex;flex-direction:column;justify-content:center;gap:12px}
+  .quote blockquote p{margin:0;font-family:var(--serif);font-size:clamp(1.5rem,3vw,2.1rem);font-weight:600;line-height:1.2;color:var(--rose-d)}
+  .quote cite{font-style:normal;font-weight:700;color:var(--ink-2)}
+  .quote .btn{align-self:flex-start}
+  @media (max-width:820px){.quote{grid-template-columns:1fr}}
+  .gallery figcaption{padding:12px 16px;font-weight:600;color:var(--rose-d);font-size:.95rem}
+  @media (max-width:820px){.gallery{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:78%;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}.gallery figure{scroll-snap-align:start}}
+  /* availability */
+  .avail{background:linear-gradient(180deg,#fff 0%,var(--blush) 100%)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:34px}
+  @media (max-width:820px){.two{grid-template-columns:1fr}}
+  .card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:24px}
+  .card h3{font-size:1.6rem;text-transform:uppercase}
+  .week{list-style:none;padding:0;margin:14px 0 0}
+  .week li{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px dashed var(--line);font-weight:600}
+  .week li:last-child{border:0}
+  .week span{font-weight:700;padding:4px 12px;border-radius:999px;font-size:.88rem}
+  .week .all{background:var(--blush);color:var(--rose-d)}
+  .week .eve{background:var(--rose);color:#fff}
+  .week li.today{color:var(--rose)}
+  .week li.today::after{content:"today";font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--rose);margin-left:8px}
+  .week li.today{display:grid;grid-template-columns:1fr auto auto;gap:8px}
+  .prep{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:10px}
+  .prep li{display:flex;gap:10px;font-size:.96rem}
+  .prep li::before{content:"♡";color:var(--rose);font-weight:700}
+
+  /* areas */
+  .towns{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .towns span{background:var(--blush);color:var(--rose-d);border-radius:999px;padding:6px 14px;font-weight:600;font-size:.92rem}
+  .check{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+  .check input{flex:1;min-width:170px;padding:13px 16px;border-radius:999px;border:1.5px solid var(--rose-l);font:600 1rem var(--sans);text-transform:uppercase;color:var(--ink);background:#fff}
+  .check input:focus{outline:2px solid var(--rose);outline-offset:1px}
+  .check button{border:0;cursor:pointer}
+  #check-out{margin:12px 0 0;font-weight:600;min-height:1.6em}
+  #check-out.yes{color:#2f8a57}#check-out.maybe{color:var(--rose-d)}
+
+  /* about */
+  .about .wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:44px;align-items:center}
+  .about .photo{border-radius:30px;overflow:hidden;box-shadow:0 22px 40px rgba(156,44,88,.18);aspect-ratio:1/1.03;background:var(--blush)}
+  .about .photo img{width:100%;height:100%;object-fit:cover}
+  @media (max-width:820px){.about .wrap{grid-template-columns:1fr}.about .photo{max-width:340px}}
+
+  /* contact */
+  .contact{background:linear-gradient(160deg,var(--rose) 0%,var(--rose-d) 100%);color:#fff;text-align:center}
+  .contact h2{color:#fff}.contact .script{color:#fff}
+  .contact .lede{color:#ffe5ef;margin-inline:auto}
+  .ways{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:34px}
+  .ways a{display:flex;flex-direction:column;align-items:center;gap:8px;padding:22px 16px;border-radius:20px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);color:#fff;text-decoration:none;font-weight:700;transition:background .15s,transform .15s}
+  .ways a:hover{background:rgba(255,255,255,.22);transform:translateY(-2px)}
+  .ways svg{width:30px;height:30px}
+  .ways small{font-weight:400;opacity:.9;word-break:break-all}
+  .ways a.main{background:#fff;color:var(--rose-d)}
+
+  footer{background:#2e1824;color:#d9bfcb;font-size:.88rem;padding:26px 0 90px}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between}
+  footer a{color:#f3c3d6}
+
+  /* sticky mobile booking bar */
+  .mbar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:none;gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(255,250,252,.96);border-top:1px solid var(--line);backdrop-filter:blur(8px)}
+  .mbar .btn{flex:1;justify-content:center;padding:12px}
+  @media (max-width:820px){.mbar{display:flex}}
+  @media (min-width:821px){footer{padding-bottom:26px}}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3Z"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></symbol>
+  <symbol id="i-fb" viewBox="0 0 24 24" fill="currentColor"><path d="M14 8.5V6.8c0-.8.2-1.3 1.4-1.3H17V2.3A22 22 0 0 0 14.6 2C12.2 2 10.6 3.5 10.6 6.2v2.3H8v3.6h2.6V22H14v-9.9h2.7l.4-3.6Z"/></symbol>
+  <symbol id="i-tt" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 2h-3.3v13.4a2.9 2.9 0 1 1-2-2.8V9.2a6.3 6.3 0 1 0 5.3 6.2V8.6a7.9 7.9 0 0 0 4.6 1.5V6.8a4.6 4.6 0 0 1-4.6-4.8Z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2 0 3.5 1.1 5.3 3 1.8-1.9 3.3-3 5.3-3 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21Z"/></symbol>
+  <symbol id="i-shoe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 3v8a6 6 0 0 0 12 0V3"/><path d="M6 6h2M16 6h2M6 9.5h2M16 9.5h2"/></symbol>
+  <symbol id="i-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 7v10M7 12h10" stroke-width="2.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></symbol>
+  <symbol id="i-pound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M15 8.5a2.8 2.8 0 0 0-5 1.6V16M8 13h5M8 16h8" stroke-linecap="round"/></symbol>
+</svg>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="img/logo.png" alt=""><span>Aliyah Rose</span></a>
+    <nav>
+      <a href="#prices">Clips &amp; prices</a>
+      <a href="#work">My work</a>
+      <a href="#availability">Availability</a>
+      <a href="#areas">Areas</a>
+      <a href="#about">About</a>
+      <a class="btn primary" data-book href="#book">Book now</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1><span class="script">Professional</span>Horse Clipping</h1>
+        <div class="divider"><svg width="14" height="14"><use href="#i-heart"/></svg></div>
+        <p class="tag">Keeping your horse comfortable, healthy &amp; happy ♡</p>
+        <p class="lede">Mobile clipping at your yard. Full, blanket, chaser, trace and bib clips, plus mane and tail tidy-ups. Nervy and first-time horses welcome.</p>
+        <div class="ctas">
+          <a class="btn primary" data-book href="#book"><svg><use href="#i-cal"/></svg>Book online</a>
+          <a class="btn ghost" data-wa href="#"><svg><use href="#i-wa"/></svg>WhatsApp me</a>
+        </div>
+        <p class="area"><svg><use href="#i-pin"/></svg>Covering Faversham, Whitstable, Canterbury &amp; surrounding Kent</p>
+      </div>
+      <div class="badge"><img src="img/logo.png" alt="Aliyah Rose Clipping logo: a black and white horse in a pink head collar surrounded by pink flowers"></div>
+    </div>
+  </section>
+
+  <section class="prices" id="prices">
+    <div class="wrap">
+      <h2 class="reveal"><span class="script">Clips</span> &amp; Prices</h2>
+      <p class="lede reveal">Prices are a guide and vary with the size of your horse and the clip you choose. Message me if you're not sure which clip suits your horse.</p>
+      <div class="grid-clips">
+        <article class="clip reveal"><div class="pic"><img src="img/clip0.png" alt="Horse outline showing a full or hunter clip" loading="lazy"></div>
+          <h3>Full / Hunter</h3><div class="price"><small>from</small><b>£45</b></div><span class="for">Horses in full-time work</span>
+          <p>Legs on or off, half or full head, and a saddle patch left on or taken off depending on how sensitive your horse is.</p></article>
+        <article class="clip reveal"><div class="pic"><img src="img/clip1.png" alt="Horse outline showing a blanket clip" loading="lazy"></div>
+          <h3>Blanket</h3><div class="price"><small>from</small><b>£30</b></div><span class="for">Horses in medium work</span>
+          <p>Legs on or off, keeping the upper back and bottom covered for warmth without heavy sweating in work.</p></article>
+        <article class="clip reveal"><div class="pic"><img src="img/clip2.png" alt="Horse outline showing a chaser clip" loading="lazy"></div>
+          <h3>Chaser</h3><div class="price"><small>from</small><b>£30</b></div><span class="for">Light work &amp; youngsters</span>
+          <p>Hair taken off the underside of the neck and body.</p></article>
+        <article class="clip reveal"><div class="pic"><img src="img/clip3.png" alt="Horse outline showing a trace clip" loading="lazy"></div>
+          <h3>Trace</h3><div class="price"><small>from</small><b>£30</b></div><span class="for">Horses in light work</span>
+          <p>Hair off the underside of the neck, body and bottom to stop excessive sweating.</p></article>
+        <article class="clip reveal"><div class="pic"><img src="img/clip4.png" alt="Horse outline showing a bib clip" loading="lazy"></div>
+          <h3>Bib</h3><div class="price"><small>from</small><b>£25</b></div><span class="for">Perfect for a first clip</span>
+          <p>Just the underside or full neck, with a thin strip down the chest and under the stomach.</p></article>
+        <article class="clip reveal"><div class="pic"><img src="img/clip5.png" alt="Horse outline with only the lower legs clipped" loading="lazy"></div>
+          <h3>Just Legs</h3><div class="price"><small>from</small><b>£10</b></div><span class="for">Feathers only</span>
+          <p>Taking just the feathers off, for example to help manage leg conditions.</p></article>
+      </div>
+      <div class="extra reveal"><div><span class="script">Mane &amp; tail trims</span><div>Tidy-ups available on their own or with any clip.</div></div><a class="btn" data-book href="#book">Book a clip</a></div>
+
+      <div class="know">
+        <div class="reveal"><svg><use href="#i-heart"/></svg><p><b>Nervy or first-time horses</b>More than happy to clip them. We'll go at their pace.</p></div>
+        <div class="reveal"><svg><use href="#i-shoe"/></svg><p><b>Welfare first</b>I always put your horse's welfare and my safety before any clip.</p></div>
+        <div class="reveal"><svg><use href="#i-cross"/></svg><p><b>Medical conditions</b>Please let me know beforehand so the clip can be suited to your horse.</p></div>
+        <div class="reveal"><svg><use href="#i-warn"/></svg><p><b>Please note</b>I no longer clip dangerous or badly behaved horses.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="work" id="work" style="background:linear-gradient(180deg,var(--cream),#fff)">
+    <div class="wrap">
+      <h2 class="reveal"><span class="script">My</span> work</h2>
+      <p class="lede reveal">A few recent clips, finished off with my little signature heart ♡</p>
+      <div class="gallery">
+        <figure class="reveal"><img src="img/work2.jpg" alt="Grey Shetland pony freshly clipped, with a heart left in the coat on its hindquarters" loading="lazy"><figcaption>Shetland, with a heart ♡</figcaption></figure>
+        <figure class="reveal"><img src="img/work3.jpg" alt="Skewbald pony freshly clipped, with a white heart shape on its side" loading="lazy"><figcaption>Neat lines, happy pony</figcaption></figure>
+        <figure class="reveal"><img src="img/work1.jpg" alt="Black cob standing in a stable after being clipped" loading="lazy"><figcaption>Clipped and ready for winter</figcaption></figure>
+      </div>
+      <div class="quote reveal">
+        <img src="img/duchess-wide.jpg" alt="Duchess, a black and white mare, standing in a field after her clip" loading="lazy">
+        <blockquote>
+          <p>“Got you again, this is Duchess and her clip turned out perfect.”</p>
+          <cite>Duchess's owner</cite>
+          <a class="btn ghost" data-tt href="#" target="_blank" rel="noopener"><svg><use href="#i-tt"/></svg>See more clips on TikTok</a>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section class="avail" id="availability">
+    <div class="wrap">
+      <h2 class="reveal"><span class="script">When</span> I'm available</h2>
+      <p class="lede reveal">I clip part-time, so weekday evenings and weekends are when you'll find me. Pick a slot on Booksy and I'll confirm.</p>
+      <div class="two">
+        <div class="card reveal">
+          <h3>My week</h3>
+          <ul class="week" id="week">
+            <li data-d="1">Monday <span class="all">Any time</span></li>
+            <li data-d="2">Tuesday <span class="eve">From 5:30pm</span></li>
+            <li data-d="3">Wednesday <span class="all">Any time</span></li>
+            <li data-d="4">Thursday <span class="eve">From 5:30pm</span></li>
+            <li data-d="5">Friday <span class="eve">From 5:30pm</span></li>
+            <li data-d="6">Saturday <span class="all">Any time</span></li>
+            <li data-d="0">Sunday <span class="all">Any time</span></li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <h3>Before I arrive</h3>
+          <ul class="prep">
+            <li>Horse clean, dry and brushed off. Clippers can't cut through mud or a damp coat.</li>
+            <li>A power socket near where we'll clip.</li>
+            <li>For evening bookings, a well-lit stable or barn.</li>
+            <li>Somewhere safe to tie up, or someone to hold your horse.</li>
+            <li>Tell me about any medical conditions or if your vet has advised sedation.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="areas">
+    <div class="wrap two" style="margin-top:0;align-items:start">
+      <div>
+        <h2 class="reveal"><span class="script">Where</span> I cover</h2>
+        <p class="lede reveal">Mobile across north and east Kent, within about 40 minutes of Faversham.</p>
+        <div class="towns reveal">
+          <span>Faversham</span><span>Whitstable</span><span>Canterbury</span><span>Herne Bay</span><span>Sittingbourne</span><span>Isle of Sheppey</span><span>Ashford</span><span>Maidstone</span><span>Chatham &amp; Gillingham</span><span>Margate</span><span>Ramsgate</span><span>Sandwich</span><span>&amp; villages in between</span>
+        </div>
+      </div>
+      <div class="card reveal">
+        <h3>Do I cover you?</h3>
+        <p style="margin:8px 0 0;color:var(--ink-2)">Pop in your yard's postcode for a quick check.</p>
+        <form class="check" id="check">
+          <input id="pc" aria-label="Yard postcode" placeholder="e.g. CT5 1AB" autocomplete="postal-code" maxlength="9">
+          <button class="btn primary" type="submit">Check</button>
+        </form>
+        <p id="check-out" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="wrap">
+      <div class="photo reveal"><img src="img/horse.jpg" alt="Black and white horse wearing a pink head collar"></div>
+      <div>
+        <h2 class="reveal"><span class="script">Hi,</span> I'm Aliyah</h2>
+        <div class="divider reveal"><svg width="14" height="14"><use href="#i-heart"/></svg></div>
+        <p class="lede reveal">I run Aliyah Rose Clipping, a mobile horse clipping service across Kent. I come to your yard, take my time and suit every clip to the horse, whether it's a full hunter clip for a busy competition horse or a gentle first bib clip for a youngster.</p>
+        <p class="lede reveal">Nervy horses are very welcome. Your horse's comfort and welfare always come first.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px" class="reveal">
+          <a class="btn primary" data-book href="#book"><svg><use href="#i-cal"/></svg>Book a clip</a>
+          <a class="btn ghost" href="img/price-list.jpg" target="_blank" rel="noopener">See the price list</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="book">
+    <div class="wrap">
+      <h2><span class="script">Book</span> your clip</h2>
+      <p class="lede">The quickest way is Booksy, where you can see my free slots and book straight in. Prefer to chat first? Message, call or email.</p>
+      <div class="ways">
+        <a class="main" data-book href="#"><svg><use href="#i-cal"/></svg>Book on Booksy<small>See free slots</small></a>
+        <a data-wa href="#"><svg><use href="#i-wa"/></svg>WhatsApp<small>Quickest reply</small></a>
+        <a data-tel href="#"><svg><use href="#i-phone"/></svg>Call or text<small data-tel-text></small></a>
+        <a data-mail href="#"><svg><use href="#i-mail"/></svg>Email<small data-mail-text></small></a>
+        <a data-fb href="#" target="_blank" rel="noopener"><svg><use href="#i-fb"/></svg>Facebook<small>Aliyah Rose Clipping</small></a>
+        <a data-tt href="#" target="_blank" rel="noopener"><svg><use href="#i-tt"/></svg>TikTok<small>@aliyahroseclipping</small></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr"></span> Aliyah Rose Clipping · Mobile horse clipping, Kent</span>
+    <span><a href="#prices">Prices</a> · <a href="#availability">Availability</a> · <a href="#book">Book</a></span>
+  </div>
+</footer>
+
+<div class="mbar">
+  <a class="btn primary" data-book href="#book"><svg><use href="#i-cal"/></svg>Book</a>
+  <a class="btn ghost" data-wa href="#"><svg><use href="#i-wa"/></svg>WhatsApp</a>
+</div>
+
+<script>
+// ===== Aliyah's details: edit here =====
+const SITE = {
+  phone: '07763 273870',
+  whatsapp: '447763273870',
+  email: 'aliyahhorrigan8@gmail.com',
+  booksy: '',            // paste her Booksy page link here, e.g. https://booksy.com/en-gb/....
+  facebook: 'https://www.facebook.com/share/19rWbeNpbP/',
+  tiktok: 'https://www.tiktok.com/@aliyahroseclipping',
+};
+// =======================================
+const $$ = s => document.querySelectorAll(s);
+const wa = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent("Hi Aliyah, I'd like to book a clip for my horse.")}`;
+$$('[data-wa]').forEach(a => { a.href = wa; a.target = '_blank'; a.rel = 'noopener'; });
+$$('[data-tel]').forEach(a => a.href = 'tel:' + SITE.phone.replace(/\s/g, ''));
+$$('[data-tel-text]').forEach(s => s.textContent = SITE.phone);
+$$('[data-mail]').forEach(a => a.href = 'mailto:' + SITE.email + '?subject=' + encodeURIComponent('Clipping booking'));
+$$('[data-mail-text]').forEach(s => s.textContent = SITE.email);
+$$('[data-book]').forEach(a => { if (SITE.booksy) { a.href = SITE.booksy; a.target = '_blank'; a.rel = 'noopener'; } else if (a.closest('.ways')) a.href = wa; else a.href = '#book'; });
+$$('[data-fb]').forEach(a => { if (SITE.facebook) a.href = SITE.facebook; else a.style.display = 'none'; });
+$$('[data-tt]').forEach(a => a.href = SITE.tiktok);
+document.getElementById('yr').textContent = new Date().getFullYear();
+// today in the week list
+const d = new Date().getDay(); const li = document.querySelector(`#week li[data-d="${d}"]`); if (li) li.classList.add('today');
+// gentle reveal on scroll
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
+$$('.reveal').forEach(el => io.observe(el));
+// postcode check: straight-line distance from Faversham town centre (about 40 min drive ≈ 27 miles)
+const BASE = [51.3155, 0.8905], OK = 24, EDGE = 30;
+const miles = (a, b) => { const R = 3958.8, r = x => x * Math.PI / 180, dl = r(b[0] - a[0]), dn = r(b[1] - a[1]); const h = Math.sin(dl / 2) ** 2 + Math.cos(r(a[0])) * Math.cos(r(b[0])) * Math.sin(dn / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(h)); };
+document.getElementById('check').addEventListener('submit', async e => {
+  e.preventDefault();
+  const out = document.getElementById('check-out'), pc = document.getElementById('pc').value.trim();
+  out.className = ''; if (!pc) return; out.textContent = 'Checking…';
+  try {
+    const r = await fetch('https://api.postcodes.io/postcodes/' + encodeURIComponent(pc)); const j = await r.json();
+    if (!j.result) { out.textContent = "I couldn't find that postcode. Please check it, or just message me."; return; }
+    const m = miles(BASE, [j.result.latitude, j.result.longitude]), town = j.result.admin_district;
+    if (m <= OK) { out.className = 'yes'; out.textContent = `Yes, ${town} is in my area ♡ Book a slot or send me a message.`; }
+    else if (m <= EDGE) { out.className = 'maybe'; out.textContent = `${town} is on the edge of my area. Message me and I'll see what I can do.`; }
+    else { out.className = 'maybe'; out.textContent = `Sorry, ${town} is a bit far for me at the moment.`; }
+  } catch { out.textContent = "Couldn't check right now. Please message me with your postcode."; }
+});
+</script>
+</body>
+</html>
