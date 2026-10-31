@@ -48,7 +48,7 @@
   .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
   .brand img{width:46px;height:46px}
   .brand span{font-family:var(--script);font-size:1.9rem;color:var(--rose);line-height:1}
-  nav{display:flex;gap:22px;align-items:center}
+  nav{display:flex;gap:18px;align-items:center}
   nav a{text-decoration:none;color:var(--ink);font-weight:600;font-size:.95rem}
   nav a:hover{color:var(--rose)}
   nav .btn{padding:9px 18px;font-size:.92rem}
@@ -150,6 +150,29 @@
   .about .photo img{width:100%;height:100%;object-fit:cover}
   @media (max-width:820px){.about .wrap{grid-template-columns:1fr}.about .photo{max-width:340px}}
 
+  /* gift vouchers */
+  .voucher-wrap{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+  @media (max-width:820px){.voucher-wrap{grid-template-columns:1fr}}
+  .voucher{position:relative;aspect-ratio:1.7/1;border-radius:22px;padding:clamp(18px,3vw,28px);color:#fff;background:linear-gradient(135deg,var(--rose) 0%,var(--rose-d) 100%);box-shadow:0 22px 44px rgba(156,44,88,.28);overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;transform:rotate(-2deg)}
+  .voucher::before,.voucher::after{content:"";position:absolute;width:44px;height:44px;border-radius:50%;background:var(--cream);top:50%;translate:0 -50%}
+  .voucher::before{left:-22px}.voucher::after{right:-22px}
+  .voucher .v-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .voucher .v-top img{width:64px;height:64px;border-radius:50%;background:#fff}
+  .voucher .v-gift{font-family:var(--script);font-size:clamp(2.2rem,5vw,3rem);line-height:1}
+  .voucher .v-line{border-top:1.5px dashed rgba(255,255,255,.55);padding-top:10px;display:flex;justify-content:space-between;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700}
+  .voucher .v-amt{font-family:var(--serif);font-size:clamp(1.9rem,4vw,2.6rem);font-weight:700;text-transform:none;letter-spacing:0}
+  .steps{list-style:none;counter-reset:s;padding:0;margin:18px 0 0;display:grid;gap:10px}
+  .steps li{counter-increment:s;display:flex;gap:12px;align-items:flex-start}
+  .steps li::before{content:counter(s);flex:0 0 28px;height:28px;border-radius:50%;background:var(--rose);color:#fff;font-weight:700;display:grid;place-items:center;font-size:.9rem}
+  /* faq */
+  .faq{margin-top:30px;display:grid;gap:12px;max-width:820px}
+  .faq details{background:#fff;border:1px solid var(--line);border-radius:18px;padding:4px 20px}
+  .faq details[open]{box-shadow:0 10px 24px rgba(156,44,88,.08)}
+  .faq summary{cursor:pointer;list-style:none;padding:14px 0;font-weight:700;color:var(--rose-d);display:flex;justify-content:space-between;gap:12px;font-size:1.02rem}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";font-size:1.4rem;line-height:1;color:var(--rose);transition:transform .2s}
+  .faq details[open] summary::after{transform:rotate(45deg)}
+  .faq details p{margin:0 0 16px;color:var(--ink-2)}
   /* contact */
   .contact{background:linear-gradient(160deg,var(--rose) 0%,var(--rose-d) 100%);color:#fff;text-align:center}
   .contact h2{color:#fff}.contact .script{color:#fff}
@@ -202,6 +225,8 @@
       <a href="#work">My work</a>
       <a href="#availability">Availability</a>
       <a href="#areas">Areas</a>
+      <a href="#vouchers">Gift vouchers</a>
+      <a href="#faq">FAQ</a>
       <a href="#about">About</a>
       <a class="btn primary" data-book href="#book">Book now</a>
     </nav>
@@ -356,6 +381,44 @@
     </div>
   </section>
 
+  <section id="vouchers" style="background:linear-gradient(180deg,#fff,var(--blush))">
+    <div class="wrap voucher-wrap">
+      <div>
+        <h2 class="reveal"><span class="script">Gift</span> vouchers</h2>
+        <p class="lede reveal">The perfect present for a horse lover. Choose an amount or a particular clip, and I'll send a voucher ready to print or pop in a card.</p>
+        <ol class="steps reveal">
+          <li>Message me on WhatsApp with the amount or clip, and who it's for.</li>
+          <li>Pay by bank transfer.</li>
+          <li>I'll send the voucher over, ready to give.</li>
+        </ol>
+        <div class="reveal" style="margin-top:24px"><a class="btn primary" data-voucher href="#"><svg><use href="#i-wa"/></svg>Buy a voucher</a></div>
+      </div>
+      <div class="reveal" aria-hidden="true">
+        <div class="voucher">
+          <div class="v-top"><span class="v-gift">A gift for you ♡</span><img src="img/logo.png" alt=""></div>
+          <div><div style="font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;opacity:.9">Aliyah Rose Clipping</div><div class="v-amt">Full clip</div></div>
+          <div class="v-line"><span>Gift voucher</span><span>Mobile horse clipping · Kent</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <h2 class="reveal"><span class="script">Good</span> to know</h2>
+      <div class="faq reveal">
+        <details><summary>How long does a clip take?</summary><p>Most full and blanket clips take about one and a half to two hours. A bib, chaser or trace is quicker, and legs only is quicker still. Nervy or first-time horses take as long as they need.</p></details>
+        <details><summary>How often should I clip?</summary><p>Usually every four to six weeks from autumn through to late winter, depending on how fast your horse's coat grows back and how hard they're working.</p></details>
+        <details><summary>Does my horse need a rug after clipping?</summary><p>Yes. Clipping takes away your horse's winter coat, so they'll need rugging to keep warm, especially overnight and when turned out. Have rugs ready for when I finish.</p></details>
+        <details><summary>What if my horse is wet or muddy on the day?</summary><p>Clippers can't get through a wet or muddy coat, so please bring your horse in and keep them dry beforehand. If they're soaked when I arrive we may need to rebook.</p></details>
+        <details><summary>What if I need to cancel?</summary><p>No problem. Just let me know as soon as you can, ideally at least 24 hours before, so I can offer the slot to someone else.</p></details>
+        <details><summary>Will you clip a horse that needs sedating?</summary><p>If your vet advises sedation, please arrange it with your vet for the time of the clip. Your horse's safety, and mine, always come first.</p></details>
+        <details><summary>How do I pay?</summary><p>Cash or bank transfer on the day.</p></details>
+        <details><summary>Do you have a minimum charge?</summary><p>Yes, £25 per visit. Several horses at the same yard all count towards it, and there's no travel charge within 20 minutes. Further out, up to 40 minutes, there's a £5 travel charge.</p></details>
+      </div>
+    </div>
+  </section>
+
   <section class="contact" id="book">
     <div class="wrap">
       <h2><span class="script">Book</span> your clip</h2>
@@ -398,6 +461,7 @@ const SITE = {
 const $$ = s => document.querySelectorAll(s);
 const wa = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent("Hi Aliyah, I'd like to book a clip for my horse.")}`;
 $$('[data-wa]').forEach(a => { a.href = wa; a.target = '_blank'; a.rel = 'noopener'; });
+$$('[data-voucher]').forEach(a => { a.href = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent("Hi Aliyah, I'd like to buy a gift voucher.")}`; a.target = '_blank'; a.rel = 'noopener'; });
 $$('[data-tel]').forEach(a => a.href = 'tel:' + SITE.phone.replace(/\s/g, ''));
 $$('[data-tel-text]').forEach(s => s.textContent = SITE.phone);
 $$('[data-mail]').forEach(a => a.href = 'mailto:' + SITE.email + '?subject=' + encodeURIComponent('Clipping booking'));
